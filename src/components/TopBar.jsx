@@ -43,11 +43,11 @@ const TopBar = () => {
         <TopBarWrapper>
             <Logo><img src={logo_white}/></Logo>
             <TabContainer>
-                <Tab onClick={() => {navigate('/')}}>
+                <Tab onClick={() => {navigate('/search')}}>
                     <TabIcon src={compass_white}/>
                     <TabTxt>탐색</TabTxt>
                 </Tab>
-                <Tab onClick={() => {navigate('/')}}>
+                <Tab onClick={() => {navigate('/myticket')}}>
                     <TabIcon src={ticket_white}/>
                     <TabTxt>내 티켓</TabTxt>
                 </Tab>
