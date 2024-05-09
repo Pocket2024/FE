@@ -9,11 +9,11 @@ function App() {
   return (
     <>
     <TopBar/>
-    <Routes>
-        <Route path="/" element={<LandingPage/>}/>
-        <Route path='/search' element={<SearchPage/>}/>
-        <Route path='/myticket' element={<MyTicketPage/>}/>
-    </Routes>
+      <Routes>
+          <Route path="/" element={<LandingPage/>}/>
+          <Route path='/search' element={<SearchPage/>}/>
+          <Route path='/myticket' element={<MyTicketPage/>}/>
+      </Routes>
     </>
   );
 }
