@@ -14,6 +14,7 @@ const TopBarWrapper = styled.div`
     justify-content: space-between;
     padding: 0 80px;
     position: fixed;
+    z-index: 99;
 `
 const Logo = styled.div`
     height: 23px;
