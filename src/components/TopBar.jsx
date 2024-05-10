@@ -13,6 +13,7 @@ const TopBarWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0 80px;
+    position: fixed;
 `
 const Logo = styled.div`
     height: 23px;
