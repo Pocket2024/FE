@@ -1,0 +1,18 @@
+#dropdown-basic-button {
+    background-color: #E65A2E;
+    font-weight: 700;
+    border: 1px solid #E65A2E;
+    font-size: 20px;
+}
+.item {
+    color: #E65A2E;
+    font-weight: 700;
+    font-size: 15px;
+    > span {
+        margin-left: 10px;
+    }
+}
+.item:hover {
+    background-color: #FFE4DC;
+    color: #E65A2E;
+}

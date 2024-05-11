@@ -4,9 +4,14 @@ import { ReactComponent as LogoIcon } from '../images/pocketlogo_white.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoTicket } from "react-icons/io5";
 import { FaCompass } from "react-icons/fa";
+import {useMediaQuery} from 'react-responsive';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import '../style/Dropdown.css';
 
 const TopBarWrapper = styled.div`
-    width: calc(100vw - 160px);
+    width: 100vw;
     height: 100px;
     background-color: #E65A2E;
     display: flex;
@@ -39,22 +44,77 @@ const TabTxt = styled.div`
 
 const TopBar = () => {
     const navigate = useNavigate();
+    const isDesktop = useMediaQuery({ minWidth: 800 });
 
     return (
-        <TopBarWrapper>
-            <Logo><LogoIcon fill='white'/></Logo>
-            <TabContainer>
-                <Tab onClick={() => {navigate('/search')}}>
-                    <FaCompass color='white' size={23}/>
-                    <TabTxt>탐색</TabTxt>
-                </Tab>
-                <Tab onClick={() => {navigate('/myticket')}}>
-                    <IoTicket color='white' size={23}/>
-                    <TabTxt>내 티켓</TabTxt>
-                </Tab>
-            </TabContainer>
-        </TopBarWrapper>
+        <>
+        {isDesktop? 
+            <TopBarWrapper>
+                <Logo><LogoIcon fill='white'/></Logo>
+                <TabContainer>
+                    <Tab onClick={() => {navigate('/search')}}>
+                        <FaCompass color='white' size={23}/>
+                        <TabTxt>탐색</TabTxt>
+                    </Tab>
+                    <Tab onClick={() => {navigate('/myticket')}}>
+                        <IoTicket color='white' size={23}/>
+                        <TabTxt>내 티켓</TabTxt>
+                    </Tab>
+                </TabContainer>
+            </TopBarWrapper>
+            :
+            <TopBarWrapper>
+                <Logo><LogoIcon fill='white'/></Logo>
+                <DropdownContainer>
+                    <DropdownButton id="dropdown-basic-button" title="메뉴">
+                    <Dropdown.Item className="item" onClick={() => navigate("/search")}><FaCompass color='#E65A2E' size={23}/><span>탐색</span></Dropdown.Item>
+                    <Dropdown.Item className="item" onClick={() => navigate("/myticket")}><IoTicket color='#E65A2E' size={23}/><span>내 티켓</span></Dropdown.Item>
+                    </DropdownButton>
+                </DropdownContainer>
+            </TopBarWrapper>
+        }
+        </>
     );
 };
 
 export default TopBar;
+
+const MTopBarWrapper = styled.div`
+    width: calc(100vw - 160px);
+    height: 100px;
+    background-color: #E65A2E;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    position: fixed;
+    z-index: 99;
+`
+const MLogo = styled.div`
+    height: 23px;
+`
+const MTabContainer = styled.div`
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+`
+const MTab = styled.div`
+    display: flex;
+    height: 23px;
+    cursor: pointer;
+`
+const MTabIcon = styled.img``
+const MTabTxt = styled.div`
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    margin-left: 10px;
+`
+const DropdownContainer = styled.div`
+  margin-right: 75px;
+  display: flex;
+  align-items: center;
+  .dropdownbtn {
+    background: #E65A2E;
+  }
+`;
