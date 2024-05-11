@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import logo_white from '../images/pocketlogo_white.svg';
-import compass_white from '../images/compass_white.svg';
-import ticket_white from '../images/ticket_white.svg';
+import { ReactComponent as LogoIcon } from '../images/pocketlogo_white.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { IoTicket } from "react-icons/io5";
+import { FaCompass } from "react-icons/fa";
 
 const TopBarWrapper = styled.div`
     width: calc(100vw - 160px);
@@ -39,18 +39,17 @@ const TabTxt = styled.div`
 
 const TopBar = () => {
     const navigate = useNavigate();
-    //const location = useLocation();
 
     return (
         <TopBarWrapper>
-            <Logo><img src={logo_white}/></Logo>
+            <Logo><LogoIcon fill='white'/></Logo>
             <TabContainer>
                 <Tab onClick={() => {navigate('/search')}}>
-                    <TabIcon src={compass_white}/>
+                    <FaCompass color='white' size={23}/>
                     <TabTxt>탐색</TabTxt>
                 </Tab>
                 <Tab onClick={() => {navigate('/myticket')}}>
-                    <TabIcon src={ticket_white}/>
+                    <IoTicket color='white' size={23}/>
                     <TabTxt>내 티켓</TabTxt>
                 </Tab>
             </TabContainer>
