@@ -63,15 +63,15 @@ const TopBar = () => {
                 </TabContainer>
             </TopBarWrapper>
             :
-            <TopBarWrapper>
-                <Logo><LogoIcon fill='white'/></Logo>
+            <MTopBarWrapper>
+                <Logo><LogoIcon fill='white' style={{width:'80px'}}/></Logo>
                 <DropdownContainer>
                     <DropdownButton id="dropdown-basic-button" title="메뉴">
                     <Dropdown.Item className="item" onClick={() => navigate("/search")}><FaCompass color='#E65A2E' size={23}/><span>탐색</span></Dropdown.Item>
                     <Dropdown.Item className="item" onClick={() => navigate("/myticket")}><IoTicket color='#E65A2E' size={23}/><span>내 티켓</span></Dropdown.Item>
                     </DropdownButton>
                 </DropdownContainer>
-            </TopBarWrapper>
+            </MTopBarWrapper>
         }
         </>
     );
@@ -80,38 +80,17 @@ const TopBar = () => {
 export default TopBar;
 
 const MTopBarWrapper = styled.div`
-    width: calc(100vw - 160px);
+    width: 100vw;
     height: 100px;
     background-color: #E65A2E;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 80px;
+    padding: 0 30px;
     position: fixed;
     z-index: 99;
 `
-const MLogo = styled.div`
-    height: 23px;
-`
-const MTabContainer = styled.div`
-    display: flex;
-    width: 200px;
-    justify-content: space-between;
-`
-const MTab = styled.div`
-    display: flex;
-    height: 23px;
-    cursor: pointer;
-`
-const MTabIcon = styled.img``
-const MTabTxt = styled.div`
-    color: white;
-    font-weight: 700;
-    font-size: 20px;
-    margin-left: 10px;
-`
 const DropdownContainer = styled.div`
-  margin-right: 75px;
   display: flex;
   align-items: center;
   .dropdownbtn {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoIosArrowRoundForward } from "react-icons/io";
+import {useMediaQuery} from 'react-responsive';
 
 const Wrapper3 = styled.div`
     height: calc(100vh - 100px);
@@ -45,7 +46,10 @@ const ButtonLine = styled.div`
 const Landing3 = () => {
     const [isHover, setIsHover] = useState(false);
     const [isHover2, setIsHover2] = useState(false);
+    const isDesktop = useMediaQuery({ minWidth: 1220 });
     return (
+        <>
+        {isDesktop?
         <Wrapper3>
             <Txt>지금 당장 나만의 티켓북을 만들고 싶다면</Txt>
             <ButtonLine>
@@ -63,6 +67,10 @@ const Landing3 = () => {
                 </Button>
             </ButtonLine>
         </Wrapper3>
+        :
+        <></>
+    }
+    </>
     );
 };
 
