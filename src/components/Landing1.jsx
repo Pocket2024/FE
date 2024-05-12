@@ -115,18 +115,18 @@ const Landing1 = () => {
             <MTxtDiv2><img src={line2}/></MTxtDiv2>
             <MTxtDiv3><img src={line3}/></MTxtDiv3>
         </MTxtWrapper>
-        <BigStar><img src={bigstar}/></BigStar>
-        <JeanPocket><JeanImg src={jean_pocket}/></JeanPocket>
-        <Bubble><BubbleImg src={bubble}/></Bubble>
-        <SubTxtDiv>
-            <Line1>모아두고 싶었던 티켓들을</Line1>
-            <FlexBox>
-                <Line2>이제는</Line2>
-                <SmallLogo><LogoIcon fill='white'/></SmallLogo>
-                <Line1>을 통해 아카이빙하세요!</Line1>
-            </FlexBox>
-            <BlackTxt>흩어져있던 모바일 티켓과 지류 티켓을 한 번에</BlackTxt>
-        </SubTxtDiv>
+        <MBigStar><img src={bigstar}/></MBigStar>
+        <MJeanPocket><MJeanImg src={jean_pocket}/></MJeanPocket>
+        <MBubble><MBubbleImg src={bubble}/></MBubble>
+        <MSubTxtDiv>
+            <MLine1>모아두고 싶었던 티켓들을</MLine1>
+            <MFlexBox>
+                <MLine2>이제는</MLine2>
+                <MSmallLogo><LogoIcon fill='white' style={{height:'15px', width:'84.98px'}}/></MSmallLogo>
+                <MLine1>을 통해 아카이빙하세요!</MLine1>
+            </MFlexBox>
+            <MBlackTxt>흩어져있던 모바일 티켓과 지류 티켓을 한 번에</MBlackTxt>
+        </MSubTxtDiv>
     </MWrapper>
     }
     </>
@@ -144,75 +144,81 @@ const MWrapper = styled.div`
 `
 const MTxtWrapper = styled.div`
     display: block;
-    padding-top: 120px;
+    padding-top: 7vh;
     position: relative;
     z-index: 1;
+    padding-left: 10vw;
 `
 const MTxtDiv = styled.div`
     > img {
-        height: 30px;
+        height: 5vh;
     }
 `
 const MTxtDiv2 = styled.div`
-    padding-top: 50px;
+    padding-top: 30px;
     > img {
-        height: 30px;
+        height: 6vh;
     }
 `
 const MTxtDiv3 = styled.div`
-    padding-top: 50px;
+    padding-top: 30px;
     > img {
-        height: 30px;
+        height: 6vh;
     }
 `
 const MStar = styled.div`
     position: absolute;
     z-index: -1;
-    top: 10px;
-    left: 100px;
+    top: 0.5vh;
+    left: 23vw;
+    > img {
+        width: 70px;
+    }
 `
 const MBigStar = styled.div`
     position: absolute;
     z-index: -1;
-    top: 12vh;
-    right: 15vw;
+    top: 25vh;
+    right: 5vw;
+    > img {
+        height: 30vh;
+    }
 `
 const MJeanPocket = styled.div`
     position: absolute;
     z-index: 1;
-    top: 20vh;
-    right: 15vw;
+    top: 35vh;
+    right: 6vw;
 `
 const MJeanImg = styled.img`
-    width: 250px;
+    height: 24vh;
 `
 const MBubble = styled.div`
     position: absolute;
-    top: 30vh;
-    right: 50vw;
+    top: 45vh;
+    left: 10vw;
 `
 const MBubbleImg = styled.img`
-    width: 100px;
+    width: 70px;
 `
 const MSubTxtDiv = styled.div`
     color: white;
-    font-size: 25px;
+    font-size: 18px;
     font-weight: 700;
-    margin-top: 50px;
+    margin-left: 10vw;
+    margin-top: 30vh;
 `
 const MLine1 = styled.div``
 const MLine2 = styled.div`
-    margin-right: 13px;
+    margin-right: 5px;
 `
 const MFlexBox = styled.div`
     display: flex;
-    margin-top: 10px;
+    margin-top: 5px;
 `
-const MSmallLogo = styled.div`
-    height: 25px;
-`
+const MSmallLogo = styled.div``
 const MBlackTxt = styled.div`
-    margin-top: 20px;
+    margin-top: 15px;
     color: #252525;
-    font-size: 20px;
+    font-size: 15px;
 `
