@@ -89,14 +89,14 @@ const Landing1 = () => {
         {isDesktop?
         <Wrapper>
         <TxtWrapper>
-            <Star><img src={star}/></Star>
-            <TxtDiv><img src={line1}/></TxtDiv>
-            <TxtDiv2><img src={line2}/></TxtDiv2>
-            <TxtDiv3><img src={line3}/></TxtDiv3>
+            <Star><img src={star} alt=''/></Star>
+            <TxtDiv><img src={line1} alt=''/></TxtDiv>
+            <TxtDiv2><img src={line2} alt=''/></TxtDiv2>
+            <TxtDiv3><img src={line3} alt=''/></TxtDiv3>
         </TxtWrapper>
-        <BigStar><img src={bigstar}/></BigStar>
-        <JeanPocket><JeanImg src={jean_pocket}/></JeanPocket>
-        <Bubble><BubbleImg src={bubble}/></Bubble>
+        <BigStar><img src={bigstar} alt=''/></BigStar>
+        <JeanPocket><JeanImg src={jean_pocket} alt=''/></JeanPocket>
+        <Bubble><BubbleImg src={bubble} alt=''/></Bubble>
         <SubTxtDiv>
             <Line1>모아두고 싶었던 티켓들을</Line1>
             <FlexBox>
@@ -110,14 +110,14 @@ const Landing1 = () => {
     :
     <MWrapper>
         <MTxtWrapper>
-            <MStar><img src={star}/></MStar>
-            <MTxtDiv><img src={line1}/></MTxtDiv>
-            <MTxtDiv2><img src={line2}/></MTxtDiv2>
-            <MTxtDiv3><img src={line3}/></MTxtDiv3>
+            <MStar><img src={star} alt=''/></MStar>
+            <MTxtDiv><img src={line1} alt=''/></MTxtDiv>
+            <MTxtDiv2><img src={line2} alt=''/></MTxtDiv2>
+            <MTxtDiv3><img src={line3} alt=''/></MTxtDiv3>
         </MTxtWrapper>
-        <MBigStar><img src={bigstar}/></MBigStar>
-        <MJeanPocket><MJeanImg src={jean_pocket}/></MJeanPocket>
-        <MBubble><MBubbleImg src={bubble}/></MBubble>
+        <MBigStar><img src={bigstar} alt=''/></MBigStar>
+        <MJeanPocket><MJeanImg src={jean_pocket} alt=''/></MJeanPocket>
+        <MBubble><MBubbleImg src={bubble} alt=''/></MBubble>
         <MSubTxtDiv>
             <MLine1>모아두고 싶었던 티켓들을</MLine1>
             <MFlexBox>

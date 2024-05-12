@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as LogoIcon } from '../images/pocketlogo_white.svg';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { IoTicket } from "react-icons/io5";
 import { FaCompass } from "react-icons/fa";
 import {useMediaQuery} from 'react-responsive';
@@ -34,7 +33,6 @@ const Tab = styled.div`
     height: 23px;
     cursor: pointer;
 `
-const TabIcon = styled.img``
 const TabTxt = styled.div`
     color: white;
     font-weight: 700;

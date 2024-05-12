@@ -121,19 +121,19 @@ const Landing2 = () => {
                 </Title>
                 <RuleBox>
                     <Number>
-                        <img src={one}/>
+                        <img src={one} alt=''/>
                         <div>티켓들을 아카이빙할 나만의 포켓을 만들어요</div>
                     </Number>
                 </RuleBox>
                 <RuleBox>
                     <Number>
-                        <img src={two}/>
+                        <img src={two} alt=''/>
                         <div>티켓 사진을 업로드하고 자동입력된 내용을 확인해요</div>
                     </Number>
                 </RuleBox>
                 <RuleBox>
                     <Number>
-                        <img src={three}/>
+                        <img src={three} alt=''/>
                         <div>함께한 사람, 후기 등을 작성하면 나만의 티켓북 완성!</div>
                     </Number>
                 </RuleBox>

@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import Landing1 from '../components/Landing1';
 import Landing2 from '../components/Landing2';
 import Landing3 from '../components/Landing3';
