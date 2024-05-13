@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage';
 import TopBar from './components/TopBar';
 import SearchPage from './pages/SearchPage';
 import MyTicketPage from './pages/MyTicketPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<LandingPage/>}/>
           <Route path='/search' element={<SearchPage/>}/>
           <Route path='/myticket' element={<MyTicketPage/>}/>
+          <Route path='/login' element={<LoginPage/>}/>
       </Routes>
     </Page>
     </>

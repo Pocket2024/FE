@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IoIosArrowRoundForward } from "react-icons/io";
 import {useMediaQuery} from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper3 = styled.div`
     height: calc(100vh - 80px);
@@ -47,6 +48,7 @@ const Landing3 = () => {
     const [isHover, setIsHover] = useState(false);
     const [isHover2, setIsHover2] = useState(false);
     const isDesktop = useMediaQuery({ minWidth: 1220 });
+    const navigate = useNavigate();
     return (
         <>
         {isDesktop?
@@ -55,13 +57,15 @@ const Landing3 = () => {
             <ButtonLine>
                 <Button 
                     onMouseOver={() => setIsHover(true)}
-                    onMouseOut={() => setIsHover(false)}>
+                    onMouseOut={() => setIsHover(false)}
+                    onClick={() => {navigate('/login')}}>
                     <IoIosArrowRoundForward color={isHover? '#161616' : 'white'} size={70}/>
                     <div>로그인하기</div>
                 </Button>
                 <Button
                     onMouseOver={() => setIsHover2(true)}
-                    onMouseOut={() => setIsHover2(false)}>
+                    onMouseOut={() => setIsHover2(false)}
+                    onClick={() => {navigate('/signup')}}>
                     <IoIosArrowRoundForward color={isHover2? '#161616' : 'white'} size={70}/>
                     <div>회원가입하기</div>
                 </Button>
@@ -73,13 +77,15 @@ const Landing3 = () => {
             <MButtonLine>
                 <MButton 
                     onMouseOver={() => setIsHover(true)}
-                    onMouseOut={() => setIsHover(false)}>
+                    onMouseOut={() => setIsHover(false)}
+                    onClick={() => {navigate('/login')}}>
                     <IoIosArrowRoundForward color={isHover? '#161616' : 'white'} size={25}/>
                     <div>로그인하기</div>
                 </MButton>
                 <MButton
                     onMouseOver={() => setIsHover2(true)}
-                    onMouseOut={() => setIsHover2(false)}>
+                    onMouseOut={() => setIsHover2(false)}
+                    onClick={() => {navigate('/signup')}}>
                     <IoIosArrowRoundForward color={isHover2? '#161616' : 'white'} size={25}/>
                     <div>회원가입하기</div>
                 </MButton>
