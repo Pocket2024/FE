@@ -11,7 +11,7 @@ import { ReactComponent as LogoIcon } from '../images/pocketlogo_white.svg';
 import {useMediaQuery} from 'react-responsive';
 
 const Wrapper = styled.div`
-    height: calc(100vh - 100px);
+    height: calc(100vh - 80px);
     background-color: #E65A2E;
     position: relative;
     z-index: 2;
@@ -137,7 +137,7 @@ export default Landing1;
 
 const MWrapper = styled.div`
     width: 100vw;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 80px);
     background-color: #E65A2E;
     position: relative;
     z-index: 2;

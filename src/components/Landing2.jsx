@@ -7,7 +7,7 @@ import two from '../images/second.svg';
 import three from '../images/third.svg';
 
 const Wrapper2 = styled.div`
-    height: calc(100vh - 100px);
+    height: calc(100vh - 80px);
     background-color: white;
     position: relative;
     z-index: 2;

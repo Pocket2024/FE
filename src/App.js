@@ -24,6 +24,6 @@ function App() {
 export default App;
 
 const Page = styled.div`
-  padding-top: 100px;
+  padding-top: 80px;
   font-family: "Pretendard";
 `

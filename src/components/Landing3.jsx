@@ -4,7 +4,7 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 import {useMediaQuery} from 'react-responsive';
 
 const Wrapper3 = styled.div`
-    height: calc(100vh - 100px);
+    height: calc(100vh - 80px);
     background-color: #E65A2E;
     position: relative;
     z-index: 2;
