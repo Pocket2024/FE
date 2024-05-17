@@ -55,7 +55,7 @@ const MTxt = styled.div`
     padding-top: ${props => props.ptop};
 `
 const MInput = styled.input`
-    border: 1px rgba(250, 250, 250, 0.35);
+    border: 1px solid rgba(250, 250, 250, 0.35);
     background-color: rgba(255, 149, 115, 0.69);
     border-radius: 10px;
     padding: ${props => props.padding};

@@ -22,6 +22,8 @@ const SignupPage = () => {
         :
         <MWrapper>
             <Title>회원가입</Title>
+            <FormTitle>이메일</FormTitle>
+            <Input />
         </MWrapper>
         }
         </>
@@ -34,10 +36,22 @@ const MWrapper = styled.div`
     width: 100vw;
     height: calc(100vh - 80px);
     background-color: white;
-    padding: 0 17vw;
+    padding: 0 10vw;
 `
 const Title = styled.div`
     font-size: 25px;
     font-weight: 700;
     color: #E65A2E;
+    margin-bottom: 20px;
+    margin-top: 30px;
+`
+const FormTitle = styled.div`
+    font-size: 15px;
+    font-weight: 600;
+    color: #E65A2E;
+`
+const Input = styled.input`
+    border: 1px solid rgba(255, 149, 115, 0.44);
+    outline: none;
+    background-color: #FFF6F3;
 `
