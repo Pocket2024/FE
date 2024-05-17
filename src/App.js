@@ -6,6 +6,7 @@ import TopBar from './components/TopBar';
 import SearchPage from './pages/SearchPage';
 import MyTicketPage from './pages/MyTicketPage';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/search' element={<SearchPage/>}/>
           <Route path='/myticket' element={<MyTicketPage/>}/>
           <Route path='/login' element={<LoginPage/>}/>
+          <Route path='/signup' element={<SignupPage/>}/>
       </Routes>
     </Page>
     </>
