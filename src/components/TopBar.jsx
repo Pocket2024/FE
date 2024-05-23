@@ -22,6 +22,7 @@ const TopBarWrapper = styled.div`
 `
 const Logo = styled.div`
     height: 23px;
+    cursor: pointer;
 `
 const TabContainer = styled.div`
     display: flex;
@@ -48,7 +49,7 @@ const TopBar = () => {
         <>
         {isDesktop? 
             <TopBarWrapper>
-                <Logo><LogoIcon fill='white'/></Logo>
+                <Logo onClick={() => (navigate('/'))}><LogoIcon fill='white'/></Logo>
                 <TabContainer>
                     <Tab onClick={() => {navigate('/search')}}>
                         <FaCompass color='white' size={23}/>
@@ -62,7 +63,7 @@ const TopBar = () => {
             </TopBarWrapper>
             :
             <MTopBarWrapper>
-                <Logo><LogoIcon fill='white' style={{width:'80px'}}/></Logo>
+                <Logo onClick={() => (navigate('/'))}><LogoIcon fill='white' style={{width:'80px'}}/></Logo>
                 <DropdownContainer>
                     <DropdownButton id="dropdown-basic-button" title="메뉴">
                     <Dropdown.Item className="item" onClick={() => navigate("/search")}><FaCompass color='#E65A2E' size={23}/><span>탐색</span></Dropdown.Item>
