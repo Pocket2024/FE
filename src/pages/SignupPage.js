@@ -45,11 +45,13 @@ const SignupPage = () => {
                     placeholder='닉네임을 입력해주세요.'/>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호</FormTitle>
                 <Input 
+                    type='password'
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='비밀번호를 입력해주세요.'/>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호 확인</FormTitle>
-                <Input 
+                <Input
+                    type='password' 
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='비밀번호를 한 번 더 입력해주세요.'/>
@@ -68,13 +70,15 @@ const SignupPage = () => {
             <Input 
                 placeholder='이메일을 입력해주세요.'/>
             <FormTitle>닉네임</FormTitle>
-            <Input 
+            <Input
                 placeholder='닉네임을 입력해주세요.'/>
             <FormTitle>비밀번호</FormTitle>
             <Input 
+                type='password'
                 placeholder='비밀번호를 입력해주세요.'/>
             <FormTitle>비밀번호 확인</FormTitle>
             <Input 
+                type='password' 
                 placeholder='비밀번호를 한 번 더 입력해주세요.'/>
             <FormTitle>한 줄 소개</FormTitle>
             <Input 
@@ -104,7 +108,7 @@ const Title = styled.div`
 const FormTitle = styled.div`
     font-size: ${props => props.fontsize || '15px'};
     font-weight: 600;
-    color: #E65A2E;
+    color: ${props => props.fcolor || "#E65A2E"};
     margin-bottom: ${props => props.mbottom || '5px'};
     margin-top: ${props => props.mtop || '15px'};
 `
