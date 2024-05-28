@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import {useMediaQuery} from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -103,10 +104,26 @@ const SignupPage = () => {
             setPhoneMessage("");
         }
     }
+    const onChangeBio = (e) => {
+        setBio(e.target.value);
+    }
 
     const handleSignup = () => {
-        alert('회원가입 성공');
-        navigate('/login');
+        axios.post('http://127.0.0.1:8000/api/users/signup', {
+            email: email, 
+            password: pw,
+            password2: pwcheck,
+            bio: bio,
+            phoneNumber: phone
+        })
+        .then(res => {
+            alert('회원가입 성공');
+            navigate('/login');
+            console.log(res);
+        })
+        .catch(err => {
+            console.error('Error handle signup: ', err);
+        })
     }
     return (
         <>
@@ -155,6 +172,7 @@ const SignupPage = () => {
                 <Msg>{phoneMessage}</Msg>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>한 줄 소개</FormTitle>
                 <Input 
+                    onChange={onChangeBio}
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='한 줄로 자신을 소개해주세요.'/>
@@ -192,6 +210,7 @@ const SignupPage = () => {
             <Msg fsize='10px'>{phoneMessage}</Msg>
             <FormTitle>한 줄 소개</FormTitle>
             <Input 
+                onChange={onChangeBio}
                 placeholder='한 줄로 자신을 소개해주세요.'/>
             <MSignupBtn>회원가입 완료</MSignupBtn>
         </MWrapper>
