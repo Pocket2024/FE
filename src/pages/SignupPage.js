@@ -30,9 +30,10 @@ const SignupPage = () => {
     const isDesktop = useMediaQuery({ minWidth: 1220 });
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
-    const [emailMessage, setEmailMessage] = useState('');
+    const [emailMessage, setEmailMessage] = useState("");
     const [nickname, setNickname] = useState("");
     const [pw, setPw] = useState("");
+    const [pwMessage, setPwMessage] = useState("");
     const [pwcheck, setPwcheck] = useState(false);
     const [phone, setPhone] = useState("");
     const [bio, setBio] = useState("");
@@ -42,17 +43,32 @@ const SignupPage = () => {
         setEmail(currentEmail);
 
         const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-
         if (!emailRegex.test(currentEmail)) {
             setEmailMessage(
                 <span style={{ color: '#FE334C' }}>
                     이메일 형식에 맞게 입력해주세요.
                 </span>);
-            console.log(emailMessage);
-
         } else {
             setEmailMessage("");
-            console.log('유효 이메일');
+        }
+    }
+    const onChangeNickname = (e) => {
+        setNickname(e.target.value)
+    }
+    const onChangePw = (e) => {
+        const currentPw = e.target.value;
+        setPw(currentPw);
+
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/;
+
+        if (!passwordRegex.test(currentPw)) {
+            setPwMessage(
+                <span style={{ color: '#FE334C' }}>
+                비밀번호는 8-16자, 영문, 숫자, 특수문자(!@#$%^&*?_)를 포함해야 합니다.
+                </span>
+            );
+        } else {
+            setPwMessage("");
         }
     }
 
@@ -78,15 +94,18 @@ const SignupPage = () => {
                 <Msg>{emailMessage}</Msg>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>닉네임</FormTitle>
                 <Input 
+                    onChange={onChangeNickname} 
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='닉네임을 입력해주세요.'/>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호</FormTitle>
                 <Input 
+                    onChange={onChangePw}
                     type='password'
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='비밀번호를 입력해주세요.'/>
+                <Msg>{pwMessage}</Msg>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호 확인</FormTitle>
                 <Input
                     type='password' 
@@ -116,11 +135,14 @@ const SignupPage = () => {
             <Msg fsize='10px'>{emailMessage}</Msg>
             <FormTitle>닉네임</FormTitle>
             <Input
+                onChange={onChangeNickname} 
                 placeholder='닉네임을 입력해주세요.'/>
             <FormTitle>비밀번호</FormTitle>
             <Input 
+                onChange={onChangePw}
                 type='password'
                 placeholder='비밀번호를 입력해주세요.'/>
+            <Msg>{pwMessage}</Msg>
             <FormTitle>비밀번호 확인</FormTitle>
             <Input 
                 type='password' 
