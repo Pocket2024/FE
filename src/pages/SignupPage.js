@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {useMediaQuery} from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
@@ -20,10 +20,46 @@ const Right = styled.div`
     padding: 50px;
     margin-bottom: 100px;
 `
+const Msg = styled.div`
+    font-weight: 500;
+    margin: 5px 10px;
+    font-size: ${props => props.fsize};
+`
 
 const SignupPage = () => {
     const isDesktop = useMediaQuery({ minWidth: 1220 });
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [emailMessage, setEmailMessage] = useState('');
+    const [nickname, setNickname] = useState("");
+    const [pw, setPw] = useState("");
+    const [pwcheck, setPwcheck] = useState(false);
+    const [phone, setPhone] = useState("");
+    const [bio, setBio] = useState("");
+
+    const onChangeEmail = (e) => {
+        const currentEmail = e.target.value;
+        setEmail(currentEmail);
+
+        const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+        if (!emailRegex.test(currentEmail)) {
+            setEmailMessage(
+                <span style={{ color: '#FE334C' }}>
+                    이메일 형식에 맞게 입력해주세요.
+                </span>);
+            console.log(emailMessage);
+
+        } else {
+            setEmailMessage("");
+            console.log('유효 이메일');
+        }
+    }
+
+    const handleSignup = () => {
+        alert('회원가입 성공');
+        navigate('/login');
+    }
     return (
         <>
         {isDesktop?
@@ -34,10 +70,12 @@ const SignupPage = () => {
             <Right>
                 <Title fontsize='35px'>회원가입</Title>
                 <FormTitle fontsize='25px' mbottom='10px'>이메일</FormTitle>
-                <Input 
+                <Input
+                    onChange={onChangeEmail} 
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='이메일을 입력해주세요.'/>
+                <Msg>{emailMessage}</Msg>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>닉네임</FormTitle>
                 <Input 
                     fontsize='20px'
@@ -55,12 +93,17 @@ const SignupPage = () => {
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='비밀번호를 한 번 더 입력해주세요.'/>
+                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>휴대폰 번호</FormTitle>
+                <Input
+                    fontsize='20px'
+                    padding='20px 25px'
+                    placeholder='공백 없이 숫자만 입력해주세요. (ex 01012345678)'/>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>한 줄 소개</FormTitle>
                 <Input 
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='한 줄로 자신을 소개해주세요.'/>
-                <MSignupBtn fontsize='20px'>회원가입 완료</MSignupBtn>
+                <MSignupBtn fontsize='20px' onClick={handleSignup}>회원가입 완료</MSignupBtn>
             </Right>
         </Wrapper>
         :
@@ -68,7 +111,9 @@ const SignupPage = () => {
             <Title fontsize='25px'>회원가입</Title>
             <FormTitle>이메일</FormTitle>
             <Input 
+                onChange={onChangeEmail}
                 placeholder='이메일을 입력해주세요.'/>
+            <Msg fsize='10px'>{emailMessage}</Msg>
             <FormTitle>닉네임</FormTitle>
             <Input
                 placeholder='닉네임을 입력해주세요.'/>
@@ -80,6 +125,9 @@ const SignupPage = () => {
             <Input 
                 type='password' 
                 placeholder='비밀번호를 한 번 더 입력해주세요.'/>
+            <FormTitle>휴대폰 번호</FormTitle>
+            <Input 
+                placeholder='공백 없이 숫자만 입력해주세요. (ex 01012345678)'/>
             <FormTitle>한 줄 소개</FormTitle>
             <Input 
                 placeholder='한 줄로 자신을 소개해주세요.'/>
