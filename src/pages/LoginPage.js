@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {useMediaQuery} from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
@@ -13,13 +13,28 @@ const Wrapper = styled.div`
 const LoginPage = () => {
     const isDesktop = useMediaQuery({ minWidth: 1220 });
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [pw, setPw] = useState("");
+    const onChangeEmail = (e) => {
+        setEmail(e.target.value);
+    }
+    const onChangePw = (e) => {
+        setPw(e.target.value);
+    }
+    const handleLogin = () => {
+
+    }
     return (
         <>
         {isDesktop?
         <Wrapper>
             <MTxt size='30px' mbottom='30px' ptop='15vh'>로그인</MTxt>
-            <MInput placeholder='이메일을 입력해주세요.' font='17px' padding='20px 30px'/>
-            <MInput type='password' placeholder='비밀번호를 입력해주세요.' font='17px' padding='20px 30px'/>
+            <MInput 
+                onChange={onChangeEmail}
+                placeholder='이메일을 입력해주세요.' font='17px' padding='20px 30px'/>
+            <MInput
+                onChange={onChangePw} 
+                type='password' placeholder='비밀번호를 입력해주세요.' font='17px' padding='20px 30px'/>
             <MTxt size='20px' mbottom='20px' ptop='5vh'>계정이 없으신가요?</MTxt>
             <MSignupBtn font='20px'
                 onClick={() => {navigate('/signup')}}>회원가입하기</MSignupBtn>
@@ -27,8 +42,12 @@ const LoginPage = () => {
         :
         <MWrapper>
             <MTxt size='20px' mbottom='30px' ptop='15vh'>로그인</MTxt>
-            <MInput placeholder='이메일을 입력해주세요.' font='12px' padding='15px 20px'/>
-            <MInput placeholder='비밀번호를 입력해주세요.' font='12px' padding='15px 20px'/>
+            <MInput 
+                onChange={onChangeEmail}
+                placeholder='이메일을 입력해주세요.' font='12px' padding='15px 20px'/>
+            <MInput 
+                onChange={onChangePw}
+                placeholder='비밀번호를 입력해주세요.' font='12px' padding='15px 20px'/>
             <MTxt size='12px' mbottom='10px' ptop='5vh'>계정이 없으신가요?</MTxt>
             <MSignupBtn font='15px'
                 onClick={() => {navigate('/signup')}}>회원가입하기</MSignupBtn>
