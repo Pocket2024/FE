@@ -35,7 +35,9 @@ const SignupPage = () => {
     const [pw, setPw] = useState("");
     const [pwMessage, setPwMessage] = useState("");
     const [pwcheck, setPwcheck] = useState(false);
+    const [pwcheckMessage, setPwcheckMessage] = useState("");
     const [phone, setPhone] = useState("");
+    const [phoneMessage, setPhoneMessage] = useState("");
     const [bio, setBio] = useState("");
 
     const onChangeEmail = (e) => {
@@ -69,6 +71,36 @@ const SignupPage = () => {
             );
         } else {
             setPwMessage("");
+        }
+    }
+    const onChangePwcheck = (e) => {
+        const currentPw2 = e.target.value;
+        setPwcheck(currentPw2);
+
+        if (currentPw2 !== pw) {
+            setPwcheckMessage(
+                <span style={{ color: '#FE334C' }}>
+                비밀번호가 일치하지 않습니다.
+                </span>
+            );
+        } else {
+            setPwcheckMessage("");
+        }
+    }
+    const onChangePhone = (e) => {
+        const currentPhone = e.target.value;
+        setPw(currentPhone);
+
+        const phonenumRegex = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+
+        if (!phonenumRegex.test(currentPhone)) {
+            setPhoneMessage(
+                <span style={{ color: '#FE334C' }}>
+                010-1234-5678 형태로 입력해주세요.
+                </span>
+            );
+        } else {
+            setPhoneMessage("");
         }
     }
 
@@ -108,15 +140,19 @@ const SignupPage = () => {
                 <Msg>{pwMessage}</Msg>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호 확인</FormTitle>
                 <Input
+                    onChange={onChangePwcheck}
                     type='password' 
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='비밀번호를 한 번 더 입력해주세요.'/>
+                <Msg>{pwcheckMessage}</Msg>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>휴대폰 번호</FormTitle>
                 <Input
+                    onChange={onChangePhone}
                     fontsize='20px'
                     padding='20px 25px'
-                    placeholder='공백 없이 숫자만 입력해주세요. (ex 01012345678)'/>
+                    placeholder='ex. 010-1234-5678'/>
+                <Msg>{phoneMessage}</Msg>
                 <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>한 줄 소개</FormTitle>
                 <Input 
                     fontsize='20px'
@@ -142,14 +178,18 @@ const SignupPage = () => {
                 onChange={onChangePw}
                 type='password'
                 placeholder='비밀번호를 입력해주세요.'/>
-            <Msg>{pwMessage}</Msg>
+            <Msg fsize='10px'>{pwMessage}</Msg>
             <FormTitle>비밀번호 확인</FormTitle>
             <Input 
+                onChange={onChangePwcheck}
                 type='password' 
                 placeholder='비밀번호를 한 번 더 입력해주세요.'/>
+            <Msg fsize='10px'>{pwcheckMessage}</Msg>
             <FormTitle>휴대폰 번호</FormTitle>
-            <Input 
-                placeholder='공백 없이 숫자만 입력해주세요. (ex 01012345678)'/>
+            <Input
+                onChange={onChangePhone} 
+                placeholder='ex. 010-1234-5678'/>
+            <Msg fsize='10px'>{phoneMessage}</Msg>
             <FormTitle>한 줄 소개</FormTitle>
             <Input 
                 placeholder='한 줄로 자신을 소개해주세요.'/>
