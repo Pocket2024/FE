@@ -62,17 +62,17 @@ const SignupPage = () => {
         const currentPw = e.target.value;
         setPw(currentPw);
 
-        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/;
+        // const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/;
 
-        if (!passwordRegex.test(currentPw)) {
-            setPwMessage(
-                <span style={{ color: '#FE334C' }}>
-                비밀번호는 8-16자, 영문, 숫자, 특수문자(!@#$%^&*?_)를 포함해야 합니다.
-                </span>
-            );
-        } else {
-            setPwMessage("");
-        }
+        // if (!passwordRegex.test(currentPw)) {
+        //     setPwMessage(
+        //         <span style={{ color: '#FE334C' }}>
+        //         비밀번호는 8-16자, 영문, 숫자, 특수문자(!@#$%^&*?_)를 포함해야 합니다.
+        //         </span>
+        //     );
+        // } else {
+        //     setPwMessage("");
+        // }
     }
     const onChangePwcheck = (e) => {
         const currentPw2 = e.target.value;
@@ -90,7 +90,7 @@ const SignupPage = () => {
     }
     const onChangePhone = (e) => {
         const currentPhone = e.target.value;
-        setPw(currentPhone);
+        setPhone(currentPhone);
 
         const phonenumRegex = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 
@@ -109,8 +109,9 @@ const SignupPage = () => {
     }
 
     const handleSignup = () => {
-        axios.post('http://127.0.0.1:8000/api/users/signup', {
+        axios.post('http://127.0.0.1:8080/api/users/signup', {
             email: email, 
+            nickName: nickname,
             password: pw,
             password2: pwcheck,
             bio: bio,
@@ -212,7 +213,7 @@ const SignupPage = () => {
             <Input 
                 onChange={onChangeBio}
                 placeholder='한 줄로 자신을 소개해주세요.'/>
-            <MSignupBtn>회원가입 완료</MSignupBtn>
+            <MSignupBtn onClick={handleSignup}>회원가입 완료</MSignupBtn>
         </MWrapper>
         }
         </>

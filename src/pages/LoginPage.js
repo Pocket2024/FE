@@ -23,12 +23,13 @@ const LoginPage = () => {
         setPw(e.target.value);
     }
     const handleLogin = () => {
-        axios.post('http://127.0.0.1:8000/api/users/login', {
+        axios.post('http://127.0.0.1:8080/api/users/login', {
             email: email,
             password: pw
         })
         .then(res => {
-            console.log(res);
+            console.log(res.data.accessToken);
+            localStorage.setItem("accessToken", res.data.accessToken);
             alert('로그인 성공');
             navigate('/');
         })
