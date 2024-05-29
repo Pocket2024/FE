@@ -35,6 +35,8 @@ const LoginPage = () => {
             <MInput
                 onChange={onChangePw} 
                 type='password' placeholder='비밀번호를 입력해주세요.' font='17px' padding='20px 30px'/>
+            <LoginBtn font='20px'
+                onClick={handleLogin}>로그인</LoginBtn>
             <MTxt size='20px' mbottom='20px' ptop='5vh'>계정이 없으신가요?</MTxt>
             <MSignupBtn font='20px'
                 onClick={() => {navigate('/signup')}}>회원가입하기</MSignupBtn>
@@ -98,4 +100,18 @@ const MSignupBtn = styled.button`
     font-weight: 600;
     padding: 20px;
     width: 100%;
+`
+const LoginBtn = styled.button`
+    border: 1.5px solid white;
+    background-color: #E65A2E;
+    border-radius: 40px;
+    color: white;
+    font-size: ${props => props.font};
+    font-weight: 600;
+    padding: 20px;
+    width: 100%;
+    &:hover {
+        background-color: white;
+        color: #E65A2E;
+    }
 `
