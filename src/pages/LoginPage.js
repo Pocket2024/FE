@@ -7,7 +7,7 @@ import axios from 'axios';
 const Wrapper = styled.div`
     width: 100vw;
     height: calc(100vh - 80px);
-    background-color: #E65A2E;
+    background-color: #CA3525;
     padding: 0 30vw;
 `
 
@@ -79,7 +79,7 @@ export default LoginPage;
 const MWrapper = styled.div`
     width: 100vw;
     height: calc(100vh - 80px);
-    background-color: #E65A2E;
+    background-color: #CA3525;
     padding: 0 17vw;
 `
 const MTxt = styled.div`
@@ -110,7 +110,7 @@ const MSignupBtn = styled.button`
     border: none;
     background-color: white;
     border-radius: 40px;
-    color: #E65A2E;
+    color: #CA3525;
     font-size: ${props => props.font};
     font-weight: 600;
     padding: 20px;
@@ -118,7 +118,7 @@ const MSignupBtn = styled.button`
 `
 const LoginBtn = styled.button`
     border: 1.5px solid white;
-    background-color: #E65A2E;
+    background-color: #CA3525;
     border-radius: 40px;
     color: white;
     font-size: ${props => props.font};
@@ -127,6 +127,6 @@ const LoginBtn = styled.button`
     width: 100%;
     &:hover {
         background-color: white;
-        color: #E65A2E;
+        color: #CA3525;
     }
 `

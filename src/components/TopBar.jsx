@@ -12,7 +12,7 @@ import '../style/Dropdown.css';
 const TopBarWrapper = styled.div`
     width: 100vw;
     height: 80px;
-    background-color: #E65A2E;
+    background-color: #CA3525;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -81,7 +81,7 @@ export default TopBar;
 const MTopBarWrapper = styled.div`
     width: 100vw;
     height: 80px;
-    background-color: #E65A2E;
+    background-color: #CA3525;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -93,6 +93,6 @@ const DropdownContainer = styled.div`
   display: flex;
   align-items: center;
   .dropdownbtn {
-    background: #E65A2E;
+    background: #CA3525;
   }
 `;

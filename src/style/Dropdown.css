@@ -1,11 +1,11 @@
 #dropdown-basic-button {
-    background-color: #E65A2E;
+    background-color: #CA3525;
     font-weight: 700;
-    border: 1px solid #E65A2E;
+    border: 1px solid #CA3525;
     font-size: 15x;
 }
 .item {
-    color: #E65A2E;
+    color: #CA3525;
     font-weight: 700;
     font-size: 15px;
     > span {
@@ -14,5 +14,5 @@
 }
 .item:hover {
     background-color: #FFE4DC;
-    color: #E65A2E;
+    color: #CA3525;
 }

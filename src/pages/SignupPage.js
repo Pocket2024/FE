@@ -231,14 +231,14 @@ const MWrapper = styled.div`
 const Title = styled.div`
     font-size: ${props => props.fontsize};
     font-weight: 700;
-    color: #E65A2E;
+    color: #CA3525;
     margin-bottom: 20px;
     margin-top: 30px;
 `
 const FormTitle = styled.div`
     font-size: ${props => props.fontsize || '15px'};
     font-weight: 600;
-    color: ${props => props.fcolor || "#E65A2E"};
+    color: ${props => props.fcolor || "#CA3525"};
     margin-bottom: ${props => props.mbottom || '5px'};
     margin-top: ${props => props.mtop || '15px'};
 `
@@ -251,7 +251,7 @@ const Input = styled.input`
     padding: ${props => props.padding || '15px 20px'};
     font-size: ${props => props.fontsize || '12px'};
     font-weight: 700;
-    color: #E65A2E;
+    color: #CA3525;
     &::placeholder {
         color: rgba(230, 90, 46, 0.53);
         font-size: ${props => props.fontsize || '12px'};
@@ -259,7 +259,7 @@ const Input = styled.input`
 `
 const MSignupBtn = styled.button`
     border: none;
-    background-color: #E65A2E;
+    background-color: #CA3525;
     border-radius: 40px;
     color: white;
     font-size: ${props => props.fontsize};

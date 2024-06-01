@@ -12,7 +12,7 @@ import {useMediaQuery} from 'react-responsive';
 
 const Wrapper = styled.div`
     height: calc(100vh - 80px);
-    background-color: #E65A2E;
+    background-color: #CA3525;
     position: relative;
     z-index: 2;
     padding-left: 12vw;

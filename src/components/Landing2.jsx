@@ -119,7 +119,7 @@ const Landing2 = () => {
             </SubTxt>
             <Rule>
                 <Title>
-                    <IoCheckmarkSharp size='35' color='#E65A2E'/>
+                    <IoCheckmarkSharp size='35' color='#CA3525'/>
                     <TitleTxt><div>한 눈에 보는</div></TitleTxt>
                     <SmallLogo><LogoIcon fill='black'/></SmallLogo>
                     <TitleTxt><div>사용법</div></TitleTxt>
