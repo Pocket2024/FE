@@ -7,6 +7,7 @@ import SearchPage from './pages/SearchPage';
 import MyTicketPage from './pages/MyTicketPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import MyInfoPage from './pages/MyInfoPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/myticket' element={<MyTicketPage/>}/>
           <Route path='/login' element={<LoginPage/>}/>
           <Route path='/signup' element={<SignupPage/>}/>
+          <Route path='/myinfo' element={<MyInfoPage/>}/>
       </Routes>
     </Page>
     </>
