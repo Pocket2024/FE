@@ -135,20 +135,20 @@ const SignupPage = () => {
             </Left>
             <Right>
                 <Title fontsize='35px'>회원가입</Title>
-                <FormTitle fontsize='25px' mbottom='10px'>이메일</FormTitle>
+                <FormTitle fontsize='25px' mbottom='10px'>이메일<span>*</span></FormTitle>
                 <Input
                     onChange={onChangeEmail} 
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='이메일을 입력해주세요.'/>
                 <Msg>{emailMessage}</Msg>
-                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>닉네임</FormTitle>
+                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>닉네임<span>*</span></FormTitle>
                 <Input 
                     onChange={onChangeNickname} 
                     fontsize='20px'
                     padding='20px 25px'
                     placeholder='닉네임을 입력해주세요.'/>
-                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호</FormTitle>
+                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호<span>*</span></FormTitle>
                 <Input 
                     onChange={onChangePw}
                     type='password'
@@ -156,7 +156,7 @@ const SignupPage = () => {
                     padding='20px 25px'
                     placeholder='비밀번호를 입력해주세요.'/>
                 <Msg>{pwMessage}</Msg>
-                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호 확인</FormTitle>
+                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>비밀번호 확인<span>*</span></FormTitle>
                 <Input
                     onChange={onChangePwcheck}
                     type='password' 
@@ -164,7 +164,7 @@ const SignupPage = () => {
                     padding='20px 25px'
                     placeholder='비밀번호를 한 번 더 입력해주세요.'/>
                 <Msg>{pwcheckMessage}</Msg>
-                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>휴대폰 번호</FormTitle>
+                <FormTitle fontsize='25px' mbottom='10px' mtop='30px'>휴대폰 번호<span>*</span></FormTitle>
                 <Input
                     onChange={onChangePhone}
                     fontsize='20px'
