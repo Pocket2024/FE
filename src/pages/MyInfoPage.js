@@ -6,7 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 const Wrapper = styled.div`
     width: 100vw;
     height: calc(100vh - 80px);
-    padding: 0 30vw;
+    
 `
 
 const MyInfoPage = () => {
@@ -36,7 +36,20 @@ const MyInfoPage = () => {
         <>
         {isDesktop?
         <Wrapper>
-
+            <Line mbottom='30px' ptop='5vh'>
+                <Name size='20px'>{infoData.nickname}</Name>
+                <MTxt size='20px'>님의 정보</MTxt>
+            </Line>
+            <Title>이메일</Title>
+            <Contents>{infoData.email}</Contents>
+            <Title>닉네임</Title>
+            <Contents>{infoData.nickname}</Contents>
+            <Title>휴대폰 번호</Title>
+            <Contents>{infoData.phoneNumber}</Contents>
+            <Title>한 줄 소개</Title>
+            <Contents>{infoData.bio}</Contents>
+            <Title>프로필 이미지</Title>
+            <Contents>{infoData.profileImage}</Contents>
         </Wrapper>
         :
         <MWrapper>

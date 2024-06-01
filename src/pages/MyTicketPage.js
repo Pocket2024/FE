@@ -13,7 +13,6 @@ const Wrapper = styled.div`
 `
 const ProfileBox = styled.div`
     display: flex;
-    justify-content: space-between;
     margin-top: 10vh;
     > img {
         width: 12w;
@@ -51,7 +50,7 @@ const MyTicketPage = () => {
         <Wrapper>
             <ProfileBox>
             <img src={profileimg}/>
-                <TxtInfo>
+                <TxtInfo width='30%'>
                     <div>
                     <NameLine line='35px'>
                         <Nickname fsize='35px'>{infoData.nickname}</Nickname>
