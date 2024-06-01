@@ -33,6 +33,7 @@ const Tab = styled.div`
     display: flex;
     height: 23px;
     cursor: pointer;
+    align-items: center;
 `
 const TabTxt = styled.div`
     color: white;
