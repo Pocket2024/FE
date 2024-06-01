@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 import {useMediaQuery} from 'react-responsive';
 import profileimg from '../images/profileimg.png';
+import { IoMdSettings } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -24,6 +26,7 @@ const MyTicketPage = () => {
     const isDesktop = useMediaQuery({ minWidth: 1220 });
     let ACCESS_TOKEN = localStorage.getItem("accessToken");
     const [infoData, setInfoData] = useState([]);
+    const navigate = useNavigate();
 
     const getMyInfo = () => {
         axios.get('http://127.0.0.1:8080/api/users/details', {
@@ -56,7 +59,11 @@ const MyTicketPage = () => {
                 <img src={profileimg}/>
                 <TxtInfo>
                     <div>
-                    <Nickname>{infoData.nickname}</Nickname>
+                    <NameLine>
+                        <Nickname>{infoData.nickname}</Nickname>
+                        <IoMdSettings size={20}
+                            onClick={() => navigate('/myinfo')}/>
+                    </NameLine>
                     <Bio>{infoData.bio}</Bio>
                     <NumLine>
                         <Unit>
@@ -104,9 +111,15 @@ const TxtInfo = styled.div`
         width: 100%;
     }
 `
+const NameLine = styled.div`
+    display: flex;
+    line-height: 20px;
+`
 const Nickname = styled.div`
     font-weight: 700;
     font-size: 20px;
+    margin-right: 10px;
+    cursor: pointer;
 `
 const Bio = styled.div`
     font-weight: 600;
