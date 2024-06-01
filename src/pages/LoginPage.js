@@ -31,7 +31,7 @@ const LoginPage = () => {
             console.log(res.data.accessToken);
             localStorage.setItem("accessToken", res.data.accessToken);
             alert('로그인 성공');
-            navigate('/');
+            navigate('/myticket');
         })
         .catch(err => {
             console.log('Error handle login', err);
