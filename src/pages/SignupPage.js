@@ -183,28 +183,28 @@ const SignupPage = () => {
         :
         <MWrapper>
             <Title fontsize='25px'>회원가입</Title>
-            <FormTitle>이메일</FormTitle>
+            <FormTitle>이메일<span>*</span></FormTitle>
             <Input 
                 onChange={onChangeEmail}
                 placeholder='이메일을 입력해주세요.'/>
             <Msg fsize='10px'>{emailMessage}</Msg>
-            <FormTitle>닉네임</FormTitle>
+            <FormTitle>닉네임<span>*</span></FormTitle>
             <Input
                 onChange={onChangeNickname} 
                 placeholder='닉네임을 입력해주세요.'/>
-            <FormTitle>비밀번호</FormTitle>
+            <FormTitle>비밀번호<span>*</span></FormTitle>
             <Input 
                 onChange={onChangePw}
                 type='password'
                 placeholder='비밀번호를 입력해주세요.'/>
             <Msg fsize='10px'>{pwMessage}</Msg>
-            <FormTitle>비밀번호 확인</FormTitle>
+            <FormTitle>비밀번호 확인<span>*</span></FormTitle>
             <Input 
                 onChange={onChangePwcheck}
                 type='password' 
                 placeholder='비밀번호를 한 번 더 입력해주세요.'/>
             <Msg fsize='10px'>{pwcheckMessage}</Msg>
-            <FormTitle>휴대폰 번호</FormTitle>
+            <FormTitle>휴대폰 번호<span>*</span></FormTitle>
             <Input
                 onChange={onChangePhone} 
                 placeholder='ex. 010-1234-5678'/>
@@ -238,14 +238,17 @@ const Title = styled.div`
 const FormTitle = styled.div`
     font-size: ${props => props.fontsize || '15px'};
     font-weight: 600;
-    color: ${props => props.fcolor || "#CA3525"};
+    color: ${props => props.fcolor || "#272727"};
     margin-bottom: ${props => props.mbottom || '5px'};
     margin-top: ${props => props.mtop || '15px'};
+    > span {
+        color: #CA3525;
+    }
 `
 const Input = styled.input`
-    border: 1px solid rgba(255, 149, 115, 0.44);
+    border: 1px solid rgba(202, 53, 37, 0.57);
     outline: none;
-    background-color: #FFF6F3;
+    background-color: #FFF5F4;
     border-radius: 10px;
     width: 100%;
     padding: ${props => props.padding || '15px 20px'};
@@ -253,7 +256,7 @@ const Input = styled.input`
     font-weight: 700;
     color: #CA3525;
     &::placeholder {
-        color: rgba(230, 90, 46, 0.53);
+        color: rgba(202, 53, 37, 0.53);
         font-size: ${props => props.fontsize || '12px'};
     }
 `
