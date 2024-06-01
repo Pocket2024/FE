@@ -44,8 +44,16 @@ const MyInfoPage = () => {
                 <Name size='20px'>{infoData.nickname}</Name>
                 <MTxt size='20px'>님의 정보</MTxt>
             </Line>
-
-            
+            <Title>이메일</Title>
+            <Contents>{infoData.email}</Contents>
+            <Title>닉네임</Title>
+            <Contents>{infoData.nickname}</Contents>
+            <Title>휴대폰 번호</Title>
+            <Contents>{infoData.phoneNumber}</Contents>
+            <Title>한 줄 소개</Title>
+            <Contents>{infoData.bio}</Contents>
+            <Title>프로필 이미지</Title>
+            <Contents>{infoData.profileImage}</Contents>
         </MWrapper>}
         </>
     );
@@ -72,4 +80,16 @@ const Name = styled.div`
 const MTxt = styled.div`
     color: #141414;
     font-size: ${props => props.size};
+`
+const Title = styled.div`
+    font-size: ${props => props.fontsize || '15px'};
+    font-weight: 600;
+    color: ${props => props.fcolor || "#272727"};
+    margin-bottom: ${props => props.mbottom || '5px'};
+    margin-top: ${props => props.mtop || '15px'};
+    > span {
+        color: #CA3525;
+    }
+`
+const Contents = styled.div`
 `
