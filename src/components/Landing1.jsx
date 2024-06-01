@@ -138,7 +138,7 @@ export default Landing1;
 const MWrapper = styled.div`
     width: 100vw;
     height: calc(100vh - 80px);
-    background-color: #E65A2E;
+    background-color: #CA3525;
     position: relative;
     z-index: 2;
 `

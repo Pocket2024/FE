@@ -66,8 +66,8 @@ const TopBar = () => {
                 <Logo onClick={() => (navigate('/'))}><LogoIcon fill='white' style={{width:'80px'}}/></Logo>
                 <DropdownContainer>
                     <DropdownButton id="dropdown-basic-button" title="메뉴">
-                    <Dropdown.Item className="item" onClick={() => navigate("/search")}><FaCompass color='#E65A2E' size={23}/><span>탐색</span></Dropdown.Item>
-                    <Dropdown.Item className="item" onClick={() => navigate("/myticket")}><IoTicket color='#E65A2E' size={23}/><span>내 티켓</span></Dropdown.Item>
+                    <Dropdown.Item className="item" onClick={() => navigate("/search")}><FaCompass color='#CA3525' size={23}/><span>탐색</span></Dropdown.Item>
+                    <Dropdown.Item className="item" onClick={() => navigate("/myticket")}><IoTicket color='#CA3525' size={23}/><span>내 티켓</span></Dropdown.Item>
                     </DropdownButton>
                 </DropdownContainer>
             </MTopBarWrapper>

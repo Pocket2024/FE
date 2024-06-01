@@ -100,7 +100,7 @@ export default Landing3;
 
 const MWrapper3 = styled.div`
     height: calc(100vh - 80px);
-    background-color: #E65A2E;
+    background-color: #CA3525;
     position: relative;
     z-index: 2;
 `
