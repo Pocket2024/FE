@@ -50,7 +50,35 @@ const MyTicketPage = () => {
         {isDesktop?
         <Wrapper>
             <ProfileBox>
-                <img src={profileimg}/>
+            <img src={profileimg}/>
+                <TxtInfo>
+                    <div>
+                    <NameLine line='35px'>
+                        <Nickname fsize='35px'>{infoData.nickname}</Nickname>
+                        <IoMdSettings size={30} className='SettingIcon'
+                            onClick={() => navigate('/myinfo')}/>
+                    </NameLine>
+                    <Bio fsize='20px'>{infoData.bio}</Bio>
+                    <NumLine>
+                        <Unit fsize='20px'>
+                            <Title>포켓</Title>
+                            <Num>0</Num>
+                        </Unit>
+                        <Unit fsize='20px'>
+                            <Title>티켓</Title>
+                            <Num>0</Num>
+                        </Unit>
+                        <Unit fsize='20px'>
+                            <Title>팔로워</Title>
+                            <Num fcolor='#727272'>0</Num>
+                        </Unit>
+                        <Unit fsize='20px'>
+                            <Title>팔로잉</Title>
+                            <Num fcolor='#727272'>0</Num>
+                        </Unit>
+                    </NumLine>
+                    </div>
+                </TxtInfo>
             </ProfileBox>
         </Wrapper>
         :
@@ -61,7 +89,7 @@ const MyTicketPage = () => {
                     <div>
                     <NameLine>
                         <Nickname>{infoData.nickname}</Nickname>
-                        <IoMdSettings size={20}
+                        <IoMdSettings size={20} className='SettingIcon'
                             onClick={() => navigate('/myinfo')}/>
                     </NameLine>
                     <Bio>{infoData.bio}</Bio>
@@ -104,7 +132,7 @@ const MProfileBox = styled.div`
 `
 const TxtInfo = styled.div`
     margin-left: 15px;
-    width: 100%;
+    width: ${props => props.width || '100%'};
     display: flex;
     align-items: center;
     > div {
@@ -113,17 +141,22 @@ const TxtInfo = styled.div`
 `
 const NameLine = styled.div`
     display: flex;
-    line-height: 20px;
+    line-height: ${props => props.line || '20px'};
+    .SettingIcon {
+        cursor: pointer;
+        &:hover {
+            fill: #CA3525;
+        }
+    }
 `
 const Nickname = styled.div`
     font-weight: 700;
-    font-size: 20px;
+    font-size: ${props => props.fsize || '20px'};
     margin-right: 10px;
-    cursor: pointer;
 `
 const Bio = styled.div`
     font-weight: 600;
-    font-size: 12px;
+    font-size: ${props => props.fsize || '12px'};
     color: #737373;
     margin-top: 5px;
 `
@@ -135,7 +168,7 @@ const NumLine = styled.div`
 `
 const Unit = styled.div`
     display: flex;
-    font-size: 12px;
+    font-size: ${props => props.fsize || '12px'};
     font-weight: 600;
 `
 const Title = styled.div`
