@@ -50,15 +50,15 @@ const MyTicketPage = () => {
         <Wrapper>
             <ProfileBox>
             <img src={profileimg}/>
-                <TxtInfo width='30%'>
+                <TxtInfo width='30%' mleft='50px'>
                     <div>
                     <NameLine line='35px'>
                         <Nickname fsize='35px'>{infoData.nickname}</Nickname>
                         <IoMdSettings size={30} className='SettingIcon'
                             onClick={() => navigate('/myinfo')}/>
                     </NameLine>
-                    <Bio fsize='20px'>{infoData.bio}</Bio>
-                    <NumLine>
+                    <Bio fsize='20px' mtop='15px'>{infoData.bio}</Bio>
+                    <NumLine mtop='15px'>
                         <Unit fsize='20px'>
                             <Title>포켓</Title>
                             <Num>0</Num>
@@ -130,7 +130,7 @@ const MProfileBox = styled.div`
     }
 `
 const TxtInfo = styled.div`
-    margin-left: 15px;
+    margin-left: ${props => props.mleft || '15px'};
     width: ${props => props.width || '100%'};
     display: flex;
     align-items: center;
@@ -157,13 +157,13 @@ const Bio = styled.div`
     font-weight: 600;
     font-size: ${props => props.fsize || '12px'};
     color: #737373;
-    margin-top: 5px;
+    margin-top: ${props => props.mtop || '5px'};
 `
 const NumLine = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 5px;
+    margin-top: ${props => props.mtop || '5px'};
 `
 const Unit = styled.div`
     display: flex;
