@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import {useMediaQuery} from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import line1 from '../images/line1.svg';
+import line2 from '../images/line2.svg';
+import line3 from '../images/line3.svg';
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -14,7 +17,6 @@ const Wrapper = styled.div`
 `
 const Left = styled.div`
     width: 43vw;
-    background-color: aliceblue;
 `
 const Right = styled.div`
     width: 43vw;
@@ -25,6 +27,13 @@ const Msg = styled.div`
     font-weight: 500;
     margin: 5px 10px;
     font-size: ${props => props.fsize};
+`
+const LeftDiv = styled.div`
+    position: fixed;
+    top: 25vh;
+    > div {
+        margin-bottom: 100px;
+    }
 `
 
 const SignupPage = () => {
@@ -131,7 +140,11 @@ const SignupPage = () => {
         {isDesktop?
         <Wrapper>
             <Left>
-                f
+                <LeftDiv>
+                <div><img src={line1}/></div>
+                <div><img src={line2}/></div>
+                <div><img src={line3}/></div>
+                </LeftDiv>
             </Left>
             <Right>
                 <Title fontsize='35px'>회원가입</Title>
