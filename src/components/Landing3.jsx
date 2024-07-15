@@ -5,7 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper3 = styled.div`
-  height: calc(100vh - 80px);
+  height: 90vh;
   background-color: #262626;
   position: relative;
   z-index: 2;
@@ -15,7 +15,7 @@ const Txt = styled.div`
   font-size: 30px;
   font-weight: 700;
   text-align: center;
-  padding-top: 100px;
+  padding-top: 20vh;
 `;
 const Button = styled.button`
   display: flex;
