@@ -1,18 +1,18 @@
 #dropdown-basic-button {
-    background-color: #CA3525;
-    font-weight: 700;
-    border: 1px solid #CA3525;
-    font-size: 15x;
+  background-color: #262626;
+  font-weight: 700;
+  border: 1px solid #262626;
+  font-size: 15x;
 }
 .item {
-    color: #CA3525;
-    font-weight: 700;
-    font-size: 15px;
-    > span {
-        margin-left: 10px;
-    }
+  color: #262626;
+  font-weight: 700;
+  font-size: 15px;
+  > span {
+    margin-left: 10px;
+  }
 }
 .item:hover {
-    background-color: #FFE4DC;
-    color: #CA3525;
+  background-color: #ebebeb;
+  color: #262626;
 }

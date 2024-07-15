@@ -83,14 +83,14 @@ const TopBar = () => {
                 className="item"
                 onClick={() => navigate("/search")}
               >
-                <FaCompass color="#CA3525" size={23} />
+                <FaCompass color="#262626" size={23} />
                 <span>탐색</span>
               </Dropdown.Item>
               <Dropdown.Item
                 className="item"
                 onClick={() => navigate("/myticket")}
               >
-                <IoTicket color="#CA3525" size={23} />
+                <IoTicket color="#262626" size={23} />
                 <span>내 티켓</span>
               </Dropdown.Item>
             </DropdownButton>
@@ -106,7 +106,7 @@ export default TopBar;
 const MTopBarWrapper = styled.div`
   width: 100vw;
   height: 80px;
-  background-color: #ca3525;
+  background-color: #262626;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -118,6 +118,6 @@ const DropdownContainer = styled.div`
   display: flex;
   align-items: center;
   .dropdownbtn {
-    background: #ca3525;
+    background: #262626;
   }
 `;
