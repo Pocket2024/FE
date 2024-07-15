@@ -9,6 +9,7 @@ import icon_pocket from "../images/pocket.svg";
 import { ReactComponent as LogoIcon } from "../images/pocketlogo_white.svg";
 import { useMediaQuery } from "react-responsive";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { Link } from "react-scroll/modules";
 
 const roll = keyframes`
     0% {
@@ -102,6 +103,7 @@ const ArrowDiv = styled.div`
   justify-content: center;
   position: relative;
   animation: ${arrow} 2s infinite;
+  cursor: pointer;
   > MdKeyboardArrowDown {
     position: absolute;
     bottom: 0;
@@ -109,6 +111,7 @@ const ArrowDiv = styled.div`
 `;
 const Landing1 = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const scrollTo2 = () => {};
   return (
     <>
       {isDesktop ? (
@@ -160,9 +163,11 @@ const Landing1 = () => {
             </FlexBox>
             <BlackTxt>흩어져있던 모바일 티켓과 지류 티켓을 한 번에</BlackTxt>
           </SubTxtDiv>
-          <ArrowDiv>
-            <MdKeyboardArrowDown size={80} fill="rgba(255,255,255,0.55)" />
-          </ArrowDiv>
+          <Link to="2" spy={true} smooth={true} duration={1}>
+            <ArrowDiv>
+              <MdKeyboardArrowDown size={80} fill="rgba(255,255,255,0.55)" />
+            </ArrowDiv>
+          </Link>
         </Wrapper>
       ) : (
         <MWrapper>
