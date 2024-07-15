@@ -18,8 +18,8 @@ const MyInfoPage = () => {
     let ACCESS_TOKEN = localStorage.getItem("accessToken");
     const [infoData, setInfoData] = useState([]);
     const [isedit, setIsEdit] = useState(false);
-    const [nickname, setNickname] = useState("");
-    const [phone, setPhone] = useState("");
+    const [nickname, setNickname] = useState(infoData.nickname);
+    const [phone, setPhone] = useState(infoData.phoneNumber);
     const [phoneMessage, setPhoneMessage] = useState("");
     const [bio, setBio] = useState("");
 
@@ -65,7 +65,8 @@ const MyInfoPage = () => {
         setBio(e.target.value);
     }
     const handleEdit = () => {
-        console.log(bio);
+        console.log(nickname);
+        console.log(phone);
         axios.put(`http://localhost:8080/api/users/${infoData.id}`, 
         {
             nickname: nickname,
@@ -103,27 +104,30 @@ const MyInfoPage = () => {
             <Title fontsize='25px'>닉네임</Title>
             {isedit? 
                 <Input
+                fontsize='20px'
                 onChange={onChangeNickname} 
                 defaultValue={infoData.nickname}
                 placeholder='닉네임을 입력해주세요.'/>
             :
-                <Contents>{infoData.nickname}</Contents>}
+                <Contents fontsize='20px'>{infoData.nickname}</Contents>}
             <Title fontsize='25px'>휴대폰 번호</Title>
             {isedit? 
                 <Input
+                fontsize='20px'
                 onChange={onChangePhone} 
                 defaultValue={infoData.phoneNumber}
                 placeholder='ex. 010-1234-5678'/>
             :
-                <Contents>{infoData.phoneNumber}</Contents>}
+                <Contents fontsize='20px'>{infoData.phoneNumber}</Contents>}
             <Title fontsize='25px'>한 줄 소개</Title>
             {isedit?
                 <Input 
+                fontsize='20px'
                 onChange={onChangeBio}
                 defaultValue={infoData.bio}
                 placeholder='한 줄로 자신을 소개해주세요.'/>
             :
-                <Contents>{infoData.bio}</Contents>}
+                <Contents fontsize='20px'>{infoData.bio}</Contents>}
             <Title fontsize='25px'>프로필 이미지</Title>
             <Contents fontsize='20px'>{infoData.profileImage}</Contents>
             {isedit? 
