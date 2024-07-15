@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Wrapper3 = styled.div`
   height: calc(100vh - 80px);
-  background-color: #ca3525;
+  background-color: #262626;
   position: relative;
   z-index: 2;
 `;
