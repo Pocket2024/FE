@@ -1,11 +1,27 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { ReactComponent as LogoIcon } from "../images/pocketlogo_white.svg";
 import one from "../images/first.svg";
 import two from "../images/second.svg";
 import three from "../images/third.svg";
 import { useMediaQuery } from "react-responsive";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { Link } from "react-scroll/modules";
+
+const arrow = keyframes`
+    0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 20px);
+    opacity: 0;
+  }
+`;
 
 const Wrapper2 = styled.div`
   height: 100vh;
@@ -92,6 +108,15 @@ const Number = styled.div`
     color: white;
   }
 `;
+const ArrowDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 3vh;
+  left: 48%;
+  animation: ${arrow} 2s infinite;
+  cursor: pointer;
+`;
 
 const Landing2 = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
@@ -147,6 +172,11 @@ const Landing2 = () => {
               </Number>
             </RuleBox>
           </Rule>
+          <Link to="3" spy={true} smooth={true} duration={1}>
+            <ArrowDiv>
+              <MdKeyboardArrowDown size={80} fill="rgba(121,121,121,0.55)" />
+            </ArrowDiv>
+          </Link>
         </Wrapper2>
       ) : (
         <MWrapper2>
