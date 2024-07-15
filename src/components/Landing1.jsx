@@ -1,40 +1,85 @@
 import React from "react";
-import styled from "styled-components";
-import line1 from "../images/line1.svg";
-import line2 from "../images/line2.svg";
-import line3 from "../images/line3.svg";
-import star from "../images/back1.svg";
-import bigstar from "../images/back2.svg";
-import bubble from "../images/back3.svg";
-import jean_pocket from "../images/jean.svg";
+import styled, { keyframes } from "styled-components";
+import txt_ticket from "../images/ticket_txt.svg";
+import txt_inmy from "../images/inmy_txt.svg";
+import txt_pocket from "../images/pocket_txt.svg";
+import icon_ticket from "../images/ticket.svg";
+import icon_star from "../images/star.svg";
+import icon_pocket from "../images/pocket.svg";
 import { ReactComponent as LogoIcon } from "../images/pocketlogo_white.svg";
 import { useMediaQuery } from "react-responsive";
+import { MdKeyboardArrowDown } from "react-icons/md";
+
+const roll = keyframes`
+    0% {
+        transform: translateX(0);
+        }
+    100% {
+        transform: translateX(-100%);
+        }
+`;
+const reverse_roll = keyframes`
+    0% {
+        transform: translateX(-100%);
+        }
+    100% {
+        transform: translateX(0);
+        }
+`;
+const arrow = keyframes`
+    0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 20px);
+    opacity: 0;
+  }
+`;
 
 const Wrapper = styled.div`
   height: calc(100vh - 80px);
   background-color: #262626;
   position: relative;
   z-index: 2;
-  padding-left: 12vw;
 `;
 const TxtWrapper = styled.div`
-  display: block;
-  padding-top: 120px;
-  position: relative;
-  z-index: 1;
+  display: flex;
+  white-space: nowrap;
 `;
-const TxtDiv = styled.div``;
-const TxtDiv2 = styled.div`
-  padding-top: 50px;
+const TxtDiv = styled.div`
+  margin-top: 12vh;
+  display: flex;
+  height: 15vh;
+  line-height: 10vh;
+  animation: ${roll} 20s linear infinite;
+  .roll2:last-child & {
+    animation-delay: 20s;
+  }
+  gap: 0 3vw;
+  margin-left: 3vw;
 `;
-const TxtDiv3 = styled.div`
-  padding-top: 50px;
+const ReTxtDiv = styled.div`
+  margin-top: 5vh;
+  display: flex;
+  height: 15vh;
+  line-height: 10vh;
+  animation: ${reverse_roll} 20s linear infinite;
+  .roll2:last-child & {
+    animation-delay: 20s;
+  }
+  gap: 0 3vw;
+  margin-left: 3vw;
 `;
 const SubTxtDiv = styled.div`
+  padding-left: 12vw;
   color: white;
   font-size: 25px;
   font-weight: 700;
-  margin-top: 50px;
+  margin-top: 10vh;
 `;
 const Line1 = styled.div``;
 const Line2 = styled.div`
@@ -49,10 +94,19 @@ const SmallLogo = styled.div`
 `;
 const BlackTxt = styled.div`
   margin-top: 20px;
-  color: #252525;
+  color: #b5b5b5;
   font-size: 20px;
 `;
-
+const ArrowDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  animation: ${arrow} 2s infinite;
+  > MdKeyboardArrowDown {
+    position: absolute;
+    bottom: 0;
+  }
+`;
 const Landing1 = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   return (
@@ -60,15 +114,40 @@ const Landing1 = () => {
       {isDesktop ? (
         <Wrapper>
           <TxtWrapper>
-            <TxtDiv>
-              <img src={line1} alt="" />
+            <TxtDiv className="roll1">
+              <img src={txt_ticket} alt="" />
+              <img src={icon_ticket} alt="" />
+              <img src={txt_inmy} alt="" />
+              <img src={icon_star} alt="" />
+              <img src={txt_pocket} alt="" />
+              <img src={icon_pocket} alt="" />
             </TxtDiv>
-            <TxtDiv2>
-              <img src={line2} alt="" />
-            </TxtDiv2>
-            <TxtDiv3>
-              <img src={line3} alt="" />
-            </TxtDiv3>
+            <TxtDiv className="roll2">
+              <img src={txt_ticket} alt="" />
+              <img src={icon_ticket} alt="" />
+              <img src={txt_inmy} alt="" />
+              <img src={icon_star} alt="" />
+              <img src={txt_pocket} alt="" />
+              <img src={icon_pocket} alt="" />
+            </TxtDiv>
+          </TxtWrapper>
+          <TxtWrapper>
+            <ReTxtDiv className="roll1">
+              <img src={txt_pocket} alt="" />
+              <img src={icon_pocket} alt="" />
+              <img src={txt_ticket} alt="" />
+              <img src={icon_ticket} alt="" />
+              <img src={txt_inmy} alt="" />
+              <img src={icon_star} alt="" />
+            </ReTxtDiv>
+            <ReTxtDiv className="roll2">
+              <img src={txt_pocket} alt="" />
+              <img src={icon_pocket} alt="" />
+              <img src={txt_ticket} alt="" />
+              <img src={icon_ticket} alt="" />
+              <img src={txt_inmy} alt="" />
+              <img src={icon_star} alt="" />
+            </ReTxtDiv>
           </TxtWrapper>
           <SubTxtDiv>
             <Line1>모아두고 싶었던 티켓들을</Line1>
@@ -81,32 +160,23 @@ const Landing1 = () => {
             </FlexBox>
             <BlackTxt>흩어져있던 모바일 티켓과 지류 티켓을 한 번에</BlackTxt>
           </SubTxtDiv>
+          <ArrowDiv>
+            <MdKeyboardArrowDown size={80} fill="rgba(255,255,255,0.55)" />
+          </ArrowDiv>
         </Wrapper>
       ) : (
         <MWrapper>
           <MTxtWrapper>
-            <MStar>
-              <img src={star} alt="" />
-            </MStar>
             <MTxtDiv>
-              <img src={line1} alt="" />
+              <img src={txt_ticket} alt="" />
             </MTxtDiv>
             <MTxtDiv2>
-              <img src={line2} alt="" />
+              <img src={txt_inmy} alt="" />
             </MTxtDiv2>
             <MTxtDiv3>
-              <img src={line3} alt="" />
+              <img src={txt_pocket} alt="" />
             </MTxtDiv3>
           </MTxtWrapper>
-          <MBigStar>
-            <img src={bigstar} alt="" />
-          </MBigStar>
-          <MJeanPocket>
-            <MJeanImg src={jean_pocket} alt="" />
-          </MJeanPocket>
-          <MBubble>
-            <MBubbleImg src={bubble} alt="" />
-          </MBubble>
           <MSubTxtDiv>
             <MLine1>모아두고 싶었던 티켓들을</MLine1>
             <MFlexBox>
