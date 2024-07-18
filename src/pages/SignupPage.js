@@ -303,7 +303,7 @@ const Input = styled.input`
     font-size: ${(props) => props.fontsize || "12px"};
   }
   &:focus {
-    border: 1.5px solid rgba(202, 53, 37, 0.44);
+    border: 1.5px solid rgba(60, 143, 219, 0.64);
   }
 `;
 const MSignupBtn = styled.button`
