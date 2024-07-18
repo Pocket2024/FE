@@ -176,8 +176,10 @@ const Landing1 = () => {
               <img src={icon_ticket} alt="" />
             </MTxtDiv>
             <MTxtDiv2>
-              <img src={txt_inmy} alt="" />
-              <img src={icon_star} alt="" />
+              <div>
+                <img src={icon_star} alt="" />
+                <img src={txt_inmy} alt="" />
+              </div>
             </MTxtDiv2>
             <MTxtDiv3>
               <img src={txt_pocket} alt="" />
@@ -215,26 +217,35 @@ const MWrapper = styled.div`
 `;
 const MTxtWrapper = styled.div`
   display: block;
-  padding-top: 7vh;
   position: relative;
   z-index: 1;
-  padding-left: 10vw;
+  padding: 7vh 7vw;
 `;
 const MTxtDiv = styled.div`
+  display: flex;
+  gap: 5vw;
   img {
-    height: 6vh;
+    height: 7vh;
   }
 `;
 const MTxtDiv2 = styled.div`
   padding-top: 5vh;
+  display: flex;
   img {
-    height: 6vh;
+    height: 7vh;
+  }
+  div {
+    margin-left: auto;
+    display: flex;
+    gap: 5vw;
   }
 `;
 const MTxtDiv3 = styled.div`
   padding-top: 5vh;
+  display: flex;
+  gap: 5vw;
   img {
-    height: 6vh;
+    height: 7vh;
   }
 `;
 const MSubTxtDiv = styled.div`
