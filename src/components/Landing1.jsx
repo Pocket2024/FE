@@ -177,12 +177,12 @@ const Landing1 = () => {
             </MTxtDiv>
             <MTxtDiv2>
               <div>
-                <img src={icon_star} alt="" />
+                <img src={icon_star} alt="" id="star" />
                 <img src={txt_inmy} alt="" />
               </div>
             </MTxtDiv2>
             <MTxtDiv3>
-              <img src={txt_pocket} alt="" id="txt_pocket" />
+              <img src={txt_pocket} alt="" />
               <img src={icon_pocket} alt="" />
             </MTxtDiv3>
           </MTxtWrapper>
@@ -212,6 +212,20 @@ const Landing1 = () => {
 };
 
 export default Landing1;
+
+const lotate = keyframes`
+    0% {
+      transform : rotate(0deg)
+    }
+  
+    50% {
+      transform : rotate(180deg)
+    }
+  
+    100% {
+      transform : rotate(360deg)
+    }
+`;
 
 const MWrapper = styled.div`
   width: 100vw;
@@ -244,6 +258,9 @@ const MTxtDiv2 = styled.div`
     margin-left: auto;
     display: flex;
     gap: 5vw;
+    #star {
+      animation: ${lotate} 3s linear infinite;
+    }
   }
 `;
 const MTxtDiv3 = styled.div`
