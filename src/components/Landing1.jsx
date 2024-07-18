@@ -111,7 +111,6 @@ const ArrowDiv = styled.div`
 `;
 const Landing1 = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
-  const scrollTo2 = () => {};
   return (
     <>
       {isDesktop ? (
@@ -174,12 +173,15 @@ const Landing1 = () => {
           <MTxtWrapper>
             <MTxtDiv>
               <img src={txt_ticket} alt="" />
+              <img src={icon_ticket} alt="" />
             </MTxtDiv>
             <MTxtDiv2>
               <img src={txt_inmy} alt="" />
+              <img src={icon_star} alt="" />
             </MTxtDiv2>
             <MTxtDiv3>
               <img src={txt_pocket} alt="" />
+              <img src={icon_pocket} alt="" />
             </MTxtDiv3>
           </MTxtWrapper>
           <MSubTxtDiv>
@@ -219,56 +221,21 @@ const MTxtWrapper = styled.div`
   padding-left: 10vw;
 `;
 const MTxtDiv = styled.div`
-  > img {
-    height: 5vh;
+  img {
+    height: 6vh;
   }
 `;
 const MTxtDiv2 = styled.div`
-  padding-top: 30px;
-  > img {
+  padding-top: 5vh;
+  img {
     height: 6vh;
   }
 `;
 const MTxtDiv3 = styled.div`
-  padding-top: 30px;
-  > img {
+  padding-top: 5vh;
+  img {
     height: 6vh;
   }
-`;
-const MStar = styled.div`
-  position: absolute;
-  z-index: -1;
-  top: 0.5vh;
-  left: 23vw;
-  > img {
-    width: 70px;
-  }
-`;
-const MBigStar = styled.div`
-  position: absolute;
-  z-index: -1;
-  top: 25vh;
-  right: 5vw;
-  > img {
-    height: 30vh;
-  }
-`;
-const MJeanPocket = styled.div`
-  position: absolute;
-  z-index: 1;
-  top: 35vh;
-  right: 6vw;
-`;
-const MJeanImg = styled.img`
-  height: 24vh;
-`;
-const MBubble = styled.div`
-  position: absolute;
-  top: 45vh;
-  left: 10vw;
-`;
-const MBubbleImg = styled.img`
-  width: 70px;
 `;
 const MSubTxtDiv = styled.div`
   color: white;

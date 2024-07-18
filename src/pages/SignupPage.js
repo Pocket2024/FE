@@ -50,7 +50,7 @@ const SignupPage = () => {
     const currentEmail = e.target.value;
     setEmail(currentEmail);
 
-    const emailRegex = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    const emailRegex = /^[a-zA-Z0-9+-.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     if (!emailRegex.test(currentEmail)) {
       setEmailMessage(
         <span style={{ color: "#FE334C" }}>
