@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { useMediaQuery } from "react-responsive";
 import profileimg from "../images/profileimg.png";
 import { IoMdSettings } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +43,7 @@ const Profile = () => {
   return (
     <ProfileBox>
       <img src={profileimg} alt="profileimg" />
-      <TxtInfo width="50%" mleft="50px">
+      <TxtInfo>
         <div>
           <NameLine line="35px">
             <Nickname fsize="35px">{infoData.nickname}</Nickname>
@@ -88,7 +87,6 @@ const TxtInfo = styled.div`
   margin-left: ${(props) => props.mleft || "15px"};
   width: ${(props) => props.width || "100%"};
   display: flex;
-  align-items: center;
   color: white;
   > div {
     width: 100%;
