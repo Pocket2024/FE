@@ -68,17 +68,18 @@ const SignupPage = () => {
     const currentPw = e.target.value;
     setPw(currentPw);
 
-    // const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/;
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/;
 
-    // if (!passwordRegex.test(currentPw)) {
-    //     setPwMessage(
-    //         <span style={{ color: '#FE334C' }}>
-    //         비밀번호는 8-16자, 영문, 숫자, 특수문자(!@#$%^&*?_)를 포함해야 합니다.
-    //         </span>
-    //     );
-    // } else {
-    //     setPwMessage("");
-    // }
+    if (!passwordRegex.test(currentPw)) {
+      setPwMessage(
+        <span style={{ color: "#FE334C" }}>
+          비밀번호는 8-16자, 영문, 숫자, 특수문자(!@#$%^&*?_)를 포함해야 합니다.
+        </span>
+      );
+    } else {
+      setPwMessage("");
+    }
   };
   const onChangePwcheck = (e) => {
     const currentPw2 = e.target.value;

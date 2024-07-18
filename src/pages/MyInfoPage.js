@@ -119,12 +119,15 @@ const MyInfoPage = () => {
             )}
             <Title fontsize="25px">휴대폰 번호</Title>
             {isedit ? (
-              <Input
-                fontsize="20px"
-                onChange={onChangePhone}
-                defaultValue={infoData.phoneNumber}
-                placeholder="ex. 010-1234-5678"
-              />
+              <>
+                <Input
+                  fontsize="20px"
+                  onChange={onChangePhone}
+                  defaultValue={infoData.phoneNumber}
+                  placeholder="ex. 010-1234-5678"
+                />
+                <span>{phoneMessage}</span>
+              </>
             ) : (
               <Contents fontsize="20px">{infoData.phoneNumber}</Contents>
             )}

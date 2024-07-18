@@ -44,6 +44,7 @@ const MyTicketPage = () => {
   };
   useEffect(() => {
     getMyInfo();
+    // eslint-disable-next-line
   }, []);
   return (
     <>
