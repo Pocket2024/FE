@@ -84,7 +84,7 @@ const Landing3 = () => {
           </ButtonLine>
         </Wrapper3>
       ) : (
-        <MWrapper3>
+        <MWrapper3 id="3m">
           <MTxt>지금 당장 나만의 티켓북을 만들고 싶다면</MTxt>
           <MButtonLine>
             <MButton

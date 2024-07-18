@@ -230,6 +230,11 @@ const Landing2 = () => {
               </MNumber>
             </MRuleBox>
           </MRule>
+          <Link to="3m" spy={true} smooth={true} duration={1}>
+            <MArrowDiv>
+              <MdKeyboardArrowDown size={50} fill="rgba(121,121,121,0.55)" />
+            </MArrowDiv>
+          </Link>
         </MWrapper2>
       )}
     </>
@@ -239,16 +244,15 @@ const Landing2 = () => {
 export default Landing2;
 
 const MWrapper2 = styled.div`
-  height: calc(100vh - 80px);
+  height: 100vh;
+  padding: calc(80px + 3vh) 8vw;
   background-color: white;
   position: relative;
   z-index: 2;
-  padding-left: 8vw;
-  padding-right: 8vw;
 `;
 const MFlexBox = styled.div`
   display: flex;
-  margin-top: 7vh;
+  margin-top: 3vh;
   justify-content: space-between;
 `;
 const MExplain = styled.div`
@@ -320,4 +324,12 @@ const MNumber = styled.div`
     font-weight: 600;
     color: white;
   }
+`;
+
+const MArrowDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2vh;
+  animation: ${arrow} 2s infinite;
+  cursor: pointer;
 `;
