@@ -179,7 +179,7 @@ const Landing2 = () => {
           </Link>
         </Wrapper2>
       ) : (
-        <MWrapper2>
+        <MWrapper2 id="2m">
           <MFlexBox>
             <MExplain>
               <div>내 경험의 증표이자 </div>

@@ -182,7 +182,7 @@ const Landing1 = () => {
               </div>
             </MTxtDiv2>
             <MTxtDiv3>
-              <img src={txt_pocket} alt="" />
+              <img src={txt_pocket} alt="" id="txt_pocket" />
               <img src={icon_pocket} alt="" />
             </MTxtDiv3>
           </MTxtWrapper>
@@ -200,6 +200,11 @@ const Landing1 = () => {
             </MFlexBox>
             <MBlackTxt>흩어져있던 모바일 티켓과 지류 티켓을 한 번에</MBlackTxt>
           </MSubTxtDiv>
+          <Link to="2m" spy={true} smooth={true} duration={1}>
+            <ArrowDiv>
+              <MdKeyboardArrowDown size={50} fill="rgba(255,255,255,0.55)" />
+            </ArrowDiv>
+          </Link>
         </MWrapper>
       )}
     </>
@@ -219,20 +224,21 @@ const MTxtWrapper = styled.div`
   display: block;
   position: relative;
   z-index: 1;
-  padding: 7vh 7vw;
+  padding: 0 7vw;
+  padding-top: 10vh;
 `;
 const MTxtDiv = styled.div`
   display: flex;
   gap: 5vw;
   img {
-    height: 7vh;
+    height: 6vh;
   }
 `;
 const MTxtDiv2 = styled.div`
-  padding-top: 5vh;
+  padding-top: 7vh;
   display: flex;
   img {
-    height: 7vh;
+    height: 6vh;
   }
   div {
     margin-left: auto;
@@ -241,19 +247,18 @@ const MTxtDiv2 = styled.div`
   }
 `;
 const MTxtDiv3 = styled.div`
-  padding-top: 5vh;
+  padding-top: 7vh;
   display: flex;
   gap: 5vw;
   img {
-    height: 7vh;
+    height: 6vh;
   }
 `;
 const MSubTxtDiv = styled.div`
   color: white;
   font-size: 18px;
-  font-weight: 700;
-  margin-left: 10vw;
-  margin-top: 30vh;
+  font-weight: 500;
+  margin: 10vh 0 2vh 10vw;
 `;
 const MLine1 = styled.div``;
 const MLine2 = styled.div`
@@ -266,6 +271,6 @@ const MFlexBox = styled.div`
 const MSmallLogo = styled.div``;
 const MBlackTxt = styled.div`
   margin-top: 15px;
-  color: #252525;
+  color: #b5b5b5;
   font-size: 15px;
 `;
