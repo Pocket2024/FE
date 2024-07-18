@@ -87,32 +87,34 @@ const Landing3 = () => {
         <MWrapper3 id="3m">
           <MTxt>지금 당장 나만의 티켓북을 만들고 싶다면</MTxt>
           <MButtonLine>
-            <MButton
-              onMouseOver={() => setIsHover(true)}
-              onMouseOut={() => setIsHover(false)}
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              <IoIosArrowRoundForward
-                color={isHover ? "#161616" : "white"}
-                size={25}
-              />
-              <div>로그인하기</div>
-            </MButton>
-            <MButton
-              onMouseOver={() => setIsHover2(true)}
-              onMouseOut={() => setIsHover2(false)}
-              onClick={() => {
-                navigate("/signup");
-              }}
-            >
-              <IoIosArrowRoundForward
-                color={isHover2 ? "#161616" : "white"}
-                size={25}
-              />
-              <div>회원가입하기</div>
-            </MButton>
+            <div>
+              <MButton
+                onMouseOver={() => setIsHover(true)}
+                onMouseOut={() => setIsHover(false)}
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                <IoIosArrowRoundForward
+                  color={isHover ? "#161616" : "white"}
+                  size={25}
+                />
+                <div>로그인하기</div>
+              </MButton>
+              <MButton
+                onMouseOver={() => setIsHover2(true)}
+                onMouseOut={() => setIsHover2(false)}
+                onClick={() => {
+                  navigate("/signup");
+                }}
+              >
+                <IoIosArrowRoundForward
+                  color={isHover2 ? "#161616" : "white"}
+                  size={25}
+                />
+                <div>회원가입하기</div>
+              </MButton>
+            </div>
           </MButtonLine>
         </MWrapper3>
       )}
@@ -123,8 +125,9 @@ const Landing3 = () => {
 export default Landing3;
 
 const MWrapper3 = styled.div`
-  height: calc(100vh - 80px);
-  background-color: #ca3525;
+  height: 100vh;
+  padding: calc(80px + 3vh) 0;
+  background-color: #262626;
   position: relative;
   z-index: 2;
 `;
@@ -142,6 +145,7 @@ const MButton = styled.button`
   padding: 20px;
   border-radius: 10px;
   margin: 50px 5px;
+  width: 100%;
   cursor: pointer;
   &:hover {
     background-color: white;
