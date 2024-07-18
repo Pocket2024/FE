@@ -211,7 +211,9 @@ const SignupPage = () => {
         </Wrapper>
       ) : (
         <MWrapper>
-          <Title fontsize="25px">회원가입</Title>
+          <MWelcome>
+            <img src={welcome} alt="" />
+          </MWelcome>
           <FormTitle>
             이메일<span>*</span>
           </FormTitle>
@@ -266,16 +268,15 @@ export default SignupPage;
 
 const MWrapper = styled.div`
   width: 100vw;
-  height: calc(100vh - 80px);
+  min-height: 100vh;
   background-color: white;
   padding: 0 10vw;
 `;
-const Title = styled.div`
-  font-size: ${(props) => props.fontsize};
-  font-weight: 700;
-  color: #ca3525;
-  margin-bottom: 20px;
-  margin-top: 30px;
+const MWelcome = styled.div`
+  img {
+    width: 100%;
+    padding: 5vh 0;
+  }
 `;
 const FormTitle = styled.div`
   font-size: ${(props) => props.fontsize || "15px"};
@@ -296,10 +297,13 @@ const Input = styled.input`
   padding: ${(props) => props.padding || "15px 20px"};
   font-size: ${(props) => props.fontsize || "12px"};
   font-weight: 700;
-  color: #ca3525;
+  color: #262626;
   &::placeholder {
     color: rgba(38, 38, 38, 0.53);
     font-size: ${(props) => props.fontsize || "12px"};
+  }
+  &:focus {
+    border: 1.5px solid rgba(202, 53, 37, 0.44);
   }
 `;
 const MSignupBtn = styled.button`
@@ -311,5 +315,5 @@ const MSignupBtn = styled.button`
   font-weight: 600;
   padding: 20px;
   width: 100%;
-  margin-top: 50px;
+  margin: 5vh 0 100px 0;
 `;
