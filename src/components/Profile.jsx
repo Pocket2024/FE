@@ -10,7 +10,7 @@ const ProfileBox = styled.div`
   display: flex;
   padding-top: 10vh;
   width: 100%;
-  > img {
+  img {
     width: 15vh;
     height: 15vh;
     border-radius: 50%;
@@ -51,7 +51,9 @@ const Profile = () => {
           <TxtInfo mleft="2vw">
             <div>
               <NameLine line="3.5vh">
-                <Nickname fsize="3.5vh">{infoData.nickname}</Nickname>
+                <Nickname fsize="3.5vh">
+                  {/*{infoData.nickname}*/}포켓몬
+                </Nickname>
                 <IoMdSettings
                   size={30}
                   className="SettingIcon"
@@ -60,7 +62,7 @@ const Profile = () => {
                 />
               </NameLine>
               <Bio fsize="2vh" mtop="15px">
-                {infoData.bio}
+                {/*{infoData.bio}*/}티켓꾸미기아티스트
               </Bio>
               <NumLine mtop="15px">
                 <Unit fsize="2.5vh">
@@ -89,14 +91,14 @@ const Profile = () => {
           <TxtInfo height="23vw">
             <div>
               <NameLine>
-                <Nickname>{infoData.nickname}</Nickname>
+                <Nickname>{/*{infoData.nickname}*/}포켓몬</Nickname>
                 <IoMdSettings
                   size={20}
                   className="SettingIcon"
                   onClick={() => navigate("/myinfo")}
                 />
               </NameLine>
-              <Bio>{infoData.bio}</Bio>
+              <Bio>{/*{infoData.bio}*/}티켓꾸미기아티스트</Bio>
               <NumLine>
                 <Unit>
                   <Title>포켓</Title>

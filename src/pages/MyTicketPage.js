@@ -20,9 +20,6 @@ const ProfileArea = styled.div`
   display: flex;
   justify-content: center;
   padding: 0 100px;
-  div {
-    width: 100%;
-  }
 `;
 const TicketArea = styled.div`
   width: 50%;
@@ -65,7 +62,9 @@ const MyTicketPage = () => {
           <ProfileArea>
             <div>
               <Profile />
-              <FavTicket>{infoData.nickname}님의 대표 티켓</FavTicket>
+              <FavTicket>
+                {/*{infoData.nickname}*/}포켓몬님의 대표 티켓
+              </FavTicket>
               <Ticket />
             </div>
           </ProfileArea>
