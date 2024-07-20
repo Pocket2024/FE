@@ -6,6 +6,7 @@ import { BsFillPinFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import Profile from "../components/Profile";
 import Ticket from "../components/Ticket";
+import Detail from "../components/Detail";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -22,6 +23,7 @@ const ProfileArea = styled.div`
 const TicketArea = styled.div`
   width: 50%;
   background-color: rgba(144, 144, 144, 0.06);
+  padding: 100px;
 `;
 const FavTicket = styled.div`
   color: white;
@@ -74,7 +76,9 @@ const MyTicketPage = () => {
               <Ticket />
             </div>
           </ProfileArea>
-          <TicketArea></TicketArea>
+          <TicketArea>
+            <Detail />
+          </TicketArea>
         </Wrapper>
       ) : (
         <Wrapper>
