@@ -49,6 +49,18 @@ const Seat = styled.div`
   z-index: 5;
   bottom: 2vh;
 `;
+const Date = styled.div`
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 3vh;
+  position: absolute;
+  right: 2vh;
+  z-index: 5;
+  bottom: 2vh;
+  .year {
+    padding-left: 5px;
+  }
+`;
 const Circle = styled.div`
   width: 20px !important;
   height: 20px;
@@ -71,6 +83,10 @@ const Ticket = () => {
         <img src={dummy_img} className="custom-img" alt="custom-img" />
         <Place>KBS 아레나</Place>
         <Seat>3층 I구역 2열 1</Seat>
+        <Date>
+          <div className="year">2024</div>
+          <div>02.07</div>
+        </Date>
         <Circle bottom="-10px" />
       </TicketBox>
     </Wrapper>
