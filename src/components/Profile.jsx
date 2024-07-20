@@ -50,34 +50,32 @@ const Profile = () => {
           <img src={profileimg} alt="profileimg" />
           <TxtInfo mleft="2vw">
             <div>
-              <NameLine line="3.5vh">
-                <Nickname fsize="3.5vh">
-                  {/*{infoData.nickname}*/}포켓몬
-                </Nickname>
+              <NameLine line="3vh">
+                <Nickname fsize="3vh">{/*{infoData.nickname}*/}포켓몬</Nickname>
                 <IoMdSettings
-                  size={30}
+                  size={27}
                   className="SettingIcon"
                   color="white"
                   onClick={() => navigate("/myinfo")}
                 />
               </NameLine>
-              <Bio fsize="2vh" mtop="15px">
+              <Bio fsize="2vh" mtop="10px">
                 {/*{infoData.bio}*/}티켓꾸미기아티스트
               </Bio>
-              <NumLine mtop="15px">
-                <Unit fsize="2.5vh">
+              <NumLine mtop="10px">
+                <Unit fsize="18px">
                   <Title>포켓</Title>
                   <Num>0</Num>
                 </Unit>
-                <Unit fsize="20px">
+                <Unit fsize="18px">
                   <Title>티켓</Title>
                   <Num>0</Num>
                 </Unit>
-                <Unit fsize="20px">
+                <Unit fsize="18px">
                   <Title>팔로워</Title>
                   <Num fcolor="#727272">0</Num>
                 </Unit>
-                <Unit fsize="20px">
+                <Unit fsize="18px">
                   <Title>팔로잉</Title>
                   <Num fcolor="#727272">0</Num>
                 </Unit>
