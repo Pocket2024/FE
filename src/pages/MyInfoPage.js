@@ -5,7 +5,7 @@ import { useMediaQuery } from "react-responsive";
 
 const Wrapper = styled.div`
   width: 100vw;
-  height: calc(100vh - 80px);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   > div {
@@ -219,7 +219,7 @@ export default MyInfoPage;
 
 const MWrapper = styled.div`
   width: 100vw;
-  height: calc(100vh - 80px);
+  min-height: 100vh;
   padding: 0 10vw;
 `;
 const Line = styled.div`
@@ -270,18 +270,20 @@ const BlackLine = styled.div`
   width: 100%;
 `;
 const Input = styled.input`
-  border: 1px solid rgba(202, 53, 37, 0.57);
+  border: 1.5px solid rgba(38, 38, 38, 0.44);
   outline: none;
-  background-color: #fff5f4;
+  background-color: white;
   border-radius: 10px;
   width: 100%;
   padding: ${(props) => props.padding || "15px 20px"};
   font-size: ${(props) => props.fontsize || "12px"};
-  font-weight: 700;
-  color: #ca3525;
-  margin-bottom: 20px;
+  font-weight: 600;
+  color: #262626;
   &::placeholder {
-    color: rgba(202, 53, 37, 0.53);
+    color: rgba(38, 38, 38, 0.53);
     font-size: ${(props) => props.fontsize || "12px"};
+  }
+  &:focus {
+    border: 1.5px solid rgba(60, 143, 219, 0.64);
   }
 `;
