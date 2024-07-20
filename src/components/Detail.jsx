@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import profileimg from "../images/profileimg.png";
 import { MdSaveAlt } from "react-icons/md";
 import { MdPlace } from "react-icons/md";
 import { FaRegCalendar } from "react-icons/fa6";
+import domtoimage from "dom-to-image";
+import { saveAs } from "file-saver";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -31,8 +33,10 @@ const Nickname = styled.div`
   font-weight: 700;
   margin-left: 15px;
 `;
-const SaveBtn = styled.div`
+const SaveBtn = styled.button`
   cursor: pointer;
+  border: none;
+  background-color: white;
 `;
 const Title = styled.div`
   font-size: 30px;
@@ -57,15 +61,27 @@ const Seat = styled.div`
 `;
 
 const Detail = () => {
+  const ticketRef = useRef();
+  const onDownloadBtn = () => {
+    const ticket = ticketRef.current; // 현재 티켓 dom에 접근
+    const filter = (card) => {
+      // button 태그 필터링
+      return card.tagName !== "BUTTON";
+    };
+    domtoimage.toBlob(ticket, { filter: filter }).then((blob) => {
+      saveAs(blob, "ticketimg.png"); // png로 저장
+    });
+  };
+
   return (
     <Wrapper>
-      <TicketBox>
+      <TicketBox className="ticketimg" ref={ticketRef}>
         <FirstLine>
           <ProfileLine>
             <ProfileImg src={profileimg} />
             <Nickname>포켓몬</Nickname>
           </ProfileLine>
-          <SaveBtn>
+          <SaveBtn onClick={onDownloadBtn}>
             <MdSaveAlt color="#DEDEDE" size={40} />
           </SaveBtn>
         </FirstLine>
