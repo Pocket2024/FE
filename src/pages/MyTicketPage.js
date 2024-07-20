@@ -21,7 +21,7 @@ const ProfileArea = styled.div`
 `;
 const TicketArea = styled.div`
   width: 50%;
-  background-color: #111111;
+  background-color: rgba(144, 144, 144, 0.06);
 `;
 const FavTicket = styled.div`
   color: white;
