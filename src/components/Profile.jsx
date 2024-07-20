@@ -4,18 +4,21 @@ import axios from "axios";
 import profileimg from "../images/profileimg.png";
 import { IoMdSettings } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const ProfileBox = styled.div`
   display: flex;
   padding-top: 10vh;
+  width: 100%;
   > img {
-    width: 9vw;
-    height: 9vw;
+    width: 15vh;
+    height: 15vh;
     border-radius: 50%;
   }
 `;
 
 const Profile = () => {
+  const isDesktop = useMediaQuery({ minWidth: 1220 });
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [infoData, setInfoData] = useState([]);
   const navigate = useNavigate();
@@ -41,52 +44,105 @@ const Profile = () => {
   }, []);
 
   return (
-    <ProfileBox>
-      <img src={profileimg} alt="profileimg" />
-      <TxtInfo>
-        <div>
-          <NameLine line="35px">
-            <Nickname fsize="35px">{infoData.nickname}</Nickname>
-            <IoMdSettings
-              size={30}
-              className="SettingIcon"
-              color="white"
-              onClick={() => navigate("/myinfo")}
-            />
-          </NameLine>
-          <Bio fsize="20px" mtop="15px">
-            {infoData.bio}
-          </Bio>
-          <NumLine mtop="15px">
-            <Unit fsize="20px">
-              <Title>포켓</Title>
-              <Num>0</Num>
-            </Unit>
-            <Unit fsize="20px">
-              <Title>티켓</Title>
-              <Num>0</Num>
-            </Unit>
-            <Unit fsize="20px">
-              <Title>팔로워</Title>
-              <Num fcolor="#727272">0</Num>
-            </Unit>
-            <Unit fsize="20px">
-              <Title>팔로잉</Title>
-              <Num fcolor="#727272">0</Num>
-            </Unit>
-          </NumLine>
-        </div>
-      </TxtInfo>
-    </ProfileBox>
+    <>
+      {isDesktop ? (
+        <ProfileBox>
+          <img src={profileimg} alt="profileimg" />
+          <TxtInfo mleft="2vw">
+            <div>
+              <NameLine line="3.5vh">
+                <Nickname fsize="3.5vh">{infoData.nickname}</Nickname>
+                <IoMdSettings
+                  size={30}
+                  className="SettingIcon"
+                  color="white"
+                  onClick={() => navigate("/myinfo")}
+                />
+              </NameLine>
+              <Bio fsize="2vh" mtop="15px">
+                {infoData.bio}
+              </Bio>
+              <NumLine mtop="15px">
+                <Unit fsize="2.5vh">
+                  <Title>포켓</Title>
+                  <Num>0</Num>
+                </Unit>
+                <Unit fsize="20px">
+                  <Title>티켓</Title>
+                  <Num>0</Num>
+                </Unit>
+                <Unit fsize="20px">
+                  <Title>팔로워</Title>
+                  <Num fcolor="#727272">0</Num>
+                </Unit>
+                <Unit fsize="20px">
+                  <Title>팔로잉</Title>
+                  <Num fcolor="#727272">0</Num>
+                </Unit>
+              </NumLine>
+            </div>
+          </TxtInfo>
+        </ProfileBox>
+      ) : (
+        <MProfileBox>
+          <img src={profileimg} alt="profileimg" />
+          <TxtInfo height="23vw">
+            <div>
+              <NameLine>
+                <Nickname>{infoData.nickname}</Nickname>
+                <IoMdSettings
+                  size={20}
+                  className="SettingIcon"
+                  onClick={() => navigate("/myinfo")}
+                />
+              </NameLine>
+              <Bio>{infoData.bio}</Bio>
+              <NumLine>
+                <Unit>
+                  <Title>포켓</Title>
+                  <Num>0</Num>
+                </Unit>
+                <Unit>
+                  <Title>티켓</Title>
+                  <Num>0</Num>
+                </Unit>
+                <Unit>
+                  <Title>팔로워</Title>
+                  <Num fcolor="#727272">0</Num>
+                </Unit>
+                <Unit>
+                  <Title>팔로잉</Title>
+                  <Num fcolor="#727272">0</Num>
+                </Unit>
+              </NumLine>
+            </div>
+          </TxtInfo>
+        </MProfileBox>
+      )}
+    </>
   );
 };
 
 export default Profile;
 
+const MProfileBox = styled.div`
+  display: flex;
+  margin-top: 5vh;
+  padding: 0 30px;
+  width: 100%;
+  > img {
+    width: 23vw;
+    height: 23vw;
+    border-radius: 50%;
+  }
+`;
+
 const TxtInfo = styled.div`
   margin-left: ${(props) => props.mleft || "15px"};
   width: ${(props) => props.width || "100%"};
   display: flex;
+  align-items: center;
+  height: ${(props) => props.height || "15vh"};
   color: white;
   > div {
     width: 100%;
