@@ -3,7 +3,9 @@ import styled from "styled-components";
 import ticket from "../images/component_ticket.svg";
 import dummy_img from "../images/profileimg.png";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  cursor: pointer;
+`;
 
 const TicketBox = styled.div`
   width: 100%;
@@ -30,7 +32,7 @@ const Title = styled.div`
   z-index: 5;
   top: 2vh;
   left: 2vh;
-  font-size: 2vh;
+  font-size: 20px;
   font-weight: 900;
 `;
 const Place = styled.div`
@@ -52,7 +54,7 @@ const Seat = styled.div`
 const Date = styled.div`
   font-family: "Montserrat";
   font-weight: 500;
-  font-size: 3vh;
+  font-size: 2vw;
   position: absolute;
   right: 2vh;
   z-index: 5;

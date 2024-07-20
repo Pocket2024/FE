@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
-import profileimg from "../images/profileimg.png";
-import { IoMdSettings } from "react-icons/io";
+import { BsFillPinFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import Profile from "../components/Profile";
 import Ticket from "../components/Ticket";
@@ -16,7 +15,6 @@ const Wrapper = styled.div`
 `;
 const ProfileArea = styled.div`
   width: 50%;
-  background-color: #212121;
   display: flex;
   justify-content: center;
   padding: 0 100px;
@@ -27,6 +25,13 @@ const TicketArea = styled.div`
 `;
 const FavTicket = styled.div`
   color: white;
+  display: flex;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 40px 0 15px 0;
+  height: 15px;
+  line-height: 15px;
+  gap: 0 5px;
 `;
 
 const MyTicketPage = () => {
@@ -63,6 +68,7 @@ const MyTicketPage = () => {
             <div>
               <Profile />
               <FavTicket>
+                <BsFillPinFill color="white" />
                 {/*{infoData.nickname}*/}포켓몬님의 대표 티켓
               </FavTicket>
               <Ticket />
