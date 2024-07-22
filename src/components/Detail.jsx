@@ -14,6 +14,17 @@ const TicketBox = styled.div`
   width: 100%;
   padding: 50px;
   position: relative;
+  -webkit-mask: radial-gradient(
+      circle 20px at 0px 355px,
+      transparent 19px,
+      black 20px
+    ),
+    radial-gradient(circle 20px at 100% 355px, transparent 19px, black 20px);
+  -webkit-mask-composite: destination-out;
+  mask-composite: intersect;
+  mask: radial-gradient(circle 20px at 0px 355px, transparent 19px, black 20px),
+    radial-gradient(circle 20px at 100% 355px, transparent 19px, black 20px);
+  mask-composite: intersect;
 `;
 const FirstLine = styled.div`
   width: 100%;
@@ -60,14 +71,13 @@ const Seat = styled.div`
   font-size: 20px;
   font-weight: 600;
 `;
-const Circle = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: aliceblue;
-  position: absolute;
-  left: -20px;
-  mask: url(#ticketbox);
+const Line = styled.hr`
+  margin: 50px 0;
+`;
+const Comment = styled.div`
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 50px;
 `;
 
 const Detail = () => {
@@ -105,7 +115,24 @@ const Detail = () => {
           <FaRegCalendar size={23} />
           <Place>2023.02.25</Place>
         </PlaceLine>
-        <Circle id="circle" />
+        <Line />
+        <Comment>
+          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
+          왔다. 참 재밌었다.
+          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
+          왔다. 참 재밌었다.
+          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
+          왔다. 참 재밌었다.
+          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
+          왔다. 참 재밌었다.
+          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
+          왔다. 참 재밌었다.
+          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+        </Comment>
       </TicketBox>
     </Wrapper>
   );
