@@ -15,15 +15,15 @@ const TicketBox = styled.div`
   padding: 50px;
   position: relative;
   -webkit-mask: radial-gradient(
-      circle 20px at 0px 355px,
+      circle 20px at 0px 315px,
       transparent 19px,
       black 20px
     ),
-    radial-gradient(circle 20px at 100% 355px, transparent 19px, black 20px);
+    radial-gradient(circle 20px at 100% 315px, transparent 19px, black 20px);
   -webkit-mask-composite: destination-out;
   mask-composite: intersect;
-  mask: radial-gradient(circle 20px at 0px 355px, transparent 19px, black 20px),
-    radial-gradient(circle 20px at 100% 355px, transparent 19px, black 20px);
+  mask: radial-gradient(circle 20px at 0px 315px, transparent 19px, black 20px),
+    radial-gradient(circle 20px at 100% 315px, transparent 19px, black 20px);
   mask-composite: intersect;
 `;
 const FirstLine = styled.div`
@@ -65,14 +65,19 @@ const PlaceLine = styled.div`
 const Place = styled.div`
   font-size: 20px;
   font-weight: 600;
+  width: fit-content;
 `;
 const Seat = styled.div`
   color: #989898;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 600;
+  width: fit-content;
+  white-space: nowrap; // 티켓이미지 저장 시 줄바꿈 방지
 `;
 const Line = styled.hr`
   margin: 50px 0;
+  border: none;
+  border-top: 6px dotted gray;
 `;
 const Comment = styled.div`
   font-size: 15px;
@@ -83,14 +88,16 @@ const Comment = styled.div`
 const Detail = () => {
   const ticketRef = useRef();
   const onDownloadBtn = () => {
-    const ticket = ticketRef.current; // 현재 티켓 dom에 접근
-    const filter = (card) => {
-      // button 태그 필터링
-      return card.tagName !== "BUTTON";
-    };
-    domtoimage.toBlob(ticket, { filter: filter }).then((blob) => {
-      saveAs(blob, "ticketimg.png"); // png로 저장
-    });
+    if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
+      const ticket = ticketRef.current; // 현재 티켓 dom에 접근
+      const filter = (card) => {
+        // button 태그 필터링
+        return card.tagName !== "BUTTON";
+      };
+      domtoimage.toBlob(ticket, { filter: filter }).then((blob) => {
+        saveAs(blob, "ticketimg.png"); // png로 저장
+      });
+    }
   };
 
   return (
@@ -99,39 +106,31 @@ const Detail = () => {
         <FirstLine>
           <ProfileLine>
             <ProfileImg src={profileimg} />
-            <Nickname>포켓몬</Nickname>
+            <Nickname>leeeyez</Nickname>
           </ProfileLine>
           <SaveBtn onClick={onDownloadBtn}>
             <MdSaveAlt color="#DEDEDE" size={40} />
           </SaveBtn>
         </FirstLine>
-        <Title>2023 aespa 1st Concert ‘SYNK : HYPER LINE’</Title>
+        <Title>
+          {/* 2023 aespa 1st Concert ‘SYNK : HYPER LINE’ */}무적 LG vs 최강 두산
+        </Title>
         <PlaceLine>
           <MdPlace size={25} />
-          <Place>잠실체육관</Place>
-          <Seat>2층 A구역 2열 3</Seat>
+          <Place>{/*잠실체육관*/}잠실야구장</Place>
+          <Seat>{/*2층 A구역 2열 3*/}1루 네이비석 316블록 14열 147번</Seat>
         </PlaceLine>
         <PlaceLine>
           <FaRegCalendar size={23} />
-          <Place>2023.02.25</Place>
+          <Place>{/*2023.02.25*/}2024.07.21</Place>
         </PlaceLine>
         <Line />
         <Comment>
-          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
-          왔다. 참 재밌었다.
-          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
-          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
-          왔다. 참 재밌었다.
-          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
-          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
-          왔다. 참 재밌었다.
-          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
-          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
-          왔다. 참 재밌었다.
-          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
-          에스파 콘서트에 다녀왔는데 너무 행복했다. 평생 윈터할 것을 다짐하고
-          왔다. 참 재밌었다.
-          어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+          이번에도 패요의 역할을.. 그래도 3점까지 내는 거 처음 직관했다 완전
+          럭키예지 ㅅㅂ 그치만 장마기간에 맑은 날씨가 당첨된 건 정말 럭키
+          마지막에 뽕짝 edm도 듣고 불꽃놀이까지🎆 야구장에서도, 야구장 밖에서도
+          컨텐츠가 끊이질 않았던 즐거운 하루 <br />
+          👥 with 빈, 서현
         </Comment>
       </TicketBox>
     </Wrapper>
