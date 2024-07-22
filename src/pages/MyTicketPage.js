@@ -24,6 +24,8 @@ const TicketArea = styled.div`
   width: 50%;
   background-color: rgba(144, 144, 144, 0.06);
   padding: 100px;
+  min-height: fit-content;
+  overflow: scroll; // ticketarea 스크롤 부분
 `;
 const FavTicket = styled.div`
   color: white;
