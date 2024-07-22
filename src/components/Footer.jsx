@@ -8,6 +8,8 @@ const Wrapper = styled.div`
   background-color: #ca3525;
   display: flex;
   align-items: center;
+  z-index: 99;
+  position: relative;
 `;
 const Info = styled.div`
   margin-left: 4vw;
