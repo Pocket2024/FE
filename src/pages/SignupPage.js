@@ -22,11 +22,11 @@ const InputDiv = styled.div`
   justify-content: center;
   div {
     width: 50vw;
-    margin-top: 5vh;
   }
 `;
 const PcDiv = styled.div``;
 const Welcome = styled.div`
+  margin-bottom: 5vh;
   img {
     width: 60vw;
   }

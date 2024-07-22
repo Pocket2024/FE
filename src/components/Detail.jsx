@@ -13,6 +13,7 @@ const TicketBox = styled.div`
   border-radius: 30px;
   width: 100%;
   padding: 50px;
+  position: relative;
 `;
 const FirstLine = styled.div`
   width: 100%;
@@ -59,6 +60,15 @@ const Seat = styled.div`
   font-size: 20px;
   font-weight: 600;
 `;
+const Circle = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: aliceblue;
+  position: absolute;
+  left: -20px;
+  mask: url(#ticketbox);
+`;
 
 const Detail = () => {
   const ticketRef = useRef();
@@ -75,7 +85,7 @@ const Detail = () => {
 
   return (
     <Wrapper>
-      <TicketBox className="ticketimg" ref={ticketRef}>
+      <TicketBox className="ticketimg" ref={ticketRef} id="ticketbox">
         <FirstLine>
           <ProfileLine>
             <ProfileImg src={profileimg} />
@@ -95,6 +105,7 @@ const Detail = () => {
           <FaRegCalendar size={23} />
           <Place>2023.02.25</Place>
         </PlaceLine>
+        <Circle id="circle" />
       </TicketBox>
     </Wrapper>
   );
