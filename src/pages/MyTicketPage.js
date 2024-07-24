@@ -3,7 +3,6 @@ import styled from "styled-components";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
 import { BsFillPinFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
 import Profile from "../components/Profile";
 import Ticket from "../components/Ticket";
 import Detail from "../components/Detail";
@@ -36,13 +35,14 @@ const FavTicket = styled.div`
   height: 15px;
   line-height: 15px;
   gap: 0 5px;
+  padding: ${(props) => props.padding};
 `;
 
 const MyTicketPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  // eslint-disable-next-line
   const [infoData, setInfoData] = useState([]);
-  const navigate = useNavigate();
 
   const getMyInfo = () => {
     axios
@@ -84,7 +84,14 @@ const MyTicketPage = () => {
         </Wrapper>
       ) : (
         <Wrapper>
-          <Profile />
+          <div style={{ width: "100%" }}>
+            <Profile />
+            <FavTicket padding="0 30px">
+              <BsFillPinFill color="white" />
+              {/*{infoData.nickname}*/}포켓몬님의 대표 티켓
+            </FavTicket>
+            <Ticket />
+          </div>
         </Wrapper>
       )}
     </>

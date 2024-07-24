@@ -2,14 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import ticket from "../images/component_ticket.svg";
 import dummy_img from "../images/profileimg.png";
+import { useMediaQuery } from "react-responsive";
 
 const Wrapper = styled.div`
   cursor: pointer;
+  padding: ${(props) => props.padding};
 `;
 
 const TicketBox = styled.div`
   width: 100%;
-  height: 20vh;
+  height: ${(props) => props.height || "20vh"};
   position: relative;
   background-color: white;
   border-radius: 10px;
@@ -32,19 +34,19 @@ const Title = styled.div`
   z-index: 5;
   top: 2vh;
   left: 2vh;
-  font-size: 20px;
+  font-size: ${(props) => props.fontsize || "20px"};
   font-weight: 900;
 `;
 const Place = styled.div`
-  font-size: 2vh;
+  font-size: ${(props) => props.fontsize || "2vh"};
   font-weight: 700;
   left: 2vh;
   position: absolute;
   z-index: 5;
-  bottom: 5vh;
+  bottom: ${(props) => props.bottom || "5vh"};
 `;
 const Seat = styled.div`
-  font-size: 2vh;
+  font-size: ${(props) => props.fontsize || "2vh"};
   font-weight: 700;
   left: 2vh;
   position: absolute;
@@ -54,7 +56,7 @@ const Seat = styled.div`
 const Date = styled.div`
   font-family: "Montserrat";
   font-weight: 500;
-  font-size: 2vw;
+  font-size: ${(props) => props.fontsize || "2vw"};
   position: absolute;
   right: 2vh;
   z-index: 5;
@@ -76,22 +78,47 @@ const Circle = styled.div`
 `;
 
 const Ticket = () => {
+  const isDesktop = useMediaQuery({ minWidth: 1220 });
   return (
-    <Wrapper>
-      <TicketBox>
-        <Circle top="-10px" />
-        <Title>2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL</Title>
-        <img src={ticket} className="white-ticket" alt="back-img" />
-        <img src={dummy_img} className="custom-img" alt="custom-img" />
-        <Place>KBS 아레나</Place>
-        <Seat>3층 I구역 2열 1</Seat>
-        <Date>
-          <div className="year">2024</div>
-          <div>02.07</div>
-        </Date>
-        <Circle bottom="-10px" />
-      </TicketBox>
-    </Wrapper>
+    <>
+      {isDesktop ? (
+        <Wrapper>
+          <TicketBox>
+            <Circle top="-10px" />
+            <Title>2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL</Title>
+            <img src={ticket} className="white-ticket" alt="back-img" />
+            <img src={dummy_img} className="custom-img" alt="custom-img" />
+            <Place>KBS 아레나</Place>
+            <Seat>3층 I구역 2열 1</Seat>
+            <Date>
+              <div className="year">2024</div>
+              <div>02.07</div>
+            </Date>
+            <Circle bottom="-10px" />
+          </TicketBox>
+        </Wrapper>
+      ) : (
+        <Wrapper padding="0 30px">
+          <TicketBox height="15vh">
+            <Circle top="-10px" />
+            <Title fontsize="13px">
+              2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL
+            </Title>
+            <img src={ticket} className="white-ticket" alt="back-img" />
+            <img src={dummy_img} className="custom-img" alt="custom-img" />
+            <Place fontsize="10px" bottom="4vh">
+              KBS 아레나
+            </Place>
+            <Seat fontsize="10px">3층 I구역 2열 1</Seat>
+            <Date fontsize="17px">
+              <div className="year">2024</div>
+              <div>02.07</div>
+            </Date>
+            <Circle bottom="-10px" />
+          </TicketBox>
+        </Wrapper>
+      )}
+    </>
   );
 };
 
