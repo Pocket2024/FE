@@ -74,11 +74,6 @@ const Seat = styled.div`
   width: fit-content;
   white-space: nowrap; // 티켓이미지 저장 시 줄바꿈 방지
 `;
-const Line = styled.hr`
-  margin: 50px 0;
-  border: none;
-  border-top: 6px dotted gray;
-`;
 const Comment = styled.div`
   font-size: 15px;
   font-weight: 500;
@@ -124,7 +119,15 @@ const Detail = () => {
           <FaRegCalendar size={23} />
           <Place>{/*2023.02.25*/}2024.07.21</Place>
         </PlaceLine>
-        <Line />
+        <svg width="500" height="3" style={{ marginTop: "35px" }}>
+          <line
+            x1="0"
+            x2="500"
+            stroke="#E9E9E9"
+            strokeWidth="5"
+            strokeDasharray="15,10" // 10px 선, 5px 간격
+          />
+        </svg>
         <Comment>
           이번에도 패요의 역할을.. 그래도 3점까지 내는 거 처음 직관했다 완전
           럭키예지 ㅅㅂ 그치만 장마기간에 맑은 날씨가 당첨된 건 정말 럭키
