@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import ticket from "../images/component_ticket.svg";
 import dummy_img from "../images/profileimg.png";
 import { useMediaQuery } from "react-responsive";
 
@@ -86,7 +85,6 @@ const Ticket = () => {
           <TicketBox>
             <Circle top="-10px" />
             <Title>2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL</Title>
-            <img src={ticket} className="white-ticket" alt="back-img" />
             <img src={dummy_img} className="custom-img" alt="custom-img" />
             <Place>KBS 아레나</Place>
             <Seat>3층 I구역 2열 1</Seat>
@@ -98,13 +96,12 @@ const Ticket = () => {
           </TicketBox>
         </Wrapper>
       ) : (
-        <Wrapper padding="0 30px">
+        <Wrapper padding="030px">
           <TicketBox height="15vh">
             <Circle top="-10px" />
             <Title fontsize="13px">
               2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL
             </Title>
-            <img src={ticket} className="white-ticket" alt="back-img" />
             <img src={dummy_img} className="custom-img" alt="custom-img" />
             <Place fontsize="10px" bottom="4vh">
               KBS 아레나
