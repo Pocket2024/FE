@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import dummy_img from "../images/profileimg.png";
 import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   cursor: pointer;
@@ -78,6 +79,8 @@ const Circle = styled.div`
 
 const Ticket = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const navigate = useNavigate();
+  const id = 1;
   return (
     <>
       {isDesktop ? (
@@ -97,7 +100,7 @@ const Ticket = () => {
         </Wrapper>
       ) : (
         <Wrapper padding="030px">
-          <TicketBox height="130px">
+          <TicketBox height="130px" onClick={() => navigate(`/detail/${id}`)}>
             <Circle top="-10px" />
             <Title fontsize="13px">
               2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL
