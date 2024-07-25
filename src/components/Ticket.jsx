@@ -97,7 +97,7 @@ const Ticket = () => {
         </Wrapper>
       ) : (
         <Wrapper padding="030px">
-          <TicketBox height="15vh">
+          <TicketBox height="130px">
             <Circle top="-10px" />
             <Title fontsize="13px">
               2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL
