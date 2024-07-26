@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import profileimg from "../images/profileimg.png";
 import { MdSaveAlt } from "react-icons/md";
@@ -8,6 +8,8 @@ import { FaRegCalendar } from "react-icons/fa6";
 import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import { useMediaQuery } from "react-responsive";
+import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -82,10 +84,23 @@ const Comment = styled.div`
   font-weight: 500;
   margin-top: 50px;
 `;
+const HeartLine = styled.div`
+  display: flex;
+  height: ${(props) => props.height || "15px"};
+  line-height: ${(props) => props.height || "15px"};
+  margin-top: 20px;
+  gap: 0 10px;
+  div {
+    color: #8f8f8f;
+    font-size: ${(props) => props.height || "15px"};
+  }
+`;
 
 const Detail = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const ticketRef = useRef();
+  const [heart, setHeart] = useState(0);
+  const [isHeart, setIsHeart] = useState(false);
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
       const ticket = ticketRef.current; // 현재 티켓 dom에 접근
@@ -159,6 +174,15 @@ const Detail = () => {
       //   });
     }
   };
+  const handleHeart = () => {
+    if (isHeart) {
+      setIsHeart(!isHeart);
+      setHeart(0);
+    } else {
+      setIsHeart(!isHeart);
+      setHeart(1);
+    }
+  };
 
   return (
     <>
@@ -204,6 +228,14 @@ const Detail = () => {
               👥 with 빈, 서현
             </Comment>
           </TicketBox>
+          <HeartLine height="20px">
+            {isHeart ? (
+              <FaHeart color="white" onClick={handleHeart} size={20} />
+            ) : (
+              <FaRegHeart color="#8F8F8F" onClick={handleHeart} size={20} />
+            )}
+            <div>{heart}</div>
+          </HeartLine>
         </Wrapper>
       ) : (
         <Wrapper>
@@ -249,6 +281,14 @@ const Detail = () => {
               👥 with 빈, 서현
             </Comment>
           </MTicketBox>
+          <HeartLine>
+            {isHeart ? (
+              <FaHeart color="white" onClick={handleHeart} />
+            ) : (
+              <FaRegHeart color="#8F8F8F" onClick={handleHeart} />
+            )}
+            <div>{heart}</div>
+          </HeartLine>
         </Wrapper>
       )}
     </>
