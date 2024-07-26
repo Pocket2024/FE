@@ -230,9 +230,19 @@ const Detail = () => {
           </TicketBox>
           <HeartLine height="20px">
             {isHeart ? (
-              <FaHeart color="white" onClick={handleHeart} size={20} />
+              <FaHeart
+                color="white"
+                onClick={handleHeart}
+                size={20}
+                style={{ cursor: "pointer" }}
+              />
             ) : (
-              <FaRegHeart color="#8F8F8F" onClick={handleHeart} size={20} />
+              <FaRegHeart
+                color="#8F8F8F"
+                onClick={handleHeart}
+                size={20}
+                style={{ cursor: "pointer" }}
+              />
             )}
             <div>{heart}</div>
           </HeartLine>
