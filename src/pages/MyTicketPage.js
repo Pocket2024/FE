@@ -69,7 +69,7 @@ const MyTicketPage = () => {
       {isDesktop ? (
         <Wrapper>
           <ProfileArea>
-            <div>
+            <div style={{ width: "100%" }}>
               <Profile />
               <FavTicket>
                 <BsFillPinFill color="white" />
