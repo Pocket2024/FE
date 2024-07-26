@@ -4,7 +4,8 @@ import profileimg from "../images/profileimg.png";
 import { MdSaveAlt } from "react-icons/md";
 import { MdPlace } from "react-icons/md";
 import { FaRegCalendar } from "react-icons/fa6";
-import domtoimage from "dom-to-image";
+//import domtoimage from "dom-to-image";
+import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import { useMediaQuery } from "react-responsive";
 
@@ -85,16 +86,77 @@ const Comment = styled.div`
 const Detail = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const ticketRef = useRef();
-  const onDownloadBtn = () => {
+  const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
       const ticket = ticketRef.current; // 현재 티켓 dom에 접근
-      const filter = (card) => {
-        // button 태그 필터링
-        return card.tagName !== "BUTTON";
-      };
-      domtoimage.toBlob(ticket, { filter: filter }).then((blob) => {
-        saveAs(blob, "ticketimg.png"); // png로 저장
-      });
+      //   const filter = (card) => {
+      //     // button 태그 필터링
+      //     return card.tagName !== "BUTTON";
+      //   };
+
+      try {
+        const canvas = await html2canvas(ticket, {
+          backgroundColor: null, // 배경을 투명하게 설정
+          scale: 4,
+          ignoreElements: (element) => {
+            return element.tagName === "BUTTON"; // Ignore button elements
+          },
+        }); // Await the promise and get the canvas
+
+        const ctx = canvas.getContext("2d");
+
+        // 원래 캔버스 내용 복사
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        // 원의 좌표 및 반지름
+        const leftCircle = { x: 0, y: 315 * 4, radius: 50 };
+        const rightCircle = {
+          x: canvas.width,
+          y: 315 * 4,
+          radius: 50,
+        };
+
+        // 원 부분을 투명하게 만들기
+        const makeCircleTransparent = (circle) => {
+          for (
+            let y = circle.y - circle.radius;
+            y <= circle.y + circle.radius;
+            y++
+          ) {
+            for (
+              let x = circle.x - circle.radius;
+              x <= circle.x + circle.radius;
+              x++
+            ) {
+              const dx = circle.x - x;
+              const dy = circle.y - y;
+              if (dx * dx + dy * dy <= circle.radius * circle.radius) {
+                const index = (y * canvas.width + x) * 4;
+                imageData.data[index + 3] = 0; // 알파 채널을 0으로 설정하여 투명하게 만듦
+              }
+            }
+          }
+        };
+
+        // 왼쪽 및 오른쪽 원을 투명하게 설정
+        makeCircleTransparent(leftCircle);
+        makeCircleTransparent(rightCircle);
+
+        // 업데이트된 이미지 데이터를 다시 그리기
+        ctx.putImageData(imageData, 0, 0);
+
+        canvas.toBlob((blob) => {
+          if (blob !== null) {
+            saveAs(blob, "ticketimg.png");
+          }
+        });
+      } catch (error) {
+        console.error("Error generating image: ", error);
+      }
+
+      //   domtoimage.toBlob(ticket, { filter: filter }).then((blob) => {
+      //     saveAs(blob, "ticketimg.png"); // png로 저장
+      //   });
     }
   };
 
