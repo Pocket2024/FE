@@ -6,6 +6,7 @@ import { BsFillPinFill } from "react-icons/bs";
 import Profile from "../components/Profile";
 import Ticket from "../components/Ticket";
 import Detail from "../components/Detail";
+import UploadBtn from "../components/UploadBtn";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -81,6 +82,7 @@ const MyTicketPage = () => {
           <TicketArea>
             <Detail />
           </TicketArea>
+          <UploadBtn />
         </Wrapper>
       ) : (
         <Wrapper>
