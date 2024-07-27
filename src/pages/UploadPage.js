@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { IoMdImage } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
-import CustomDatePicker from "../components/CustomDatePicker";
+import DatePicker from "../components/DatePicker";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -89,7 +89,7 @@ const Circle = styled.div`
 `;
 const TicketInfo = styled.div`
   background-color: #262626;
-  border-radius: 20px;
+  border-radius: 20px 20px 0 0;
   width: 100vw;
   margin-left: calc(-50vw + 50%); // 부모 Padding 무시
   margin-top: 40px;
@@ -116,18 +116,40 @@ const Input = styled.input`
   margin-bottom: 15px;
   font-weight: 500;
 `;
+const ReviewArea = styled.textarea`
+  resize: none;
+  width: 100%;
+  height: 100px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.22);
+  padding: 15px;
+  color: white;
+  outline: none;
+  font-size: 12px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  font-weight: 500;
+`;
 
 const UploadPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());
+  const [place, setPlace] = useState("");
   const [seat, setSeat] = useState("");
+  const [review, setReview] = useState("");
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
   };
+  const onChangePlace = (e) => {
+    setPlace(e.target.place);
+  };
   const onChangeSeat = (e) => {
     setSeat(e.target.value);
+  };
+  const onChangeReview = (e) => {
+    setReview(e.target.value);
   };
 
   return (
@@ -161,11 +183,13 @@ const UploadPage = () => {
             <InfoTitle>제목</InfoTitle>
             <Input value={title} onChange={onChangeTitle} />
             <InfoTitle>날짜</InfoTitle>
-            <CustomDatePicker selectedDate={date} setSelectedDate={setDate} />
+            <DatePicker selectedDate={date} setSelectedDate={setDate} />
             <InfoTitle>장소</InfoTitle>
+            <Input value={place} onChange={onChangePlace} />
             <InfoTitle>좌석</InfoTitle>
             <Input value={seat} onChange={onChangeSeat} />
             <InfoTitle>나의 후기</InfoTitle>
+            <ReviewArea value={review} onChange={onChangeReview} />
           </TicketInfo>
         </Wrapper>
       )}
