@@ -27,8 +27,12 @@ const Button = styled.button`
 const UploadBtn = ({ onBtnClick }) => {
   const navigate = useNavigate();
   return (
-    <Button>
-      <MdFileUpload size={30} onClick={onBtnClick || navigate("/upload")} />
+    <Button
+      onClick={() => {
+        onBtnClick || navigate("/upload");
+      }}
+    >
+      <MdFileUpload size={30} />
       <div>티켓 업로드</div>
     </Button>
   );

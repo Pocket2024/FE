@@ -10,6 +10,7 @@ import SignupPage from "./pages/SignupPage";
 import MyInfoPage from "./pages/MyInfoPage";
 import Footer from "./components/Footer";
 import DetailPage from "./pages/DetailPage";
+import UploadPage from "./pages/UploadPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/myinfo" element={<MyInfoPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="/upload" element={<UploadPage />} />
         </Routes>
       </Page>
       <Footer />
