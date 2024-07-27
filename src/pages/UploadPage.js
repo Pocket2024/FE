@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { IoMdImage } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
+import CustomDatePicker from "../components/CustomDatePicker";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -113,10 +114,22 @@ const Input = styled.input`
   border-radius: 10px;
   width: 100%;
   margin-bottom: 15px;
+  font-weight: 500;
 `;
 
 const UploadPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [seat, setSeat] = useState("");
+
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value);
+  };
+  const onChangeSeat = (e) => {
+    setSeat(e.target.value);
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -126,7 +139,7 @@ const UploadPage = () => {
       ) : (
         <Wrapper>
           <Title>
-            <div>아이돌</div>포켓에 티켓 업로드 ⬆️
+            <div>아이돌</div>포켓에 티켓 업로드
           </Title>
           <Explain>
             티켓 이미지를 업로드하여 자동입력해보세요. 🤩
@@ -146,11 +159,12 @@ const UploadPage = () => {
           <TicketInfo>
             <InfoTitle className="ticket-info">티켓 정보</InfoTitle>
             <InfoTitle>제목</InfoTitle>
-            <Input />
+            <Input value={title} onChange={onChangeTitle} />
             <InfoTitle>날짜</InfoTitle>
+            <CustomDatePicker selectedDate={date} setSelectedDate={setDate} />
             <InfoTitle>장소</InfoTitle>
             <InfoTitle>좌석</InfoTitle>
-            <Input />
+            <Input value={seat} onChange={onChangeSeat} />
             <InfoTitle>나의 후기</InfoTitle>
           </TicketInfo>
         </Wrapper>
