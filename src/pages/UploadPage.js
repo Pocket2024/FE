@@ -8,31 +8,42 @@ import DatePicker from "../components/DatePicker";
 const Wrapper = styled.div`
   width: 100%;
   min-height: calc(100vh - 80px);
-  padding: 0 30px;
+  display: flex;
 `;
 const RightArea = styled.div`
   width: 50%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
   padding: 0 100px;
 `;
+const LeftArea = styled.div`
+  width: 50%;
+  background-color: #262626;
+  padding: 100px;
+  min-height: fit-content;
+  overflow: scroll; // 스크롤 부분
+`;
 const Title = styled.div`
-  font-size: 20px;
+  font-size: ${(props) => props.fontsize || "20px"};
   font-weight: 700;
   color: black;
   display: flex;
   gap: 0 5px;
-  margin-top: 5vh;
+  margin: ${(props) => props.margin || "5vh 0 0 0"};
+  white-space: nowrap;
   div {
     color: #ca3525;
   }
 `;
 const Explain = styled.div`
-  font-size: 10px;
+  font-size: ${(props) => props.fontsize || "10px"};
   font-weight: 500;
   color: #737373;
-  line-height: 11px;
+  line-height: calc(${(props) => props.fontsize || "10px"} + 1px);
   margin-bottom: 30px;
+  white-space: nowrap;
 `;
 const AutoBtn = styled.button`
   border: 1px solid #262626;
@@ -47,7 +58,7 @@ const AutoBtn = styled.button`
   font-weight: 600;
   line-height: 20px;
   gap: 0 10px;
-  margin-bottom: 20px;
+  margin-bottom: ${(props) => props.marginbottom || "20px"};
 `;
 const TicketBox = styled.div`
   width: 100%;
@@ -61,6 +72,7 @@ const TicketBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0 10px;
+  margin-bottom: ${(props) => props.marginbottom};
   div {
     color: white;
     font-size: 15px;
@@ -156,7 +168,46 @@ const UploadPage = () => {
     <>
       {isDesktop ? (
         <Wrapper>
-          <RightArea></RightArea>
+          <RightArea>
+            <div style={{ width: "100%" }}>
+              <Title fontsize="40px" margin="0 0 10px 0">
+                <div>아이돌</div>포켓에 티켓 업로드
+              </Title>
+              <Explain fontsize="18px">
+                티켓 이미지를 업로드하여 자동입력해보세요. 🤩
+                <br />
+                자동입력을 원하지 않으면 직접 정보를 입력할 수 있습니다.
+              </Explain>
+              <AutoBtn marginbottom="60px">
+                <IoMdImage size={20} />
+                자동입력에 사용할 티켓 이미지 선택하기
+              </AutoBtn>
+              <TicketBox marginbottom="20px">
+                <Circle top="-5px" />
+                <Circle bottom="-5px" />
+                <FaPlus color="white" size={20} />
+                <div>커스텀 이미지 선택하기</div>
+              </TicketBox>
+              <Explain fontsize="18px">
+                티켓 표지를 꾸며보세요! 🎫 <br />
+                원하는 이미지를 표지에 커스텀할 수 있습니다. <br />
+                티켓 내용을 작성하면 해당 티켓 표지를 미리보기할 수 있습니다.
+              </Explain>
+            </div>
+          </RightArea>
+          <LeftArea>
+            <InfoTitle className="ticket-info">티켓 정보</InfoTitle>
+            <InfoTitle>제목</InfoTitle>
+            <Input value={title} onChange={onChangeTitle} />
+            <InfoTitle>날짜</InfoTitle>
+            <DatePicker selectedDate={date} setSelectedDate={setDate} />
+            <InfoTitle>장소</InfoTitle>
+            <Input value={place} onChange={onChangePlace} />
+            <InfoTitle>좌석</InfoTitle>
+            <Input value={seat} onChange={onChangeSeat} />
+            <InfoTitle>나의 후기</InfoTitle>
+            <ReviewArea value={review} onChange={onChangeReview} />
+          </LeftArea>
         </Wrapper>
       ) : (
         <Wrapper>
