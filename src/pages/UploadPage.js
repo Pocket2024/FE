@@ -8,7 +8,6 @@ import DatePicker from "../components/DatePicker";
 const Wrapper = styled.div`
   width: 100%;
   min-height: calc(100vh - 80px);
-  display: flex;
 `;
 const RightArea = styled.div`
   width: 50%;
@@ -111,7 +110,7 @@ const TicketInfo = styled.div`
   }
 `;
 const InfoTitle = styled.div`
-  font-size: 15px;
+  font-size: ${(props) => props.fontsize || "15px"};
   font-weight: 600;
   color: white;
   margin-bottom: 5px;
@@ -122,10 +121,10 @@ const Input = styled.input`
   padding: 15px;
   color: white;
   outline: none;
-  font-size: 12px;
+  font-size: ${(props) => props.fontsize || "12px"};
   border-radius: 10px;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: ${(props) => props.marginbottom || "15px"};
   font-weight: 500;
 `;
 const ReviewArea = styled.textarea`
@@ -137,7 +136,7 @@ const ReviewArea = styled.textarea`
   padding: 15px;
   color: white;
   outline: none;
-  font-size: 12px;
+  font-size: ${(props) => props.fontsize || "12px"};
   border-radius: 10px;
   margin-bottom: 15px;
   font-weight: 500;
@@ -167,7 +166,7 @@ const UploadPage = () => {
   return (
     <>
       {isDesktop ? (
-        <Wrapper>
+        <Wrapper style={{ display: "flex" }}>
           <RightArea>
             <div style={{ width: "100%" }}>
               <Title fontsize="40px" margin="0 0 10px 0">
@@ -196,21 +195,47 @@ const UploadPage = () => {
             </div>
           </RightArea>
           <LeftArea>
-            <InfoTitle className="ticket-info">티켓 정보</InfoTitle>
-            <InfoTitle>제목</InfoTitle>
-            <Input value={title} onChange={onChangeTitle} />
-            <InfoTitle>날짜</InfoTitle>
-            <DatePicker selectedDate={date} setSelectedDate={setDate} />
-            <InfoTitle>장소</InfoTitle>
-            <Input value={place} onChange={onChangePlace} />
-            <InfoTitle>좌석</InfoTitle>
-            <Input value={seat} onChange={onChangeSeat} />
-            <InfoTitle>나의 후기</InfoTitle>
-            <ReviewArea value={review} onChange={onChangeReview} />
+            <InfoTitle fontsize="25px" style={{ marginBottom: "15px" }}>
+              티켓 정보
+            </InfoTitle>
+            <InfoTitle fontsize="20px">제목</InfoTitle>
+            <Input
+              value={title}
+              onChange={onChangeTitle}
+              marginbottom="25px"
+              fontsize="18px"
+            />
+            <InfoTitle fontsize="20px">날짜</InfoTitle>
+            <DatePicker
+              selectedDate={date}
+              setSelectedDate={setDate}
+              marginbottom="25px"
+            />
+            <InfoTitle fontsize="20px">장소</InfoTitle>
+            <Input
+              value={place}
+              onChange={onChangePlace}
+              marginbottom="25px"
+              fontsize="18px"
+            />
+            <InfoTitle fontsize="20px">좌석</InfoTitle>
+            <Input
+              value={seat}
+              onChange={onChangeSeat}
+              marginbottom="25px"
+              fontsize="18px"
+            />
+            <InfoTitle fontsize="20px">나의 후기</InfoTitle>
+            <ReviewArea
+              value={review}
+              onChange={onChangeReview}
+              marginbottom="25px"
+              fontsize="18px"
+            />
           </LeftArea>
         </Wrapper>
       ) : (
-        <Wrapper>
+        <Wrapper style={{ padding: "0 30px" }}>
           <Title>
             <div>아이돌</div>포켓에 티켓 업로드
           </Title>
