@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
+import HotTicket from "../components/HotTicket";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -47,6 +48,7 @@ const SearchPage = () => {
           onChange={onChangeSearch}
         />
       </SearchDiv>
+      <HotTicket />
     </Wrapper>
   );
 };

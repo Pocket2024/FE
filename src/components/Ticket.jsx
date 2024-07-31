@@ -77,7 +77,7 @@ const Circle = styled.div`
   bottom: ${(props) => props.bottom};
 `;
 
-const Ticket = () => {
+const Ticket = ({ title, place, seat, year, date }) => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const navigate = useNavigate();
   const id = 1;
@@ -87,13 +87,13 @@ const Ticket = () => {
         <Wrapper>
           <TicketBox>
             <Circle top="-10px" />
-            <Title>2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL</Title>
+            <Title>{title || "제목"}</Title>
             <img src={dummy_img} className="custom-img" alt="custom-img" />
-            <Place>KBS 아레나</Place>
-            <Seat>3층 I구역 2열 1</Seat>
+            <Place>{place || "장소"}</Place>
+            <Seat>{seat || "좌석"}</Seat>
             <Date>
-              <div className="year">2024</div>
-              <div>02.07</div>
+              <div className="year">{year || "2024"}</div>
+              <div>{date || "02.07"}</div>
             </Date>
             <Circle bottom="-10px" />
           </TicketBox>
