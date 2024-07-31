@@ -8,7 +8,6 @@ import MyTicketPage from "./pages/MyTicketPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import MyInfoPage from "./pages/MyInfoPage";
-import Footer from "./components/Footer";
 import DetailPage from "./pages/DetailPage";
 import UploadPage from "./pages/UploadPage";
 
@@ -28,7 +27,6 @@ function App() {
           <Route path="/upload" element={<UploadPage />} />
         </Routes>
       </Page>
-      <Footer />
     </>
   );
 }
