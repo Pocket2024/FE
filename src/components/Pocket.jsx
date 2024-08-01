@@ -4,6 +4,7 @@ import { FaGetPocket } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import Modal from "react-modal";
 import "../style/Modal.css";
+import { ChromePicker } from "react-color";
 
 const Wrapper = styled.div``;
 const PocketTitle = styled.div`
@@ -83,11 +84,28 @@ const CreateBtn = styled.button`
   padding: 15px 30px;
   color: #262626;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 10px;
+  margin-top: 70px;
+  width: 100%;
   &:hover {
     background-color: black;
     color: white;
+  }
+`;
+const ColorValue = styled.div`
+  div {
+    width: 140px;
+    height: 120px;
+    border-radius: 20px 20px 50% 50%; /* 반원 모양 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+    }
   }
 `;
 
@@ -96,11 +114,40 @@ let dummy = [
   { id: 2, category: "아이돌", color: "#3C8FDB", count: 8 },
 ];
 
+// hex 컬러를 rgb로 바꾸는 함수
+function hexToRgb(hex) {
+  let r = 0,
+    g = 0,
+    b = 0;
+  if (hex.length === 4) {
+    r = parseInt(hex[1] + hex[1], 16);
+    g = parseInt(hex[2] + hex[2], 16);
+    b = parseInt(hex[3] + hex[3], 16);
+  } else if (hex.length === 7) {
+    r = parseInt(hex[1] + hex[2], 16);
+    g = parseInt(hex[3] + hex[4], 16);
+    b = parseInt(hex[5] + hex[6], 16);
+  }
+  return { r, g, b };
+}
+
+// hex를 받아서 명도 확인하고 검/흰 리턴하는 함수
+function getTextColor(bgColorHex) {
+  const { r, g, b } = hexToRgb(bgColorHex);
+  const average = (r + g + b) / 3;
+  return average > 127.5 ? "#000000" : "#FFFFFF";
+}
+
 const Pocket = () => {
   const [modal, setModal] = useState(false);
   const [category, setCategory] = useState("");
+  const [color, setColor] = useState("#fff");
 
   const onChangeCategory = (e) => setCategory(e.target.value);
+  const onChangeColor = (color) => {
+    setColor(color.hex);
+    console.log(color.hex);
+  };
   return (
     <Wrapper>
       <PocketTitle>
@@ -132,7 +179,17 @@ const Pocket = () => {
           placeholder="포켓 이름을 입력해주세요."
         />
         <ModalTitle>포켓 색상</ModalTitle>
-        <CreateBtn>만들기!</CreateBtn>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <ChromePicker color={color} onChange={onChangeColor} />
+          <ColorValue>
+            <div style={{ backgroundColor: `${color}` }}>
+              <span style={{ color: `${getTextColor(color)}` }}>
+                {category || "포켓"}
+              </span>
+            </div>
+            <CreateBtn>만들기!</CreateBtn>
+          </ColorValue>
+        </div>
       </Modal>
     </Wrapper>
   );
@@ -152,7 +209,7 @@ const customStyles = {
   },
   content: {
     width: "460px",
-    height: "400px",
+    minHeight: "fit-content",
     position: "absolute",
     top: "50%",
     left: "50%",

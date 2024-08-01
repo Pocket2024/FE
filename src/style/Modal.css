@@ -25,3 +25,7 @@
 .ReactModal__Overlay--before-close {
   opacity: 0;
 }
+
+.chrome-picker {
+  width: 300px;
+}
