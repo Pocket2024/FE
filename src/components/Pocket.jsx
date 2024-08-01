@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { FaGetPocket } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import Modal from "react-modal";
+import "../style/Modal.css";
 
 const Wrapper = styled.div``;
 const PocketTitle = styled.div`
@@ -157,7 +158,7 @@ const customStyles = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     borderRadius: "35px",
-    boxShadow: "0 10px 10px rgba(0, 0, 0, 0.25)",
+    boxShadow: "0 5px 15px rgba(0, 0, 0, 0.25)",
     backgroundColor: "#262626",
     border: "none",
     justifyContent: "center",
