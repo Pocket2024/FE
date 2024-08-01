@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaGetPocket } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
+import Modal from "react-modal";
 
 const Wrapper = styled.div``;
 const PocketTitle = styled.div`
@@ -52,6 +53,42 @@ const PocketDiv = styled.div`
     text-align: center;
   }
 `;
+const ModalTitle = styled.div`
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+`;
+const Input = styled.input`
+  border: none;
+  background-color: rgba(255, 255, 255, 0.22);
+  padding: 15px;
+  color: white;
+  outline: none;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  font-weight: 500;
+  &::placeholder {
+    font-weight: 600;
+  }
+`;
+const CreateBtn = styled.button`
+  border: none;
+  outline: none;
+  background-color: white;
+  padding: 15px 30px;
+  color: #262626;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 10px;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+`;
 
 let dummy = [
   { id: 1, category: "야구", color: "#FFE976", count: 3 },
@@ -59,6 +96,10 @@ let dummy = [
 ];
 
 const Pocket = () => {
+  const [modal, setModal] = useState(false);
+  const [category, setCategory] = useState("");
+
+  const onChangeCategory = (e) => setCategory(e.target.value);
   return (
     <Wrapper>
       <PocketTitle>
@@ -74,12 +115,54 @@ const Pocket = () => {
             </div>
           </PocketDiv>
         ))}
-        <div className="createBtn">
+        <div className="createBtn" onClick={() => setModal(true)}>
           <FaPlus color="#929292" size={50} />
         </div>
       </PocketGrid>
+      <Modal
+        isOpen={modal}
+        style={customStyles}
+        onRequestClose={() => setModal(false)}
+      >
+        <ModalTitle>포켓 이름</ModalTitle>
+        <Input
+          value={category}
+          onChange={onChangeCategory}
+          placeholder="포켓 이름을 입력해주세요."
+        />
+        <ModalTitle>포켓 색상</ModalTitle>
+        <CreateBtn>만들기!</CreateBtn>
+      </Modal>
     </Wrapper>
   );
 };
 
 export default Pocket;
+
+const customStyles = {
+  overlay: {
+    backgroundColor: " rgba(0, 0, 0, 0.5)",
+    width: "100%",
+    height: "100vh",
+    zIndex: "998",
+    position: "fixed",
+    top: "0",
+    left: "0",
+  },
+  content: {
+    width: "460px",
+    height: "400px",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "35px",
+    boxShadow: "0 10px 10px rgba(0, 0, 0, 0.25)",
+    backgroundColor: "#262626",
+    border: "none",
+    justifyContent: "center",
+    overflow: "auto",
+    zIndex: "999",
+    padding: "40px",
+  },
+};
