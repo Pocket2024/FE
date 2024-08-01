@@ -7,10 +7,11 @@ import Profile from "../components/Profile";
 import Ticket from "../components/Ticket";
 import Detail from "../components/Detail";
 import UploadBtn from "../components/UploadBtn";
+import Pocket from "../components/Pocket";
 
 const Wrapper = styled.div`
   width: 100vw;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   background-color: #262626;
   display: flex;
 `;
@@ -77,6 +78,7 @@ const MyTicketPage = () => {
                 {/*{infoData.nickname}*/}포켓몬님의 대표 티켓
               </FavTicket>
               <Ticket />
+              <Pocket />
             </div>
           </ProfileArea>
           <TicketArea>
