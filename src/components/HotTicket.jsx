@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import Ticket from "./Ticket";
-import profileimg from "../images/profileimg.png";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import dummy from "../dummy/hot.json";
 
 const HotTitle = styled.div`
   font-weight: 700;
@@ -47,53 +47,6 @@ const Heart = styled.div`
   font-weight: 500;
 `;
 
-let dummy = [
-  {
-    id: 1,
-    profileimg: profileimg,
-    nickname: "닉네임1",
-    heart: 122,
-    title: "제목1",
-    place: "장소1",
-    seat: "좌석1",
-    year: "2024",
-    date: "03.27",
-  },
-  {
-    id: 2,
-    profileimg: profileimg,
-    nickname: "닉네임2",
-    heart: 98,
-    title: "제목2",
-    place: "장소2",
-    seat: "좌석2",
-    year: "2024",
-    date: "09.07",
-  },
-  {
-    id: 3,
-    profileimg: profileimg,
-    nickname: "닉네임3",
-    heart: 77,
-    title: "제목3",
-    place: "장소3",
-    seat: "좌석3",
-    year: "2024",
-    date: "07.09",
-  },
-  {
-    id: 4,
-    profileimg: profileimg,
-    nickname: "닉네임4",
-    heart: 45,
-    title: "제목4",
-    place: "장소4",
-    seat: "좌석4",
-    year: "2024",
-    date: "12.12",
-  },
-];
-
 const HotTicket = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const [isHeart, setIsHeart] = useState(false);
@@ -111,7 +64,7 @@ const HotTicket = () => {
         <>
           <HotTitle>🔥 지금 핫한 티켓</HotTitle>
           <HotList>
-            {dummy.map((hot) => (
+            {dummy.data.map((hot) => (
               <div>
                 <FlexLine>
                   <ProfileLine>
@@ -144,6 +97,7 @@ const HotTicket = () => {
                   seat={hot.seat}
                   year={hot.year}
                   date={hot.date}
+                  custom={hot.customimg}
                 />
               </div>
             ))}

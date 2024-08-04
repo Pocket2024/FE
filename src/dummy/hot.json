@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "profileimg": "/dummyimg/profileimg.png",
+      "nickname": "포켓몬",
+      "heart": 122,
+      "title": "2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL",
+      "place": "KBS아레나",
+      "seat": "3층 I구역 2열 1",
+      "year": "2024",
+      "date": "02.07"
+    },
+    {
+      "id": 2,
+      "profileimg": "/dummyimg/profileimg.png",
+      "nickname": "김민정",
+      "heart": 98,
+      "title": "2023 aespa 1st Concert ‘SYNK : HYPER LINE’",
+      "place": "잠실실내체육관",
+      "seat": "2층 A구역 2열 3",
+      "year": "2023",
+      "date": "02.25"
+    },
+    {
+      "id": 3,
+      "profileimg": "/dummyimg/profileimg.png",
+      "nickname": "최강두산",
+      "heart": 77,
+      "title": "두산 베어스 vs LG TWINS",
+      "place": "잠실야구장",
+      "seat": "1루 네이비석 316블록 14열 147번",
+      "year": "2024",
+      "date": "07.21"
+    },
+    {
+      "id": 4,
+      "profileimg": "/dummyimg/profileimg.png",
+      "customimg": "/dummyimg/talju.png",
+      "nickname": "영수증",
+      "heart": 45,
+      "title": "탈주 보고싶은데 언제 보냐",
+      "place": "고양행신 CGV",
+      "seat": "G08",
+      "year": "2024",
+      "date": "08.04"
+    }
+  ]
+}
