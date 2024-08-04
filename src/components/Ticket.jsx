@@ -77,7 +77,7 @@ const Circle = styled.div`
   bottom: ${(props) => props.bottom};
 `;
 
-const Ticket = ({ title, place, seat, year, date }) => {
+const Ticket = ({ title, place, seat, year, date, custom }) => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const navigate = useNavigate();
   const id = 1;
@@ -88,7 +88,11 @@ const Ticket = ({ title, place, seat, year, date }) => {
           <TicketBox>
             <Circle top="-10px" />
             <Title>{title || "제목"}</Title>
-            <img src={dummy_img} className="custom-img" alt="custom-img" />
+            <img
+              src={custom || dummy_img}
+              className="custom-img"
+              alt="custom-img"
+            />
             <Place>{place || "장소"}</Place>
             <Seat>{seat || "좌석"}</Seat>
             <Date>

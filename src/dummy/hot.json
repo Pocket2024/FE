@@ -3,6 +3,7 @@
     {
       "id": 1,
       "profileimg": "/dummyimg/profileimg.png",
+      "customimg": "/dummyimg/andteam.png",
       "nickname": "포켓몬",
       "heart": 122,
       "title": "2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL",
@@ -14,6 +15,7 @@
     {
       "id": 2,
       "profileimg": "/dummyimg/profileimg.png",
+      "customimg": "/dummyimg/aespa.png",
       "nickname": "김민정",
       "heart": 98,
       "title": "2023 aespa 1st Concert ‘SYNK : HYPER LINE’",
@@ -25,6 +27,7 @@
     {
       "id": 3,
       "profileimg": "/dummyimg/profileimg.png",
+      "customimg": "/dummyimg/doosan.png",
       "nickname": "최강두산",
       "heart": 77,
       "title": "두산 베어스 vs LG TWINS",
