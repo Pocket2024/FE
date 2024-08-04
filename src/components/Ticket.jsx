@@ -22,7 +22,7 @@ const TicketBox = styled.div`
     position: absolute;
     z-index: 2;
     background-blend-mode: overlay;
-    opacity: 0.4;
+    opacity: 0.45;
     border-radius: 10px;
     left: 0;
   }
