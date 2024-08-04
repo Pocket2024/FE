@@ -10,6 +10,7 @@ import SignupPage from "./pages/SignupPage";
 import MyInfoPage from "./pages/MyInfoPage";
 import DetailPage from "./pages/DetailPage";
 import UploadPage from "./pages/UploadPage";
+import MyTicketDetailPage from "./pages/MyTicketDetailPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/myinfo" element={<MyInfoPage />} />
           <Route path="/detail/:id" element={<DetailPage />} />
           <Route path="/upload" element={<UploadPage />} />
+          <Route path="/myticket/:pocket" element={<MyTicketDetailPage />} />
         </Routes>
       </Page>
     </>
