@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa6";
 import Modal from "react-modal";
 import "../style/Modal.css";
 import { ChromePicker } from "react-color";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div``;
 const PocketTitle = styled.div`
@@ -139,14 +140,19 @@ function getTextColor(bgColorHex) {
 }
 
 const Pocket = () => {
+  const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const [category, setCategory] = useState("");
   const [color, setColor] = useState("#fff");
+  const id = 1; // 임시 포켓 아이디
 
   const onChangeCategory = (e) => setCategory(e.target.value);
   const onChangeColor = (color) => {
     setColor(color.hex);
     console.log(color.hex);
+  };
+  const onClickPocket = () => {
+    navigate(`/myticket/${id}`);
   };
   return (
     <Wrapper>
@@ -156,7 +162,12 @@ const Pocket = () => {
       </PocketTitle>
       <PocketGrid>
         {dummy.map((pocket) => (
-          <PocketDiv color={pocket.color}>
+          <PocketDiv
+            color={pocket.color}
+            onClick={onClickPocket}
+            key={pocket.id}
+            id={pocket.id}
+          >
             <div>
               <div className="category-name">{pocket.category}</div>
               <div className="ticket-count">{pocket.count}</div>
