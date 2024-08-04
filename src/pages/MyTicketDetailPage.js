@@ -3,6 +3,9 @@ import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import Detail from "../components/Detail";
 import UploadBtn from "../components/UploadBtn";
+import { MdNavigateBefore } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import TicketList from "../components/TicketList";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -23,26 +26,44 @@ const TicketArea = styled.div`
   min-height: fit-content;
   overflow: scroll; // ticketarea 스크롤 부분
 `;
-const FavTicket = styled.div`
-  color: white;
+const CategoryLine = styled.div`
   display: flex;
-  font-size: 15px;
-  font-weight: 600;
-  margin: 40px 0 15px 0;
-  height: 15px;
-  line-height: 15px;
-  gap: 0 5px;
-  padding: ${(props) => props.padding};
+  gap: 10px;
+  align-items: center;
+  margin-top: 5vh;
+  .name {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+  }
+  .pocket {
+    font-size: 30px;
+    font-weight: 700;
+    color: white;
+  }
 `;
 
 const MyTicketDetailPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const navigate = useNavigate();
   return (
     <>
       {isDesktop ? (
         <Wrapper>
           <ProfileArea>
-            <div style={{ width: "100%" }}>포켓별 티켓 페이지</div>
+            <div style={{ width: "100%" }}>
+              <CategoryLine>
+                <MdNavigateBefore
+                  color="#A9A9A9"
+                  size={50}
+                  onClick={() => navigate("/myticket")}
+                  style={{ cursor: "pointer" }}
+                />
+                <div className="name">야구</div>
+                <div className="pocket">포켓</div>
+              </CategoryLine>
+              <TicketList />
+            </div>
           </ProfileArea>
           <TicketArea>
             <Detail />
