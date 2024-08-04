@@ -4,6 +4,7 @@ import { FaGetPocket } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import PocketModal from "./PocketModal";
+import dummy from "../dummy/pocket.json";
 
 const Wrapper = styled.div``;
 const PocketTitle = styled.div`
@@ -55,11 +56,6 @@ const PocketDiv = styled.div`
   }
 `;
 
-let dummy = [
-  { id: 1, category: "야구", color: "#FFE976", count: 3 },
-  { id: 2, category: "아이돌", color: "#3C8FDB", count: 8 },
-];
-
 const Pocket = () => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
@@ -75,7 +71,7 @@ const Pocket = () => {
         <div>포켓몬님의 포켓</div>
       </PocketTitle>
       <PocketGrid>
-        {dummy.map((pocket) => (
+        {dummy.data.map((pocket) => (
           <PocketDiv
             color={pocket.color}
             onClick={onClickPocket}

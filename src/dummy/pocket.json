@@ -1,0 +1,7 @@
+{
+  "data": [
+    { "id": 1, "category": "야구", "color": "#FFE976", "count": 3 },
+    { "id": 2, "category": "아이돌", "color": "#3C8FDB", "count": 8 },
+    { "id": 3, "category": "영화", "color": "#E65E2E", "count": 5 }
+  ]
+}
