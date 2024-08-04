@@ -19,12 +19,12 @@ const ProfileArea = styled.div`
   width: 50%;
   display: flex;
   justify-content: center;
-  padding: 0 100px;
+  padding: 10vh 100px;
 `;
 const TicketArea = styled.div`
   width: 50%;
   background-color: rgba(144, 144, 144, 0.06);
-  padding: 100px;
+  padding: 10vh 100px;
   min-height: fit-content;
   overflow: scroll; // ticketarea 스크롤 부분
 `;

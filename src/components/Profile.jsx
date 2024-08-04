@@ -8,7 +8,6 @@ import { useMediaQuery } from "react-responsive";
 
 const ProfileBox = styled.div`
   display: flex;
-  padding-top: 10vh;
   width: 100%;
   img {
     width: 15vh;
