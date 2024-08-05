@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { IoMdImage } from "react-icons/io";
@@ -59,11 +59,11 @@ const AutoBtn = styled.button`
   gap: 0 10px;
   margin-bottom: ${(props) => props.marginbottom || "20px"};
 `;
-const TicketBox = styled.div`
+const TicketBox = styled.label`
   width: 100%;
   height: ${(props) => props.height || "20vh"};
   position: relative;
-  background-color: #262626;
+  background-color: ${(props) => props.background || "#262626"};
   border-radius: 10px;
   overflow: hidden;
   z-index: 1;
@@ -72,6 +72,7 @@ const TicketBox = styled.div`
   align-items: center;
   gap: 0 10px;
   margin-bottom: ${(props) => props.marginbottom};
+  cursor: pointer;
   div {
     color: white;
     font-size: 15px;
@@ -141,6 +142,7 @@ const ReviewArea = styled.textarea`
   margin-bottom: 15px;
   font-weight: 500;
 `;
+const ImgInput = styled.input``;
 
 const UploadPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
@@ -149,6 +151,8 @@ const UploadPage = () => {
   const [place, setPlace] = useState("");
   const [seat, setSeat] = useState("");
   const [review, setReview] = useState("");
+  const [imgFile, setImgFile] = useState("");
+  const imgRef = useRef();
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -161,6 +165,18 @@ const UploadPage = () => {
   };
   const onChangeReview = (e) => {
     setReview(e.target.value);
+  };
+  // 이미지 업로드 input의 onChange
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0] ? imgRef.current.files[0] : "";
+    const reader = new FileReader();
+    if (file != "") {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImgFile(reader.result);
+        console.log(reader.result);
+      };
+    }
   };
 
   return (
@@ -181,11 +197,24 @@ const UploadPage = () => {
                 <IoMdImage size={20} />
                 자동입력에 사용할 티켓 이미지 선택하기
               </AutoBtn>
-              <TicketBox marginbottom="20px">
+              <ImgInput
+                id="customimg"
+                type="file"
+                accept="image/*"
+                onChange={saveImgFile}
+                ref={imgRef}
+                style={{ display: imgFile ? "" : "none" }}
+              />
+              <TicketBox
+                marginbottom="20px"
+                for="customimg"
+                background={imgFile ? "white" : "#262626"}
+              >
                 <Circle top="-5px" />
                 <Circle bottom="-5px" />
                 <FaPlus color="white" size={20} />
                 <div>커스텀 이미지 선택하기</div>
+                {imgFile ? <img src={imgFile} className="custom-img" /> : <></>}
               </TicketBox>
               <Explain fontsize="18px">
                 티켓 표지를 꾸며보세요! 🎫 <br />
