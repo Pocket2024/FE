@@ -39,12 +39,23 @@ const FavTicket = styled.div`
   gap: 0 5px;
   padding: ${(props) => props.padding};
 `;
+const None = styled.div`
+  display: flex;
+  align-items: center;
+  height: calc(80vh - 80px);
+  width: 100%;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.59);
+  font-size: 25px;
+  font-weight: 600;
+`;
 
 const MyTicketPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   // eslint-disable-next-line
   const [infoData, setInfoData] = useState([]);
+  const [clickticket, setClickticket] = useState(false);
 
   const getMyInfo = () => {
     axios
@@ -66,6 +77,10 @@ const MyTicketPage = () => {
     // eslint-disable-next-line
   }, []);
 
+  const handleTicket = () => {
+    setClickticket(true);
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -77,12 +92,14 @@ const MyTicketPage = () => {
                 <BsFillPinFill color="white" />
                 {/*{infoData.nickname}*/}포켓몬님의 대표 티켓
               </FavTicket>
-              <Ticket />
+              <div onClick={handleTicket}>
+                <Ticket />
+              </div>
               <Pocket />
             </div>
           </ProfileArea>
           <TicketArea>
-            <Detail />
+            {clickticket ? <Detail /> : <None>티켓이 이곳에 표시됩니다.</None>}
           </TicketArea>
           <UploadBtn />
         </Wrapper>

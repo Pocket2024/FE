@@ -11,14 +11,13 @@ const TicketDiv = styled.div`
   margin-bottom: 30px;
 `;
 
-const TicketList = () => {
+const TicketList = ({ onClickTicket }) => {
   return (
     <List>
       {dummy.data.map((ticket) => (
         <>
-          <TicketDiv>
+          <TicketDiv key={ticket.id} onClick={onClickTicket}>
             <Ticket
-              key={ticket.id}
               title={ticket.title}
               place={ticket.place}
               seat={ticket.seat}

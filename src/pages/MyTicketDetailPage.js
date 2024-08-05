@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import Detail from "../components/Detail";
@@ -41,10 +41,24 @@ const CategoryLine = styled.div`
     color: white;
   }
 `;
+const None = styled.div`
+  display: flex;
+  align-items: center;
+  height: calc(80vh - 80px);
+  width: 100%;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.59);
+  font-size: 25px;
+  font-weight: 600;
+`;
 
 const MyTicketDetailPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const navigate = useNavigate();
+  const [ticketClick, setTicketClick] = useState(false);
+  const handleTicket = (e) => {
+    setTicketClick(true);
+  };
   return (
     <>
       {isDesktop ? (
@@ -61,11 +75,11 @@ const MyTicketDetailPage = () => {
                 <div className="name">야구</div>
                 <div className="pocket">포켓</div>
               </CategoryLine>
-              <TicketList />
+              <TicketList onClickTicket={handleTicket} />
             </div>
           </ProfileArea>
           <TicketArea>
-            <Detail />
+            {ticketClick ? <Detail /> : <None>티켓이 이곳에 표시됩니다.</None>}
           </TicketArea>
           <UploadBtn />
         </Wrapper>
