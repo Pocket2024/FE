@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import "../style/Modal.css";
+import "../style/PocketModal.css";
 import { ChromePicker } from "react-color";
 import styled from "styled-components";
 

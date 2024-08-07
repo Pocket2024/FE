@@ -5,6 +5,7 @@ import Ticket from "./Ticket";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import dummy from "../dummy/hot.json";
+import TicketModal from "./TicketModal";
 
 const HotTitle = styled.div`
   font-weight: 700;
@@ -50,6 +51,7 @@ const Heart = styled.div`
 const HotTicket = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const [isHeart, setIsHeart] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const handleHeart = () => {
     if (isHeart) {
@@ -57,6 +59,9 @@ const HotTicket = () => {
     } else {
       setIsHeart(!isHeart);
     }
+  };
+  const handleTicket = () => {
+    setModal(true);
   };
   return (
     <>
@@ -90,18 +95,21 @@ const HotTicket = () => {
                     {hot.heart}
                   </Heart>
                 </FlexLine>
-                <Ticket
-                  key={hot.id}
-                  title={hot.title}
-                  place={hot.place}
-                  seat={hot.seat}
-                  year={hot.year}
-                  date={hot.date}
-                  custom={hot.customimg}
-                />
+                <div onClick={handleTicket}>
+                  <Ticket
+                    key={hot.id}
+                    title={hot.title}
+                    place={hot.place}
+                    seat={hot.seat}
+                    year={hot.year}
+                    date={hot.date}
+                    custom={hot.customimg}
+                  />
+                </div>
               </div>
             ))}
           </HotList>
+          <TicketModal isOpen={modal} onRequestClose={() => setModal(false)} />
         </>
       ) : (
         <Ticket />
