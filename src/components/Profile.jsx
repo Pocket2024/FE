@@ -32,6 +32,7 @@ const Profile = () => {
       .then((res) => {
         console.log(res);
         setInfoData(res.data);
+        localStorage.setItem("userId", res.data.id);
       })
       .catch((err) => {
         console.error("Error get info", err);

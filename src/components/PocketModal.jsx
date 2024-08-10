@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import "../style/PocketModal.css";
 import { ChromePicker } from "react-color";
 import styled from "styled-components";
+import axios from "axios";
 
 const customStyles = {
   overlay: {
@@ -59,6 +60,28 @@ function getTextColor(bgColorHex) {
 const PocketModal = ({ isOpen, onRequestClose }) => {
   const [category, setCategory] = useState("");
   const [color, setColor] = useState("#fff");
+  const userId = localStorage.getItem("userId");
+  let ACCESS_TOKEN = localStorage.getItem("accessToken");
+
+  const createPocket = () => {
+    axios
+      .post(
+        `http://127.0.0.1:8080/api/categories/${userId}`,
+        { category: category, color: color },
+        {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        alert("포켓이 생성되었습니다.");
+      })
+      .catch((err) => {
+        console.log("create pocket error", err);
+      });
+  };
 
   const onChangeCategory = (e) => setCategory(e.target.value);
 
@@ -84,7 +107,7 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
               {category || "포켓"}
             </span>
           </div>
-          <CreateBtn>만들기!</CreateBtn>
+          <CreateBtn onClick={createPocket}>만들기!</CreateBtn>
         </ColorValue>
       </div>
     </Modal>
