@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaGetPocket } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import PocketModal from "./PocketModal";
 import dummy from "../dummy/pocket.json";
+import axios from "axios";
 
 const Wrapper = styled.div``;
 const PocketTitle = styled.div`
@@ -56,14 +57,60 @@ const PocketDiv = styled.div`
   }
 `;
 
+// hex 컬러를 rgb로 바꾸는 함수
+function hexToRgb(hex) {
+  let r = 0,
+    g = 0,
+    b = 0;
+  if (hex.length === 4) {
+    r = parseInt(hex[1] + hex[1], 16);
+    g = parseInt(hex[2] + hex[2], 16);
+    b = parseInt(hex[3] + hex[3], 16);
+  } else if (hex.length === 7) {
+    r = parseInt(hex[1] + hex[2], 16);
+    g = parseInt(hex[3] + hex[4], 16);
+    b = parseInt(hex[5] + hex[6], 16);
+  }
+  return { r, g, b };
+}
+
+// hex를 받아서 명도 확인하고 검/흰 리턴하는 함수
+function getTextColor(bgColorHex) {
+  const { r, g, b } = hexToRgb(bgColorHex);
+  const average = (r + g + b) / 3;
+  return average > 127.5 ? "#000000" : "#FFFFFF";
+}
+
 const Pocket = () => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
+  let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  const [pocket, setPocket] = useState([]);
   const id = 1; // 임시 포켓 아이디
 
-  const onClickPocket = () => {
-    navigate(`/myticket/${id}`);
+  const getPocket = () => {
+    axios
+      .get("http://127.0.0.1:8080/api/categories/getTicketCategories", {
+        headers: {
+          Authorization: `${ACCESS_TOKEN}`,
+        },
+      })
+      .then((res) => {
+        console.log("pocket", res);
+        setPocket(res.data.categories);
+      })
+      .catch((err) => {
+        console.log("get pocket error", err);
+      });
   };
+
+  const onClickPocket = (pocketId) => {
+    navigate(`/myticket/${pocketId}`);
+  };
+
+  useEffect(() => {
+    getPocket();
+  }, []);
   return (
     <Wrapper>
       <PocketTitle>
@@ -71,16 +118,16 @@ const Pocket = () => {
         <div>포켓몬님의 포켓</div>
       </PocketTitle>
       <PocketGrid>
-        {dummy.data.map((pocket) => (
+        {pocket.map((pocket) => (
           <PocketDiv
             color={pocket.color}
-            onClick={onClickPocket}
+            onClick={() => onClickPocket(pocket.id)}
             key={pocket.id}
             id={pocket.id}
           >
-            <div>
+            <div style={{ color: `${getTextColor(pocket.color)}` }}>
               <div className="category-name">{pocket.category}</div>
-              <div className="ticket-count">{pocket.count}</div>
+              <div className="ticket-count">{/*pocket.count*/}0</div>
             </div>
           </PocketDiv>
         ))}
