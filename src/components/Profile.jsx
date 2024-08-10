@@ -47,11 +47,11 @@ const Profile = () => {
     <>
       {isDesktop ? (
         <ProfileBox>
-          <img src={profileimg} alt="profileimg" />
+          <img src={infoData.profileImageUrl} alt="profileimg" />
           <TxtInfo mleft="2vw">
             <div>
               <NameLine line="3vh">
-                <Nickname fsize="3vh">{infoData.nickname}</Nickname>
+                <Nickname fsize="3vh">{infoData.nickName}</Nickname>
                 <IoMdSettings
                   size={27}
                   className="SettingIcon"
@@ -65,19 +65,19 @@ const Profile = () => {
               <NumLine mtop="10px">
                 <Unit fsize="18px">
                   <Title>포켓</Title>
-                  <Num>0</Num>
+                  <Num>{infoData.ticketCategoryCount}</Num>
                 </Unit>
                 <Unit fsize="18px">
                   <Title>티켓</Title>
-                  <Num>0</Num>
+                  <Num>{infoData.reviewCount}</Num>
                 </Unit>
                 <Unit fsize="18px">
                   <Title>팔로워</Title>
-                  <Num fcolor="#727272">0</Num>
+                  <Num fcolor="#727272">{infoData.followersCount}</Num>
                 </Unit>
                 <Unit fsize="18px">
                   <Title>팔로잉</Title>
-                  <Num fcolor="#727272">0</Num>
+                  <Num fcolor="#727272">{infoData.followingsCount}</Num>
                 </Unit>
               </NumLine>
             </div>
