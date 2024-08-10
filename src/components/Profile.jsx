@@ -50,7 +50,7 @@ const Profile = () => {
           <TxtInfo mleft="2vw">
             <div>
               <NameLine line="3vh">
-                <Nickname fsize="3vh">{/*{infoData.nickname}*/}포켓몬</Nickname>
+                <Nickname fsize="3vh">{infoData.nickname}</Nickname>
                 <IoMdSettings
                   size={27}
                   className="SettingIcon"
@@ -59,7 +59,7 @@ const Profile = () => {
                 />
               </NameLine>
               <Bio fsize="2vh" mtop="10px">
-                {/*{infoData.bio}*/}티켓꾸미기아티스트
+                {infoData.bio}
               </Bio>
               <NumLine mtop="10px">
                 <Unit fsize="18px">
@@ -88,14 +88,14 @@ const Profile = () => {
           <TxtInfo height="23vw">
             <div>
               <NameLine>
-                <Nickname>{/*{infoData.nickname}*/}포켓몬</Nickname>
+                <Nickname>{infoData.nickname}</Nickname>
                 <IoMdSettings
                   size={20}
                   className="SettingIcon"
                   onClick={() => navigate("/myinfo")}
                 />
               </NameLine>
-              <Bio>{/*{infoData.bio}*/}티켓꾸미기아티스트</Bio>
+              <Bio>{infoData.bio}</Bio>
               <NumLine>
                 <Unit>
                   <Title>포켓</Title>
