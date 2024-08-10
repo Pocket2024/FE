@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import "../style/PocketModal.css";
 import { ChromePicker } from "react-color";
 import styled from "styled-components";
-import axios from "axios";
+import api from "../api/api";
 
 const customStyles = {
   overlay: {
@@ -64,9 +64,9 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
 
   const createPocket = () => {
-    axios
+    api
       .post(
-        `http://127.0.0.1:8080/api/categories/${userId}`,
+        `/api/categories/${userId}`,
         { category: category, color: color },
         {
           headers: {

@@ -4,8 +4,7 @@ import { FaGetPocket } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import PocketModal from "./PocketModal";
-import dummy from "../dummy/pocket.json";
-import axios from "axios";
+import api from "../api/api";
 
 const Wrapper = styled.div``;
 const PocketTitle = styled.div`
@@ -89,8 +88,8 @@ const Pocket = () => {
   const id = 1; // 임시 포켓 아이디
 
   const getPocket = () => {
-    axios
-      .get("http://127.0.0.1:8080/api/categories/getTicketCategories", {
+    api
+      .get("/api/categories/getTicketCategories", {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },

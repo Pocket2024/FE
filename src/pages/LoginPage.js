@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/api";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -23,8 +23,8 @@ const LoginPage = () => {
     setPw(e.target.value);
   };
   const handleLogin = () => {
-    axios
-      .post("http://127.0.0.1:8080/api/users/login", {
+    api
+      .post("/api/users/login", {
         email: email,
         password: pw,
       })

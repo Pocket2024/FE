@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/api";
 import welcome from "../images/welcome.svg";
 
 const Wrapper = styled.div`
@@ -114,8 +114,8 @@ const SignupPage = () => {
   };
 
   const handleSignup = () => {
-    axios
-      .post("http://127.0.0.1:8080/api/users/signup", {
+    api
+      .post("/api/users/signup", {
         email: email,
         nickName: nickname,
         password: pw,

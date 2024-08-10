@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import api from "../api/api";
 import profileimg from "../images/profileimg.png";
 import { IoMdSettings } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -23,8 +23,8 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const getMyInfo = () => {
-    axios
-      .get("http://127.0.0.1:8080/api/users/details", {
+    api
+      .get("/api/users/details", {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },

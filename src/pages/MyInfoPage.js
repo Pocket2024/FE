@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import api from "../api/api";
 import { useMediaQuery } from "react-responsive";
 
 const Wrapper = styled.div`
@@ -24,8 +24,8 @@ const MyInfoPage = () => {
   const [bio, setBio] = useState("");
 
   const getMyInfo = () => {
-    axios
-      .get("http://127.0.0.1:8080/api/users/details", {
+    api
+      .get("/api/users/details", {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },
@@ -69,9 +69,9 @@ const MyInfoPage = () => {
   const handleEdit = () => {
     console.log(nickname);
     console.log(phone);
-    axios
+    api
       .put(
-        `http://localhost:8080/api/users/${infoData.id}`,
+        `/api/users/${infoData.id}`,
         {
           nickname: nickname,
           bio: bio,

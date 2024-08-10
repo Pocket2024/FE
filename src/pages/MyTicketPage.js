@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import api from "../api/api";
 import { useMediaQuery } from "react-responsive";
 import { BsFillPinFill } from "react-icons/bs";
 import Profile from "../components/Profile";
@@ -58,8 +58,8 @@ const MyTicketPage = () => {
   const [clickticket, setClickticket] = useState(false);
 
   const getMyInfo = () => {
-    axios
-      .get("http://127.0.0.1:8080/api/users/details", {
+    api
+      .get("/api/users/details", {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },
