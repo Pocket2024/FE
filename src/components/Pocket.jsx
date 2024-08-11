@@ -104,8 +104,8 @@ const Pocket = () => {
       });
   };
 
-  const onClickPocket = (pocketId) => {
-    navigate(`/myticket/${pocketId}`);
+  const onClickPocket = (pocketId, category) => {
+    navigate(`/myticket/${pocketId}`, { state: category });
   };
 
   useEffect(() => {
@@ -121,7 +121,7 @@ const Pocket = () => {
         {pocket.map((pocket) => (
           <PocketDiv
             color={pocket.color}
-            onClick={() => onClickPocket(pocket.id)}
+            onClick={() => onClickPocket(pocket.id, pocket.category)}
             key={pocket.id}
             id={pocket.id}
           >

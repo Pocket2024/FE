@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Detail from "../components/Detail";
 import UploadBtn from "../components/UploadBtn";
 import { MdNavigateBefore } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TicketList from "../components/TicketList";
 import { useResponsive } from "../context/Responsive";
 
@@ -54,6 +54,7 @@ const None = styled.div`
 
 const MyTicketDetailPage = () => {
   const { isDesktop } = useResponsive();
+  const { state } = useLocation();
   const navigate = useNavigate();
   const [ticketClick, setTicketClick] = useState(false);
   const handleTicket = (e) => {
@@ -72,7 +73,7 @@ const MyTicketDetailPage = () => {
                   onClick={() => navigate("/myticket")}
                   style={{ cursor: "pointer" }}
                 />
-                <div className="name">야구</div>
+                <div className="name">{state}</div>
                 <div className="pocket">포켓</div>
               </CategoryLine>
               <TicketList onClickTicket={handleTicket} />

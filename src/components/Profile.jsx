@@ -24,13 +24,13 @@ const Profile = () => {
 
   const getMyInfo = () => {
     api
-      .get("/api/users/details", {
+      .get(`/api/users/details/1`, {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log("profile", res);
         setInfoData(res.data);
         localStorage.setItem("userId", res.data.id);
       })
@@ -40,7 +40,6 @@ const Profile = () => {
   };
   useEffect(() => {
     getMyInfo();
-    // eslint-disable-next-line
   }, []);
 
   return (
@@ -48,7 +47,7 @@ const Profile = () => {
       {isDesktop ? (
         <ProfileBox>
           <img
-            src={`http://127.0.0.1/static/images/default.png`}
+            src={`http://localhost:8080/images/${infoData.profileImageUrl}`}
             alt="profileimg"
           />
           <TxtInfo mleft="2vw">

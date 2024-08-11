@@ -187,6 +187,14 @@ const UploadPage = () => {
     }
   };
 
+  const dateToString = (date) => {
+    return (
+      date.getFullYear() +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      date.getDate().toString().padStart(2, "0")
+    );
+  };
+
   const uploadTicket = () => {
     const formData = new FormData();
 
@@ -194,7 +202,7 @@ const UploadPage = () => {
     formData.append("title", title);
     formData.append("content", review);
     formData.append("seat", seat);
-    formData.append("date", date);
+    formData.append("date", dateToString(date));
     formData.append("location", place);
     formData.append("images", realfile);
 

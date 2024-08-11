@@ -48,8 +48,8 @@ const TicketList = ({ onClickTicket }) => {
               title={ticket.title}
               place={ticket.location}
               seat={ticket.seat}
-              year={ticket.year}
-              date={ticket.date}
+              year={ticket.date.substr(0, 4)}
+              date={ticket.date.substr(4, 8)}
               custom={ticket.customimg}
             />
           </TicketDiv>
