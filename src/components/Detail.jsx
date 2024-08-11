@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import profileimg from "../images/profileimg.png";
 import { MdSaveAlt } from "react-icons/md";
@@ -10,6 +10,8 @@ import { saveAs } from "file-saver";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useResponsive } from "../context/Responsive";
+import { useParams } from "react-router-dom";
+import api from "../api/api";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -101,6 +103,11 @@ const Detail = () => {
   const ticketRef = useRef();
   const [heart, setHeart] = useState(0);
   const [isHeart, setIsHeart] = useState(false);
+  const { ticket } = useParams();
+  const userId = localStorage.getItem("userId");
+  let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  const [detail, setDetail] = useState([]);
+
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
       const ticket = ticketRef.current; // 현재 티켓 dom에 접근
@@ -184,6 +191,26 @@ const Detail = () => {
     }
   };
 
+  const getDetail = () => {
+    api
+      .get(`/api/reviews/${ticket}?userId=${userId}`, {
+        headers: {
+          Authorization: `${ACCESS_TOKEN}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setDetail(res.data);
+      })
+      .catch((err) => {
+        console.log("get detail err", err);
+      });
+  };
+
+  useEffect(() => {
+    getDetail();
+  }, []);
+
   return (
     <>
       {isDesktop ? (
@@ -198,18 +225,21 @@ const Detail = () => {
                 <MdSaveAlt color="#DEDEDE" size={40} />
               </SaveBtn>
             </FirstLine>
-            <Title>
-              {/* 2023 aespa 1st Concert ‘SYNK : HYPER LINE’ */}무적 LG vs 최강
-              두산
-            </Title>
+            <Title>{detail.title}</Title>
             <PlaceLine>
               <MdPlace size={25} />
-              <Place>{/*잠실체육관*/}잠실야구장</Place>
-              <Seat>{/*2층 A구역 2열 3*/}1루 네이비석 316블록 14열 147번</Seat>
+              <Place>{detail.location}</Place>
+              <Seat>{detail.seat}</Seat>
             </PlaceLine>
             <PlaceLine>
               <FaRegCalendar size={23} />
-              <Place>{/*2023.02.25*/}2024.07.21</Place>
+              <Place>
+                {detail.date.substr(0, 4) +
+                  "." +
+                  detail.date.substr(4, 6) +
+                  "." +
+                  detail.date.substr(6, 8)}
+              </Place>
             </PlaceLine>
             <svg width="500" height="3" style={{ marginTop: "35px" }}>
               <line
@@ -220,13 +250,7 @@ const Detail = () => {
                 strokeDasharray="15,10" // 10px 선, 5px 간격
               />
             </svg>
-            <Comment>
-              이번에도 패요의 역할을.. 그래도 3점까지 내는 거 처음 직관했다 완전
-              럭키예지 그치만 장마기간에 맑은 날씨가 당첨된 건 정말 럭키
-              마지막에 뽕짝 edm도 듣고 불꽃놀이까지🎆 야구장에서도, 야구장
-              밖에서도 컨텐츠가 끊이질 않았던 즐거운 하루 <br />
-              👥 with 빈, 서현
-            </Comment>
+            <Comment>{detail.content}</Comment>
           </TicketBox>
           <HeartLine height="20px">
             {isHeart ? (
