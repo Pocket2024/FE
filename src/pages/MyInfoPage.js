@@ -101,7 +101,7 @@ const MyInfoPage = () => {
         <Wrapper>
           <div>
             <Line mbottom="30px" ptop="5vh">
-              <Name size="30px">{infoData.nickname}</Name>
+              <Name size="30px">{infoData.nickName}</Name>
               <MTxt size="30px">님의 정보</MTxt>
             </Line>
             <Title fontsize="25px">이메일</Title>
@@ -111,11 +111,11 @@ const MyInfoPage = () => {
               <Input
                 fontsize="20px"
                 onChange={onChangeNickname}
-                defaultValue={infoData.nickname}
+                defaultValue={infoData.nickName}
                 placeholder="닉네임을 입력해주세요."
               />
             ) : (
-              <Contents fontsize="20px">{infoData.nickname}</Contents>
+              <Contents fontsize="20px">{infoData.nickName}</Contents>
             )}
             <Title fontsize="25px">휴대폰 번호</Title>
             {isedit ? (
@@ -143,7 +143,7 @@ const MyInfoPage = () => {
               <Contents fontsize="20px">{infoData.bio}</Contents>
             )}
             <Title fontsize="25px">프로필 이미지</Title>
-            <Contents fontsize="20px">{infoData.profileImage}</Contents>
+            <Contents fontsize="20px">{infoData.profileImageUrl}</Contents>
             {isedit ? (
               <EditBtn fontsize="17px" onClick={handleEdit}>
                 수정 완료
@@ -154,6 +154,7 @@ const MyInfoPage = () => {
               </EditBtn>
             )}
           </div>
+          <Logout>로그아웃</Logout>
         </Wrapper>
       ) : (
         <MWrapper>
@@ -209,6 +210,7 @@ const MyInfoPage = () => {
               정보 수정하기
             </EditBtn>
           )}
+          <Logout>로그아웃</Logout>
         </MWrapper>
       )}
     </>
@@ -286,4 +288,12 @@ const Input = styled.input`
   &:focus {
     border: 1.5px solid rgba(60, 143, 219, 0.64);
   }
+`;
+
+const Logout = styled.div`
+  font-size: 15px;
+  font-weight: 600;
+  color: #d9d9d9;
+  width: 100%;
+  text-align: center;
 `;

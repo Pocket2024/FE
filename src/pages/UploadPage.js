@@ -155,6 +155,7 @@ const UploadPage = () => {
   const [seat, setSeat] = useState("");
   const [review, setReview] = useState("");
   const [imgFile, setImgFile] = useState("");
+  const [realfile, setRealFile] = useState([]);
   const imgRef = useRef();
   const [category, setCategory] = useState([]);
   const [categoryId, setCategoryId] = useState();
@@ -164,7 +165,7 @@ const UploadPage = () => {
     setTitle(e.target.value);
   };
   const onChangePlace = (e) => {
-    setPlace(e.target.place);
+    setPlace(e.target.value);
   };
   const onChangeSeat = (e) => {
     setSeat(e.target.value);
@@ -175,6 +176,7 @@ const UploadPage = () => {
   // 이미지 업로드 input의 onChange
   const saveImgFile = () => {
     const file = imgRef.current.files[0] ? imgRef.current.files[0] : "";
+    setRealFile(file);
     const reader = new FileReader();
     if (file != "") {
       reader.readAsDataURL(file);
@@ -188,18 +190,20 @@ const UploadPage = () => {
   const uploadTicket = () => {
     const formData = new FormData();
 
-    const value = {
-      ticketCategoryId: 1,
-      title: title,
-      content: review,
-      seat: seat,
-      date: date,
-      location: place,
-    };
+    formData.append("ticketCategoryId", 1);
+    formData.append("title", title);
+    formData.append("content", review);
+    formData.append("seat", seat);
+    formData.append("date", date);
+    formData.append("location", place);
+    formData.append("images", realfile);
 
-    const blob = new Blob([JSON.stringify(value)], {
-      type: "application/json",
-    });
+    for (let key of formData.keys()) {
+      console.log("key: " + key);
+    }
+    for (let value of formData.values()) {
+      console.log("value: " + value);
+    }
 
     api
       .post("/api/reviews", formData, {
@@ -321,6 +325,8 @@ const UploadPage = () => {
               marginbottom="25px"
               fontsize="18px"
             />
+            <InfoTitle fontsize="20px">사진</InfoTitle>
+            <input type="file" onChange={saveImgFile} ref={imgRef} />
             <InfoTitle fontsize="20px">나의 후기</InfoTitle>
             <ReviewArea
               value={review}

@@ -47,7 +47,10 @@ const Profile = () => {
     <>
       {isDesktop ? (
         <ProfileBox>
-          <img src={infoData.profileImageUrl} alt="profileimg" />
+          <img
+            src={`http://127.0.0.1/static/images/default.png`}
+            alt="profileimg"
+          />
           <TxtInfo mleft="2vw">
             <div>
               <NameLine line="3vh">
