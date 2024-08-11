@@ -186,14 +186,26 @@ const UploadPage = () => {
   };
 
   const uploadTicket = () => {
+    const formData = new FormData();
+
+    const value = {
+      ticketCategoryId: 1,
+      title: title,
+      content: review,
+      seat: seat,
+      date: date,
+      location: place,
+    };
+
+    const blob = new Blob([JSON.stringify(value)], {
+      type: "application/json",
+    });
+
     api
-      .post("/api/reviews", {
-        ticketCategoryId: categoryId,
-        title: title,
-        content: review,
-        seat: seat,
-        date: date,
-        location: place,
+      .post("/api/reviews", formData, {
+        headers: {
+          Authorization: `${ACCESS_TOKEN}`,
+        },
       })
       .then((res) => {
         console.log(res);
