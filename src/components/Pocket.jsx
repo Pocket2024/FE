@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 import PocketModal from "./PocketModal";
 import api from "../api/api";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 100%;
+`;
 const PocketTitle = styled.div`
   display: flex;
   gap: 0 10px;
@@ -22,7 +24,7 @@ const PocketTitle = styled.div`
 `;
 const PocketGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 210px);
+  grid-template-columns: repeat(3, 33%);
   gap: 30px 0;
   margin-top: 20px;
   .createBtn {
@@ -35,7 +37,7 @@ const PocketGrid = styled.div`
   }
 `;
 const PocketDiv = styled.div`
-  width: 180px; /* 너비 설정 */
+  width: 85%; /* 너비 설정 */
   height: 160px; /* 높이 설정 */
   background-color: white; /* 배경 색 설정 */
   border-radius: 20px 20px 50% 50%; /* 반원 모양 설정 */
@@ -85,7 +87,6 @@ const Pocket = () => {
   const [modal, setModal] = useState(false);
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [pocket, setPocket] = useState([]);
-  const id = 1; // 임시 포켓 아이디
 
   const getPocket = () => {
     api
