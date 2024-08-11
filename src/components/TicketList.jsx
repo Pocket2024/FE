@@ -80,7 +80,7 @@ const TicketList = () => {
                 place={ticket.location}
                 seat={ticket.seat}
                 year={ticket.date.substr(0, 4)}
-                date={ticket.date.substr(4, 8)}
+                date={ticket.date.substr(5, 9)}
                 custom={ticket.customimg}
               />
             </TicketDiv>

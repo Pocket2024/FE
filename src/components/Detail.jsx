@@ -233,13 +233,7 @@ const Detail = () => {
             </PlaceLine>
             <PlaceLine>
               <FaRegCalendar size={23} />
-              <Place>
-                {detail.date.substr(0, 4) +
-                  "." +
-                  detail.date.substr(4, 6) +
-                  "." +
-                  detail.date.substr(6, 8)}
-              </Place>
+              <Place>{detail.date}</Place>
             </PlaceLine>
             <svg width="500" height="3" style={{ marginTop: "35px" }}>
               <line
