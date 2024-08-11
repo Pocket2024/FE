@@ -209,7 +209,7 @@ const Detail = () => {
 
   useEffect(() => {
     getDetail();
-  }, []);
+  }, [ticket]);
 
   return (
     <>
