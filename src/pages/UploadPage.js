@@ -1,9 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { IoMdImage } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import DatePicker from "../components/DatePicker";
+import api from "../api/api";
+import { useNavigate } from "react-router-dom";
+import { MdFileUpload } from "react-icons/md";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -32,9 +35,8 @@ const Title = styled.div`
   gap: 0 5px;
   margin: ${(props) => props.margin || "5vh 0 0 0"};
   white-space: nowrap;
-  div {
-    color: #ca3525;
-  }
+  height: 55px;
+  align-items: center;
 `;
 const Explain = styled.div`
   font-size: ${(props) => props.fontsize || "10px"};
@@ -146,6 +148,7 @@ const ImgInput = styled.input``;
 
 const UploadPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());
   const [place, setPlace] = useState("");
@@ -153,6 +156,9 @@ const UploadPage = () => {
   const [review, setReview] = useState("");
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
+  const [category, setCategory] = useState([]);
+  const [categoryId, setCategoryId] = useState();
+  let ACCESS_TOKEN = localStorage.getItem("accessToken");
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -179,6 +185,48 @@ const UploadPage = () => {
     }
   };
 
+  const uploadTicket = () => {
+    api
+      .post("/api/reviews", {
+        ticketCategoryId: categoryId,
+        title: title,
+        content: review,
+        seat: seat,
+        date: date,
+        location: place,
+      })
+      .then((res) => {
+        console.log(res);
+        alert("티켓을 업로드했습니다.");
+        navigate("/myticket");
+      })
+      .catch((err) => {
+        console.log("upload error", err);
+      });
+  };
+
+  const getmyCat = () => {
+    api
+      .get("/api/categories/getTicketCategories", {
+        headers: {
+          Authorization: `${ACCESS_TOKEN}`,
+        },
+      })
+      .then((res) => {
+        setCategory(res.data.categories);
+      })
+      .catch((err) => {
+        console.log("get category error", err);
+      });
+  };
+  useEffect(() => {
+    getmyCat();
+  }, []);
+
+  const onChangeCat = (e) => {
+    setCategoryId(e.target.value);
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -186,7 +234,14 @@ const UploadPage = () => {
           <RightArea>
             <div style={{ width: "100%" }}>
               <Title fontsize="40px" margin="0 0 10px 0">
-                <div>아이돌</div>포켓에 티켓 업로드
+                <ItemBox onChange={onChangeCat} value={categoryId}>
+                  {category.map((category) => (
+                    <Item key={category.id} value={category.id}>
+                      {category.category}
+                    </Item>
+                  ))}
+                </ItemBox>{" "}
+                포켓에 티켓 업로드
               </Title>
               <Explain fontsize="18px">
                 티켓 이미지를 업로드하여 자동입력해보세요. 🤩
@@ -261,6 +316,10 @@ const UploadPage = () => {
               marginbottom="25px"
               fontsize="18px"
             />
+            <Button onClick={uploadTicket}>
+              <MdFileUpload size={30} />
+              <div>티켓 업로드</div>
+            </Button>
           </LeftArea>
         </Wrapper>
       ) : (
@@ -303,3 +362,37 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
+
+const Button = styled.button`
+  background-color: white;
+  border: none;
+  color: #262626;
+  padding: 20px 30px;
+  display: flex;
+  height: fit-content;
+  z-index: 100;
+  border-radius: 50px;
+  gap: 0 10px;
+  float: right;
+  margin-top: 20px;
+  div {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  &:hover {
+    background-color: #ffe976;
+  }
+`;
+
+const ItemBox = styled.select`
+  padding: 5px 20px;
+  width: 150px;
+  font-size: 40px;
+  font-weight: 700;
+  border: 1.5px solid #c6c6c6;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  color: #ca3525;
+`;
+const Item = styled.option``;
