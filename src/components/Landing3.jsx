@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper3 = styled.div`
   height: 90vh;
@@ -47,7 +47,7 @@ const ButtonLine = styled.div`
 const Landing3 = () => {
   const [isHover, setIsHover] = useState(false);
   const [isHover2, setIsHover2] = useState(false);
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   const navigate = useNavigate();
   return (
     <>

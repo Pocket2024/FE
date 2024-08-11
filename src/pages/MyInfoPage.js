@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import api from "../api/api";
-import { useMediaQuery } from "react-responsive";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const MyInfoPage = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [infoData, setInfoData] = useState([]);
   const [isedit, setIsEdit] = useState(false);

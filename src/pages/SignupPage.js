@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import welcome from "../images/welcome.svg";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -33,7 +33,7 @@ const Welcome = styled.div`
 `;
 
 const SignupPage = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { useMediaQuery } from "react-responsive";
 import { IoMdImage } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import DatePicker from "../components/DatePicker";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { MdFileUpload } from "react-icons/md";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -147,7 +147,7 @@ const ReviewArea = styled.textarea`
 const ImgInput = styled.input``;
 
 const UploadPage = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());

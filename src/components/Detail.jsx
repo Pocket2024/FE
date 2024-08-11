@@ -7,9 +7,9 @@ import { FaRegCalendar } from "react-icons/fa6";
 //import domtoimage from "dom-to-image";
 import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
-import { useMediaQuery } from "react-responsive";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -97,7 +97,7 @@ const HeartLine = styled.div`
 `;
 
 const Detail = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   const ticketRef = useRef();
   const [heart, setHeart] = useState(0);
   const [isHeart, setIsHeart] = useState(false);

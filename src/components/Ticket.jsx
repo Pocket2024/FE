@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import dummy_img from "../images/profileimg.png";
-import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   cursor: pointer;
@@ -78,7 +78,7 @@ const Circle = styled.div`
 `;
 
 const Ticket = ({ title, place, seat, year, date, custom }) => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   const navigate = useNavigate();
   const id = 1;
   return (

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import Detail from "../components/Detail";
 import UploadBtn from "../components/UploadBtn";
 import { MdNavigateBefore } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import TicketList from "../components/TicketList";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -53,7 +53,7 @@ const None = styled.div`
 `;
 
 const MyTicketDetailPage = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   const navigate = useNavigate();
   const [ticketClick, setTicketClick] = useState(false);
   const handleTicket = (e) => {

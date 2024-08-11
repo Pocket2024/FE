@@ -11,24 +11,27 @@ import MyInfoPage from "./pages/MyInfoPage";
 import DetailPage from "./pages/DetailPage";
 import UploadPage from "./pages/UploadPage";
 import MyTicketDetailPage from "./pages/MyTicketDetailPage";
+import { ResponsiveProvider } from "./context/Responsive";
 
 function App() {
   return (
     <>
-      <TopBar />
-      <Page>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/myticket" element={<MyTicketPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/myinfo" element={<MyInfoPage />} />
-          <Route path="/detail/:id" element={<DetailPage />} />
-          <Route path="/upload" element={<UploadPage />} />
-          <Route path="/myticket/:pocket" element={<MyTicketDetailPage />} />
-        </Routes>
-      </Page>
+      <ResponsiveProvider>
+        <TopBar />
+        <Page>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/myticket" element={<MyTicketPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/myinfo" element={<MyInfoPage />} />
+            <Route path="/detail/:id" element={<DetailPage />} />
+            <Route path="/upload" element={<UploadPage />} />
+            <Route path="/myticket/:pocket" element={<MyTicketDetailPage />} />
+          </Routes>
+        </Page>
+      </ResponsiveProvider>
     </>
   );
 }

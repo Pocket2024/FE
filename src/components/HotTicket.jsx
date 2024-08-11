@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useMediaQuery } from "react-responsive";
 import Ticket from "./Ticket";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import dummy from "../dummy/hot.json";
 import TicketModal from "./TicketModal";
+import { useResponsive } from "../context/Responsive";
 
 const HotTitle = styled.div`
   font-weight: 700;
@@ -49,7 +49,7 @@ const Heart = styled.div`
 `;
 
 const HotTicket = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   const [isHeart, setIsHeart] = useState(false);
   const [modal, setModal] = useState(false);
 

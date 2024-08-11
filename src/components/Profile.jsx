@@ -4,7 +4,7 @@ import api from "../api/api";
 import profileimg from "../images/profileimg.png";
 import { IoMdSettings } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+import { useResponsive } from "../context/Responsive";
 
 const ProfileBox = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const ProfileBox = styled.div`
 `;
 
 const Profile = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [infoData, setInfoData] = useState([]);
   const navigate = useNavigate();
@@ -47,10 +47,7 @@ const Profile = () => {
     <>
       {isDesktop ? (
         <ProfileBox>
-          <img
-            src={`http://127.0.0.1:8080/images/${infoData.profileImageUrl}`}
-            alt="profileimg"
-          />
+          <img src={infoData.profileImageUrl} alt="profileimg" />
           <TxtInfo mleft="2vw">
             <div>
               <NameLine line="3vh">

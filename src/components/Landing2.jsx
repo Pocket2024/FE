@@ -5,9 +5,9 @@ import { ReactComponent as LogoIcon } from "../images/pocketlogo_white.svg";
 import one from "../images/first.svg";
 import two from "../images/second.svg";
 import three from "../images/third.svg";
-import { useMediaQuery } from "react-responsive";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-scroll/modules";
+import { useResponsive } from "../context/Responsive";
 
 const arrow = keyframes`
     0% {
@@ -119,7 +119,7 @@ const ArrowDiv = styled.div`
 `;
 
 const Landing2 = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
 
   return (
     <>

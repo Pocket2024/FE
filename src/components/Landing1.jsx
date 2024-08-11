@@ -7,9 +7,9 @@ import icon_ticket from "../images/ticket.svg";
 import icon_star from "../images/star.svg";
 import icon_pocket from "../images/pocket.svg";
 import { ReactComponent as LogoIcon } from "../images/pocketlogo_white.svg";
-import { useMediaQuery } from "react-responsive";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Link } from "react-scroll/modules";
+import { useResponsive } from "../context/Responsive";
 
 const roll = keyframes`
     0% {
@@ -110,7 +110,7 @@ const ArrowDiv = styled.div`
   }
 `;
 const Landing1 = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   return (
     <>
       {isDesktop ? (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import api from "../api/api";
 import { useMediaQuery } from "react-responsive";
@@ -8,6 +8,7 @@ import Ticket from "../components/Ticket";
 import Detail from "../components/Detail";
 import UploadBtn from "../components/UploadBtn";
 import Pocket from "../components/Pocket";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -51,7 +52,7 @@ const None = styled.div`
 `;
 
 const MyTicketPage = () => {
-  const isDesktop = useMediaQuery({ minWidth: 1220 });
+  const { isDesktop } = useResponsive();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   // eslint-disable-next-line
   const [infoData, setInfoData] = useState([]);
