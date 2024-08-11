@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Detail from "../components/Detail";
 import UploadBtn from "../components/UploadBtn";
-import { MdNavigateBefore } from "react-icons/md";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import TicketList from "../components/TicketList";
 import { useResponsive } from "../context/Responsive";
 
@@ -26,21 +25,6 @@ const TicketArea = styled.div`
   min-height: fit-content;
   overflow: scroll; // ticketarea 스크롤 부분
 `;
-const CategoryLine = styled.div`
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  .name {
-    font-size: 30px;
-    font-weight: 700;
-    color: white;
-  }
-  .pocket {
-    font-size: 30px;
-    font-weight: 700;
-    color: white;
-  }
-`;
 const None = styled.div`
   display: flex;
   align-items: center;
@@ -54,33 +38,19 @@ const None = styled.div`
 
 const MyTicketDetailPage = () => {
   const { isDesktop } = useResponsive();
-  const { state } = useLocation();
-  const navigate = useNavigate();
-  const [ticketClick, setTicketClick] = useState(false);
-  const handleTicket = (e) => {
-    setTicketClick(true);
-  };
+  const { ticket } = useParams();
+
   return (
     <>
       {isDesktop ? (
         <Wrapper>
           <ProfileArea>
             <div style={{ width: "100%" }}>
-              <CategoryLine>
-                <MdNavigateBefore
-                  color="#A9A9A9"
-                  size={50}
-                  onClick={() => navigate("/myticket")}
-                  style={{ cursor: "pointer" }}
-                />
-                <div className="name">{state}</div>
-                <div className="pocket">포켓</div>
-              </CategoryLine>
-              <TicketList onClickTicket={handleTicket} />
+              <TicketList />
             </div>
           </ProfileArea>
           <TicketArea>
-            {ticketClick ? <Detail /> : <None>티켓이 이곳에 표시됩니다.</None>}
+            {ticket ? <Detail /> : <None>티켓이 이곳에 표시됩니다.</None>}
           </TicketArea>
           <UploadBtn />
         </Wrapper>

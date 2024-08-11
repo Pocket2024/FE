@@ -29,6 +29,10 @@ function App() {
             <Route path="/detail/:id" element={<DetailPage />} />
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/myticket/:pocket" element={<MyTicketDetailPage />} />
+            <Route
+              path="/myticket/:pocket/:ticket"
+              element={<MyTicketDetailPage />}
+            />
           </Routes>
         </Page>
       </ResponsiveProvider>
