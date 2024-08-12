@@ -97,6 +97,10 @@ const HeartLine = styled.div`
     font-size: ${(props) => props.height || "15px"};
   }
 `;
+const ImageLine = styled.div`
+  display: flex;
+  gap: 0 10px;
+`;
 
 const Detail = () => {
   const { isDesktop } = useResponsive();
@@ -235,6 +239,9 @@ const Detail = () => {
               <FaRegCalendar size={23} />
               <Place>{detail.date}</Place>
             </PlaceLine>
+            <ImageLine>
+              {/* <img src={detail.images[0].url} alt="티켓리뷰이미지" /> */}
+            </ImageLine>
             <svg width="500" height="3" style={{ marginTop: "35px" }}>
               <line
                 x1="0"

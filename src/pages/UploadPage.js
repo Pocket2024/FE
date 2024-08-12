@@ -7,6 +7,7 @@ import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { MdFileUpload } from "react-icons/md";
 import { useResponsive } from "../context/Responsive";
+import { FaImage } from "react-icons/fa";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -146,6 +147,38 @@ const ReviewArea = styled.textarea`
 `;
 const ImgInput = styled.input``;
 
+const FileUpload = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 0 10px;
+`;
+
+const FileContainer = styled.div`
+  width: 35%;
+  height: 150px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.22);
+
+  text-align: center;
+  padding-top: 5vh;
+  font-size: 3vh;
+  cursor: pointer;
+  input {
+    display: none;
+  }
+`;
+const PreviewContainer = styled.div`
+  width: 35%;
+  height: 150px;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 5vh;
+  font-size: 3vh;
+  background-color: rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  background-size: cover;
+`;
+
 const UploadPage = () => {
   const { isDesktop } = useResponsive();
   const navigate = useNavigate();
@@ -200,13 +233,15 @@ const UploadPage = () => {
   const uploadTicket = () => {
     const formData = new FormData();
 
+    // let images = [realimg1, realimg2, realimg3]; // 이미지 여러개 어떤 형태로 보내야되는지..
+
     formData.append("ticketCategoryId", 1);
     formData.append("title", title);
     formData.append("content", review);
     formData.append("seat", seat);
     formData.append("date", dateToString(date));
     formData.append("location", place);
-    formData.append("images", realfile);
+    formData.append("images", realimg1);
 
     for (let key of formData.keys()) {
       console.log("key: " + key);
@@ -251,6 +286,49 @@ const UploadPage = () => {
 
   const onChangeCat = (e) => {
     setCategoryId(e.target.value);
+  };
+
+  const [image1, setImage1Src] = useState("");
+  const [image2, setImage2Src] = useState("");
+  const [image3, setImage3Src] = useState("");
+  const [realimg1, setRealimg1] = useState([]);
+  const [realimg2, setRealimg2] = useState([]);
+  const [realimg3, setRealimg3] = useState([]);
+
+  const img1encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    setRealimg1(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImage1Src(reader.result);
+        resolve();
+      };
+    });
+  };
+
+  const img2encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    setRealimg2(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImage2Src(reader.result);
+        resolve();
+      };
+    });
+  };
+
+  const img3encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    setRealimg3(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImage3Src(reader.result);
+        resolve();
+      };
+    });
   };
 
   return (
@@ -335,8 +413,6 @@ const UploadPage = () => {
               marginbottom="25px"
               fontsize="18px"
             />
-            <InfoTitle fontsize="20px">사진</InfoTitle>
-            <input type="file" onChange={saveImgFile} ref={imgRef} />
             <InfoTitle fontsize="20px">나의 후기</InfoTitle>
             <ReviewArea
               value={review}
@@ -344,6 +420,76 @@ const UploadPage = () => {
               marginbottom="25px"
               fontsize="18px"
             />
+            <InfoTitle fontsize="20px">사진</InfoTitle>
+            <FileUpload>
+              {!image1 && (
+                <FileContainer>
+                  <label for="file1">
+                    <FaImage color="#262626" />
+                  </label>
+                  <input
+                    type="file"
+                    name="file1"
+                    id="file1"
+                    onChange={(e) => {
+                      img1encodeFileToBase64(e.target.files[0]);
+                    }}
+                  />
+                </FileContainer>
+              )}
+              {image1 && (
+                <PreviewContainer
+                  style={{
+                    backgroundImage: `url(${image1})`,
+                  }}
+                />
+              )}
+              {!image2 && (
+                <FileContainer>
+                  <label for="file2">
+                    <FaImage color="#262626" />
+                  </label>
+                  <input
+                    type="file"
+                    name="file2"
+                    id="file2"
+                    onChange={(e) => {
+                      img2encodeFileToBase64(e.target.files[0]);
+                    }}
+                  />
+                </FileContainer>
+              )}
+              {image2 && (
+                <PreviewContainer
+                  style={{
+                    backgroundImage: `url(${image2})`,
+                  }}
+                />
+              )}
+
+              {!image3 && (
+                <FileContainer>
+                  <label for="file3">
+                    <FaImage color="#262626" />
+                  </label>
+                  <input
+                    type="file"
+                    name="file3"
+                    id="file3"
+                    onChange={(e) => {
+                      img3encodeFileToBase64(e.target.files[0]);
+                    }}
+                  />
+                </FileContainer>
+              )}
+              {image3 && (
+                <PreviewContainer
+                  style={{
+                    backgroundImage: `url(${image3})`,
+                  }}
+                />
+              )}
+            </FileUpload>
             <Button onClick={uploadTicket}>
               <MdFileUpload size={30} />
               <div>티켓 업로드</div>
