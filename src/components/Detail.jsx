@@ -102,7 +102,6 @@ const ImageLine = styled.div`
   width: 100%;
   gap: 0 10px;
   div {
-    width: 32%;
     height: 200px;
     border-radius: 10px;
     background-size: cover;
@@ -247,9 +246,43 @@ const Detail = () => {
               <Place>{detail.date}</Place>
             </PlaceLine>
             <ImageLine>
-              {detail.images.map((img) => (
-                <div style={{ backgroundImage: `url(${img.url})` }} />
-              ))}
+              {detail.images && detail.images.length == 1 ? (
+                detail.images.map((img) => (
+                  <div
+                    style={{
+                      backgroundImage: `url(${img.url})`,
+                      width: "100%",
+                    }}
+                  />
+                ))
+              ) : (
+                <></>
+              )}
+              {detail.images && detail.images.length == 2 ? (
+                detail.images.map((img) => (
+                  <div
+                    style={{
+                      backgroundImage: `url(${img.url})`,
+                      width: "50%",
+                    }}
+                  />
+                ))
+              ) : (
+                <></>
+              )}
+
+              {detail.images && detail.images.length == 3 ? (
+                detail.images.map((img) => (
+                  <div
+                    style={{
+                      backgroundImage: `url(${img.url})`,
+                      width: "32%",
+                    }}
+                  />
+                ))
+              ) : (
+                <></>
+              )}
             </ImageLine>
             <svg width="500" height="3" style={{ marginTop: "35px" }}>
               <line
