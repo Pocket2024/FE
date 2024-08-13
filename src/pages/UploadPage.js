@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { IoMdImage } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import DatePicker from "../components/DatePicker";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { MdFileUpload } from "react-icons/md";
 import { useResponsive } from "../context/Responsive";
-import { FaImage } from "react-icons/fa";
+import { IoMdImage } from "react-icons/io";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -155,28 +154,42 @@ const FileUpload = styled.div`
 
 const FileContainer = styled.div`
   width: 35%;
-  height: 150px;
+  height: 200px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.22);
-
-  text-align: center;
-  padding-top: 5vh;
-  font-size: 3vh;
-  cursor: pointer;
-  input {
-    display: none;
-  }
+  border: 2px dashed #707070;
+  background-color: none;
 `;
 const PreviewContainer = styled.div`
   width: 35%;
-  height: 150px;
+  height: 200px;
   border-radius: 10px;
-  text-align: center;
-  padding-top: 5vh;
-  font-size: 3vh;
-  background-color: rgba(255, 255, 255, 0.22);
-  cursor: pointer;
   background-size: cover;
+`;
+const MultiImgInput = styled.div`
+  display: flex;
+  gap: 0 15px;
+  label {
+    background-color: #565656;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 10px;
+    line-height: 20px;
+    span {
+      margin-left: 10px;
+    }
+    margin-bottom: 20px;
+  }
+  input {
+    display: none;
+  }
+  div {
+    color: #b1b1b1;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 40px;
+  }
 `;
 
 const UploadPage = () => {
@@ -188,7 +201,7 @@ const UploadPage = () => {
   const [seat, setSeat] = useState("");
   const [review, setReview] = useState("");
   const [imgFile, setImgFile] = useState("");
-  const [realfile, setRealFile] = useState([]);
+  const [customImg, setCustomImg] = useState([]);
   const imgRef = useRef();
   const [category, setCategory] = useState([]);
   const [categoryId, setCategoryId] = useState();
@@ -209,7 +222,7 @@ const UploadPage = () => {
   // 이미지 업로드 input의 onChange
   const saveImgFile = () => {
     const file = imgRef.current.files[0] ? imgRef.current.files[0] : "";
-    setRealFile(file);
+    setCustomImg(file);
     const reader = new FileReader();
     if (file != "") {
       reader.readAsDataURL(file);
@@ -233,15 +246,20 @@ const UploadPage = () => {
   const uploadTicket = () => {
     const formData = new FormData();
 
-    // let images = [realimg1, realimg2, realimg3]; // 이미지 여러개 어떤 형태로 보내야되는지..
-
     formData.append("ticketCategoryId", 1);
     formData.append("title", title);
     formData.append("content", review);
     formData.append("seat", seat);
     formData.append("date", dateToString(date));
     formData.append("location", place);
-    formData.append("images", realimg1);
+    if (realimg) {
+      for (let i = 0; i < realimg.length; i++) {
+        formData.append("images", realimg[i]); //반복문을 활용하여 파일들을 formDataR객체에 추가
+      }
+    }
+    if (customImg) {
+      formData.append("customImageFile", customImg);
+    }
 
     for (let key of formData.keys()) {
       console.log("key: " + key);
@@ -291,43 +309,40 @@ const UploadPage = () => {
   const [image1, setImage1Src] = useState("");
   const [image2, setImage2Src] = useState("");
   const [image3, setImage3Src] = useState("");
-  const [realimg1, setRealimg1] = useState([]);
-  const [realimg2, setRealimg2] = useState([]);
-  const [realimg3, setRealimg3] = useState([]);
+  const [realimg, setRealimg] = useState([]);
 
   const img1encodeFileToBase64 = (fileBlob) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    setRealimg1(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImage1Src(reader.result);
-        resolve();
-      };
-    });
-  };
+    const reader1 = new FileReader();
+    const reader2 = new FileReader();
+    const reader3 = new FileReader();
 
-  const img2encodeFileToBase64 = (fileBlob) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    setRealimg2(fileBlob);
+    reader1.readAsDataURL(fileBlob[0]);
+    if (fileBlob[1]) {
+      reader2.readAsDataURL(fileBlob[1]);
+    }
+    if (fileBlob[2]) {
+      reader3.readAsDataURL(fileBlob[2]);
+    }
+    setRealimg(fileBlob);
     return new Promise((resolve) => {
-      reader.onload = () => {
-        setImage2Src(reader.result);
+      reader1.onload = () => {
+        setImage1Src(reader1.result);
         resolve();
       };
-    });
-  };
 
-  const img3encodeFileToBase64 = (fileBlob) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    setRealimg3(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImage3Src(reader.result);
-        resolve();
-      };
+      if (fileBlob[1]) {
+        reader2.onload = () => {
+          setImage2Src(reader2.result);
+          resolve();
+        };
+      }
+
+      if (fileBlob[2]) {
+        reader3.onload = () => {
+          setImage3Src(reader3.result);
+          resolve();
+        };
+      }
     });
   };
 
@@ -421,22 +436,24 @@ const UploadPage = () => {
               fontsize="18px"
             />
             <InfoTitle fontsize="20px">사진</InfoTitle>
+            <MultiImgInput>
+              <label for="file">
+                <IoMdImage color="white" size={20} />
+                <span>사진 선택하기</span>
+              </label>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                multiple="multiple"
+                onChange={(e) => {
+                  img1encodeFileToBase64(e.target.files);
+                }}
+              />
+              <div>*최대 3장까지 업로드 가능</div>
+            </MultiImgInput>
             <FileUpload>
-              {!image1 && (
-                <FileContainer>
-                  <label for="file1">
-                    <FaImage color="#262626" />
-                  </label>
-                  <input
-                    type="file"
-                    name="file1"
-                    id="file1"
-                    onChange={(e) => {
-                      img1encodeFileToBase64(e.target.files[0]);
-                    }}
-                  />
-                </FileContainer>
-              )}
+              {!image1 && <FileContainer></FileContainer>}
               {image1 && (
                 <PreviewContainer
                   style={{
@@ -444,21 +461,7 @@ const UploadPage = () => {
                   }}
                 />
               )}
-              {!image2 && (
-                <FileContainer>
-                  <label for="file2">
-                    <FaImage color="#262626" />
-                  </label>
-                  <input
-                    type="file"
-                    name="file2"
-                    id="file2"
-                    onChange={(e) => {
-                      img2encodeFileToBase64(e.target.files[0]);
-                    }}
-                  />
-                </FileContainer>
-              )}
+              {!image2 && <FileContainer></FileContainer>}
               {image2 && (
                 <PreviewContainer
                   style={{
@@ -467,21 +470,7 @@ const UploadPage = () => {
                 />
               )}
 
-              {!image3 && (
-                <FileContainer>
-                  <label for="file3">
-                    <FaImage color="#262626" />
-                  </label>
-                  <input
-                    type="file"
-                    name="file3"
-                    id="file3"
-                    onChange={(e) => {
-                      img3encodeFileToBase64(e.target.files[0]);
-                    }}
-                  />
-                </FileContainer>
-              )}
+              {!image3 && <FileContainer></FileContainer>}
               {image3 && (
                 <PreviewContainer
                   style={{
