@@ -246,7 +246,7 @@ const UploadPage = () => {
   const uploadTicket = () => {
     const formData = new FormData();
 
-    formData.append("ticketCategoryId", 1);
+    formData.append("ticketCategoryId", categoryId);
     formData.append("title", title);
     formData.append("content", review);
     formData.append("seat", seat);
