@@ -99,7 +99,14 @@ const HeartLine = styled.div`
 `;
 const ImageLine = styled.div`
   display: flex;
+  width: 100%;
   gap: 0 10px;
+  div {
+    width: 32%;
+    height: 200px;
+    border-radius: 10px;
+    background-size: cover;
+  }
 `;
 
 const Detail = () => {
@@ -240,7 +247,9 @@ const Detail = () => {
               <Place>{detail.date}</Place>
             </PlaceLine>
             <ImageLine>
-              {/* <img src={detail.images[0].url} alt="티켓리뷰이미지" /> */}
+              {detail.images.map((img) => (
+                <div style={{ backgroundImage: `url(${img.url})` }} />
+              ))}
             </ImageLine>
             <svg width="500" height="3" style={{ marginTop: "35px" }}>
               <line
