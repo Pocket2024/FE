@@ -88,11 +88,11 @@ const Ticket = ({ title, place, seat, year, date, custom }) => {
           <TicketBox>
             <Circle top="-10px" />
             <Title>{title || "제목"}</Title>
-            <img
-              src={custom || dummy_img}
-              className="custom-img"
-              alt="custom-img"
-            />
+            {custom ? (
+              <img src={custom} className="custom-img" alt="custom-img" />
+            ) : (
+              <></>
+            )}
             <Place>{place || "장소"}</Place>
             <Seat>{seat || "좌석"}</Seat>
             <Date>
