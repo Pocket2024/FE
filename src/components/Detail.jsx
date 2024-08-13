@@ -12,6 +12,7 @@ import { FaHeart } from "react-icons/fa";
 import { useResponsive } from "../context/Responsive";
 import { useParams } from "react-router-dom";
 import api from "../api/api";
+import ImgModal from "./ImgModal";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -221,6 +222,14 @@ const Detail = () => {
     getDetail();
   }, [ticket]);
 
+  const [modal, setModal] = useState(false);
+  const [clickimgurl, setClickimgurl] = useState(""); // 지금 클릭한 이미지 url
+
+  const handleClickimg = (imgUrl) => {
+    setClickimgurl(imgUrl);
+    setModal(true);
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -249,6 +258,7 @@ const Detail = () => {
               {detail.images && detail.images.length == 1 ? (
                 detail.images.map((img) => (
                   <div
+                    onClick={() => handleClickimg(img.url)}
                     style={{
                       backgroundImage: `url(${img.url})`,
                       width: "100%",
@@ -261,6 +271,7 @@ const Detail = () => {
               {detail.images && detail.images.length == 2 ? (
                 detail.images.map((img) => (
                   <div
+                    onClick={() => handleClickimg(img.url)}
                     style={{
                       backgroundImage: `url(${img.url})`,
                       width: "50%",
@@ -274,6 +285,7 @@ const Detail = () => {
               {detail.images && detail.images.length == 3 ? (
                 detail.images.map((img) => (
                   <div
+                    onClick={() => handleClickimg(img.url)}
                     style={{
                       backgroundImage: `url(${img.url})`,
                       width: "32%",
@@ -313,6 +325,11 @@ const Detail = () => {
             )}
             <div>{heart}</div>
           </HeartLine>
+          <ImgModal
+            isOpen={modal}
+            onRequestClose={() => setModal(false)}
+            imgUrl={clickimgurl}
+          />
         </Wrapper>
       ) : (
         <Wrapper>
