@@ -127,7 +127,7 @@ const Pocket = () => {
           >
             <div style={{ color: `${getTextColor(pocket.color)}` }}>
               <div className="category-name">{pocket.category}</div>
-              <div className="ticket-count">{/*pocket.count*/}0</div>
+              <div className="ticket-count">{pocket.reviewCount}</div>
             </div>
           </PocketDiv>
         ))}
