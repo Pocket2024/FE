@@ -22,15 +22,27 @@ const TicketBox = styled.div`
   padding: 50px;
   position: relative;
   -webkit-mask: radial-gradient(
-      circle 20px at 0px 315px,
+      circle 20px at 0px ${(props) => props.y},
       transparent 19px,
       black 20px
     ),
-    radial-gradient(circle 20px at 100% 315px, transparent 19px, black 20px);
+    radial-gradient(
+      circle 20px at 100% ${(props) => props.y},
+      transparent 19px,
+      black 20px
+    );
   -webkit-mask-composite: destination-out;
   mask-composite: intersect;
-  mask: radial-gradient(circle 20px at 0px 315px, transparent 19px, black 20px),
-    radial-gradient(circle 20px at 100% 315px, transparent 19px, black 20px);
+  mask: radial-gradient(
+      circle 20px at 0px ${(props) => props.y},
+      transparent 19px,
+      black 20px
+    ),
+    radial-gradient(
+      circle 20px at 100% ${(props) => props.y},
+      transparent 19px,
+      black 20px
+    );
   mask-composite: intersect;
 `;
 const FirstLine = styled.div`
@@ -234,7 +246,12 @@ const Detail = () => {
     <>
       {isDesktop ? (
         <Wrapper>
-          <TicketBox className="ticketimg" ref={ticketRef} id="ticketbox">
+          <TicketBox
+            className="ticketimg"
+            ref={ticketRef}
+            id="ticketbox"
+            y="315px"
+          >
             <FirstLine>
               <ProfileLine>
                 <ProfileImg src={profileimg} />
