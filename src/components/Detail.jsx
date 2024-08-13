@@ -118,6 +118,7 @@ const ImageLine = styled.div`
     height: 200px;
     border-radius: 10px;
     background-size: cover;
+    cursor: pointer;
   }
 `;
 
