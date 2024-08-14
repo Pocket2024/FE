@@ -114,11 +114,12 @@ const ImageLine = styled.div`
   display: flex;
   width: 100%;
   gap: 0 10px;
-  div {
+  img {
     height: 200px;
     border-radius: 10px;
     background-size: cover;
     cursor: pointer;
+    object-fit: cover;
   }
 `;
 
@@ -275,10 +276,10 @@ const Detail = () => {
             <ImageLine>
               {detail.images && detail.images.length == 1 ? (
                 detail.images.map((img) => (
-                  <div
+                  <img
+                    src={img.url}
                     onClick={() => handleClickimg(img.url)}
                     style={{
-                      backgroundImage: `url(${img.url})`,
                       width: "100%",
                     }}
                   />
@@ -288,10 +289,10 @@ const Detail = () => {
               )}
               {detail.images && detail.images.length == 2 ? (
                 detail.images.map((img) => (
-                  <div
+                  <img
+                    src={img.url}
                     onClick={() => handleClickimg(img.url)}
                     style={{
-                      backgroundImage: `url(${img.url})`,
                       width: "50%",
                     }}
                   />
@@ -302,10 +303,10 @@ const Detail = () => {
 
               {detail.images && detail.images.length == 3 ? (
                 detail.images.map((img) => (
-                  <div
+                  <img
+                    src={img.url}
                     onClick={() => handleClickimg(img.url)}
                     style={{
-                      backgroundImage: `url(${img.url})`,
                       width: "32%",
                     }}
                   />
