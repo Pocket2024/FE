@@ -511,11 +511,24 @@ const UploadPage = () => {
             <IoMdImage size={20} />
             자동입력에 사용할 티켓 이미지 선택하기
           </AutoBtn>
-          <TicketBox height="130px" background={imgFile ? "white" : "#262626"}>
+          <ImgInput
+            id="customimg"
+            type="file"
+            accept="image/*"
+            onChange={saveImgFile}
+            ref={imgRef}
+            style={{ display: imgFile ? "" : "none" }}
+          />
+          <TicketBox
+            height="130px"
+            for="customimg"
+            background={imgFile ? "white" : "#262626"}
+          >
             <Circle top="-5px" />
             <Circle bottom="-5px" />
             <FaPlus color="white" size={20} />
             <div>커스텀 이미지 선택하기</div>
+            {imgFile ? <img src={imgFile} className="custom-img" /> : <></>}
           </TicketBox>
           <TicketInfo>
             <InfoTitle className="ticket-info">티켓 정보</InfoTitle>
