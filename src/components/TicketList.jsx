@@ -84,7 +84,11 @@ const TicketList = () => {
           <>
             <TicketDiv
               key={ticket.id}
-              onClick={() => navigate(`/myticket/${pocket}/${ticket.id}`)}
+              onClick={() =>
+                isDesktop
+                  ? navigate(`/myticket/${pocket}/${ticket.id}`)
+                  : navigate(`/detail/${ticket.id}`)
+              }
             >
               <Ticket
                 title={ticket.title}

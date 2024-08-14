@@ -26,7 +26,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/myinfo" element={<MyInfoPage />} />
-            <Route path="/detail/:id" element={<DetailPage />} />
+            <Route path="/detail/:ticket" element={<DetailPage />} />
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/myticket/:pocket" element={<MyTicketDetailPage />} />
             <Route
