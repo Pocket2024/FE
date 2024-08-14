@@ -103,20 +103,22 @@ const Ticket = ({ title, place, seat, year, date, custom }) => {
           </TicketBox>
         </Wrapper>
       ) : (
-        <Wrapper padding="030px">
+        <Wrapper padding="30px">
           <TicketBox height="130px" onClick={() => navigate(`/detail/${id}`)}>
             <Circle top="-10px" />
-            <Title fontsize="13px">
-              2024 &TEAM CONCERT TOUR ‘FIRST PAW PRINT’ IN SEOUL
-            </Title>
-            <img src={dummy_img} className="custom-img" alt="custom-img" />
+            <Title fontsize="13px">{title || "제목"}</Title>
+            {custom ? (
+              <img src={custom} className="custom-img" alt="custom-img" />
+            ) : (
+              <></>
+            )}
             <Place fontsize="10px" bottom="4vh">
-              KBS 아레나
+              {place || "장소"}
             </Place>
-            <Seat fontsize="10px">3층 I구역 2열 1</Seat>
+            <Seat fontsize="10px">{seat || "좌석"}</Seat>
             <Date fontsize="17px">
-              <div className="year">2024</div>
-              <div>02.07</div>
+              <div className="year">{year || "2024"}</div>
+              <div>{date || "02.07"}</div>
             </Date>
             <Circle bottom="-10px" />
           </TicketBox>
