@@ -1,7 +1,7 @@
 import React, { useEffect, useId, useState } from "react";
 import styled from "styled-components";
 import Ticket from "./Ticket";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
 import { MdNavigateBefore } from "react-icons/md";
 import { useResponsive } from "../context/Responsive";
@@ -55,9 +55,10 @@ const CreateBtn = styled.button`
 const TicketList = () => {
   let { pocket } = useParams();
   const userId = localStorage.getItem("userId");
+  const location = useLocation();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [ticketlist, setTicketList] = useState([]);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(location.state);
   const navigate = useNavigate();
   const { isDesktop } = useResponsive();
 
@@ -69,7 +70,9 @@ const TicketList = () => {
         },
       })
       .then((res) => {
-        setCategory(res.data[0].ticketcategory.category);
+        if (res.data[0].ticketcategory.category) {
+          setCategory(res.data[0].ticketcategory.category);
+        }
         setTicketList(res.data);
       })
       .catch((err) => {
