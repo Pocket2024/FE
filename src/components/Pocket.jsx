@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { FaGetPocket } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import PocketModal from "./PocketModal";
@@ -8,19 +7,6 @@ import api from "../api/api";
 
 const Wrapper = styled.div`
   width: 100%;
-`;
-const PocketTitle = styled.div`
-  display: flex;
-  gap: 0 10px;
-  margin: 40px 0 15px 0;
-  div {
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    height: 15px;
-    line-height: 15px;
-    gap: 0 5px;
-  }
 `;
 const PocketGrid = styled.div`
   display: grid;
