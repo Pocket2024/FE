@@ -33,6 +33,7 @@ const PocketDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   cursor: pointer;
   .category-name {
     font-size: 20px;
