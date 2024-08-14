@@ -12,7 +12,7 @@ import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   width: 100vw;
-  min-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
   background-color: #262626;
   display: flex;
 `;
@@ -21,13 +21,14 @@ const ProfileArea = styled.div`
   display: flex;
   justify-content: center;
   padding: 10vh 100px;
+  overflow-y: auto;
 `;
 const TicketArea = styled.div`
   width: 50%;
   background-color: rgba(144, 144, 144, 0.06);
   padding: 10vh 100px;
   min-height: fit-content;
-  overflow: scroll; // ticketarea 스크롤 부분
+  overflow-y: auto;
 `;
 const FavTicket = styled.div`
   color: white;
