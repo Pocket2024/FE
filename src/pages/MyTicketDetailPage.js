@@ -56,12 +56,22 @@ const MyTicketDetailPage = () => {
           <UploadBtn />
         </Wrapper>
       ) : (
-        <Wrapper>
-          <div style={{ width: "100%" }}>포켓별 티켓 페이지</div>
-        </Wrapper>
+        <MWrapper>
+          <div style={{ width: "100%" }}>
+            <TicketList />
+          </div>
+        </MWrapper>
       )}
     </>
   );
 };
 
 export default MyTicketDetailPage;
+
+const MWrapper = styled.div`
+  width: 100vw;
+  min-height: calc(100vh - 80px);
+  height: fit-content;
+  background-color: #262626;
+  display: flex;
+`;
