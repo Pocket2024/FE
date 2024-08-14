@@ -133,11 +133,13 @@ const MyTicketPage = () => {
             <div onClick={handleTicket}>
               <Ticket />
             </div>
-            <PocketTitle>
-              <FaGetPocket color="white" />
-              <div>{infoData.nickName}님의 포켓</div>
-            </PocketTitle>
-            <Pocket />
+            <div style={{ width: "100%", padding: "0 30px" }}>
+              <PocketTitle>
+                <FaGetPocket color="white" />
+                <div>{infoData.nickName}님의 포켓</div>
+              </PocketTitle>
+              <Pocket />
+            </div>
           </div>
         </Wrapper>
       )}
