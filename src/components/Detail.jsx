@@ -273,48 +273,52 @@ const Detail = () => {
               <FaRegCalendar size={23} />
               <Place>{detail.date}</Place>
             </PlaceLine>
-            <ImageLine>
-              {detail.images && detail.images.length == 1 ? (
-                detail.images.map((img) => (
-                  <img
-                    src={img.url}
-                    onClick={() => handleClickimg(img.url)}
-                    style={{
-                      width: "100%",
-                    }}
-                  />
-                ))
-              ) : (
-                <></>
-              )}
-              {detail.images && detail.images.length == 2 ? (
-                detail.images.map((img) => (
-                  <img
-                    src={img.url}
-                    onClick={() => handleClickimg(img.url)}
-                    style={{
-                      width: "50%",
-                    }}
-                  />
-                ))
-              ) : (
-                <></>
-              )}
+            {!detail.images ? (
+              <></>
+            ) : (
+              <ImageLine>
+                {detail.images && detail.images.length == 1 ? (
+                  detail.images.map((img) => (
+                    <img
+                      src={img.url}
+                      onClick={() => handleClickimg(img.url)}
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
+                {detail.images && detail.images.length == 2 ? (
+                  detail.images.map((img) => (
+                    <img
+                      src={img.url}
+                      onClick={() => handleClickimg(img.url)}
+                      style={{
+                        width: "50%",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
 
-              {detail.images && detail.images.length == 3 ? (
-                detail.images.map((img) => (
-                  <img
-                    src={img.url}
-                    onClick={() => handleClickimg(img.url)}
-                    style={{
-                      width: "32%",
-                    }}
-                  />
-                ))
-              ) : (
-                <></>
-              )}
-            </ImageLine>
+                {detail.images && detail.images.length == 3 ? (
+                  detail.images.map((img) => (
+                    <img
+                      src={img.url}
+                      onClick={() => handleClickimg(img.url)}
+                      style={{
+                        width: "32%",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
+              </ImageLine>
+            )}
             <svg width="500" height="3" style={{ marginTop: "35px" }}>
               <line
                 x1="0"
