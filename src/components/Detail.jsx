@@ -285,8 +285,10 @@ const Detail = () => {
           >
             <FirstLine>
               <ProfileLine>
-                <ProfileImg src={profileimg} />
-                <Nickname>leeeyez</Nickname>
+                <ProfileImg
+                  src={`http://localhost:8080/images/${detail.authorProfileImageUrl}`}
+                />
+                <Nickname>{detail.authorNickname}</Nickname>
               </ProfileLine>
               <div style={{ display: "flex", gap: "0 10px" }}>
                 <SaveBtn onClick={onDownloadBtn}>
@@ -397,28 +399,71 @@ const Detail = () => {
           <MTicketBox className="ticketimg" ref={ticketRef} id="ticketbox">
             <FirstLine lineHeight="35px">
               <ProfileLine>
-                <MProfileImg src={profileimg} />
-                <MNickname>leeeyez</MNickname>
+                <MProfileImg
+                  src={`http://localhost:8080/images/${detail.authorProfileImageUrl}`}
+                />
+                <MNickname>{detail.authorNickname}</MNickname>
               </ProfileLine>
               <SaveBtn onClick={onDownloadBtn}>
                 <MdSaveAlt color="#DEDEDE" size={25} />
               </SaveBtn>
             </FirstLine>
-            <Title fontSize="22px">
-              {/* 2023 aespa 1st Concert ‘SYNK : HYPER LINE’ */}무적 LG vs 최강
-              두산
-            </Title>
+            <Title fontSize="22px">{detail.title}</Title>
             <PlaceLine height="20px">
               <MdPlace size={20} />
-              <Place fontSize="15px">{/*잠실체육관*/}잠실야구장</Place>
-              <Seat fontSize="10px">
-                {/*2층 A구역 2열 3*/}1루 네이비석 316블록 14열 147번
-              </Seat>
+              <Place fontSize="15px">{detail.location}</Place>
+              <Seat fontSize="10px">{detail.seat}</Seat>
             </PlaceLine>
             <PlaceLine height="20px">
               <FaRegCalendar size={15} />
-              <Place fontSize="15px">{/*2023.02.25*/}2024.07.21</Place>
+              <Place fontSize="15px">{detail.date}</Place>
             </PlaceLine>
+            {!detail.images ? (
+              <></>
+            ) : (
+              <ImageLine>
+                {detail.images && detail.images.length == 1 ? (
+                  detail.images.map((img) => (
+                    <img
+                      src={img.url}
+                      onClick={() => handleClickimg(img.url)}
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
+                {detail.images && detail.images.length == 2 ? (
+                  detail.images.map((img) => (
+                    <img
+                      src={img.url}
+                      onClick={() => handleClickimg(img.url)}
+                      style={{
+                        width: "50%",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
+
+                {detail.images && detail.images.length == 3 ? (
+                  detail.images.map((img) => (
+                    <img
+                      src={img.url}
+                      onClick={() => handleClickimg(img.url)}
+                      style={{
+                        width: "32%",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <></>
+                )}
+              </ImageLine>
+            )}
             <svg width="100%" height="2" style={{ marginTop: "20px" }}>
               <line
                 x1="0"
@@ -428,13 +473,7 @@ const Detail = () => {
                 strokeDasharray="10,8" // 10px 선, 8px 간격
               />
             </svg>
-            <Comment fontSize="12px">
-              이번에도 패요의 역할을.. 그래도 3점까지 내는 거 처음 직관했다 완전
-              럭키예지 그치만 장마기간에 맑은 날씨가 당첨된 건 정말 럭키
-              마지막에 뽕짝 edm도 듣고 불꽃놀이까지🎆 야구장에서도, 야구장
-              밖에서도 컨텐츠가 끊이질 않았던 즐거운 하루 <br />
-              👥 with 빈, 서현
-            </Comment>
+            <Comment fontSize="12px">{detail.content}</Comment>
           </MTicketBox>
           <HeartLine>
             {isHeart ? (
