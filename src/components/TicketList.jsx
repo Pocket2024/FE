@@ -19,13 +19,12 @@ const CategoryLine = styled.div`
   gap: ${(props) => props.gap};
   align-items: center;
   padding: ${(props) => props.padding};
+  font-size: ${(props) => props.fontsize};
   .name {
-    font-size: ${(props) => props.fontsize};
     font-weight: 700;
     color: white;
   }
   .pocket {
-    font-size: ${(props) => props.fontsize};
     font-weight: 700;
     color: white;
   }
@@ -65,6 +64,7 @@ const TicketList = () => {
       <CategoryLine
         gap={isDesktop ? "10px" : "5px"}
         padding={isDesktop ? "" : "0 30px"}
+        fontsize={isDesktop ? "30px" : "25px"}
       >
         <MdNavigateBefore
           color="#A9A9A9"
@@ -72,12 +72,8 @@ const TicketList = () => {
           onClick={() => navigate("/myticket")}
           style={{ cursor: "pointer" }}
         />
-        <div className="name" fontsize={isDesktop ? "30px" : "25px"}>
-          {category}
-        </div>
-        <div className="pocket" fontsize={isDesktop ? "30px" : "25px"}>
-          포켓
-        </div>
+        <div className="name">{category}</div>
+        <div className="pocket">포켓</div>
       </CategoryLine>
       <List>
         {ticketlist.map((ticket) => (
