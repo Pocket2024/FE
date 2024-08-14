@@ -128,9 +128,16 @@ const MyTicketPage = () => {
             <Profile />
             <FavTicket padding="0 30px">
               <BsFillPinFill color="white" />
-              {/*{infoData.nickname}*/}포켓몬님의 대표 티켓
+              {infoData.nickName}님의 대표 티켓
             </FavTicket>
-            <Ticket />
+            <div onClick={handleTicket}>
+              <Ticket />
+            </div>
+            <PocketTitle>
+              <FaGetPocket color="white" />
+              <div>{infoData.nickName}님의 포켓</div>
+            </PocketTitle>
+            <Pocket />
           </div>
         </Wrapper>
       )}
