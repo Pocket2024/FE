@@ -4,6 +4,7 @@ import Ticket from "./Ticket";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
 import { MdNavigateBefore } from "react-icons/md";
+import { useResponsive } from "../context/Responsive";
 
 const List = styled.div`
   display: block;
@@ -15,15 +16,16 @@ const TicketDiv = styled.div`
 `;
 const CategoryLine = styled.div`
   display: flex;
-  gap: 10px;
+  gap: ${(props) => props.gap};
   align-items: center;
+  padding: ${(props) => props.padding};
   .name {
-    font-size: 30px;
+    font-size: ${(props) => props.fontsize};
     font-weight: 700;
     color: white;
   }
   .pocket {
-    font-size: 30px;
+    font-size: ${(props) => props.fontsize};
     font-weight: 700;
     color: white;
   }
@@ -36,6 +38,7 @@ const TicketList = () => {
   const [ticketlist, setTicketList] = useState([]);
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
+  const { isDesktop } = useResponsive();
 
   const getTicketList = () => {
     api
@@ -59,15 +62,22 @@ const TicketList = () => {
 
   return (
     <>
-      <CategoryLine>
+      <CategoryLine
+        gap={isDesktop ? "10px" : "5px"}
+        padding={isDesktop ? "" : "0 30px"}
+      >
         <MdNavigateBefore
           color="#A9A9A9"
-          size={50}
+          size={isDesktop ? 50 : 30}
           onClick={() => navigate("/myticket")}
           style={{ cursor: "pointer" }}
         />
-        <div className="name">{category}</div>
-        <div className="pocket">포켓</div>
+        <div className="name" fontsize={isDesktop ? "30px" : "25px"}>
+          {category}
+        </div>
+        <div className="pocket" fontsize={isDesktop ? "30px" : "25px"}>
+          포켓
+        </div>
       </CategoryLine>
       <List>
         {ticketlist.map((ticket) => (
