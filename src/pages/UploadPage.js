@@ -108,6 +108,7 @@ const TicketInfo = styled.div`
   margin-left: calc(-50vw + 50%); // 부모 Padding 무시
   margin-top: 40px;
   padding: 30px;
+  min-height: fit-content;
   .ticket-info {
     margin-bottom: 15px;
   }
@@ -154,14 +155,14 @@ const FileUpload = styled.div`
 
 const FileContainer = styled.div`
   width: 35%;
-  height: 200px;
+  height: ${(props) => props.height || "200px"};
   border-radius: 10px;
   border: 2px dashed #707070;
   background-color: none;
 `;
 const PreviewContainer = styled.div`
   width: 35%;
-  height: 200px;
+  height: ${(props) => props.height || "200px"};
   border-radius: 10px;
   background-size: cover;
 `;
@@ -488,10 +489,18 @@ const UploadPage = () => {
                 />
               )}
             </FileUpload>
-            <Button onClick={uploadTicket}>
-              <MdFileUpload size={30} />
-              <div>티켓 업로드</div>
-            </Button>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button onClick={uploadTicket}>
+                <MdFileUpload size={30} />
+                <div>티켓 업로드</div>
+              </Button>
+            </div>
           </LeftArea>
         </Wrapper>
       ) : (
@@ -542,6 +551,65 @@ const UploadPage = () => {
             <Input value={seat} onChange={onChangeSeat} />
             <InfoTitle>나의 후기</InfoTitle>
             <ReviewArea value={review} onChange={onChangeReview} />
+            <InfoTitle>사진</InfoTitle>
+            <MultiImgInput>
+              <label for="file">
+                <IoMdImage color="white" size={20} />
+                <span>사진 선택하기</span>
+              </label>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                multiple="multiple"
+                onChange={(e) => {
+                  img1encodeFileToBase64(e.target.files);
+                }}
+              />
+              <div>*최대 3장까지 업로드 가능</div>
+            </MultiImgInput>
+            <FileUpload>
+              {!image1 && <FileContainer height="35vw"></FileContainer>}
+              {image1 && (
+                <PreviewContainer
+                  height="35vw"
+                  style={{
+                    backgroundImage: `url(${image1})`,
+                  }}
+                />
+              )}
+              {!image2 && <FileContainer height="35vw"></FileContainer>}
+              {image2 && (
+                <PreviewContainer
+                  height="35vw"
+                  style={{
+                    backgroundImage: `url(${image2})`,
+                  }}
+                />
+              )}
+
+              {!image3 && <FileContainer height="35vw"></FileContainer>}
+              {image3 && (
+                <PreviewContainer
+                  height="35vw"
+                  style={{
+                    backgroundImage: `url(${image3})`,
+                  }}
+                />
+              )}
+            </FileUpload>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button onClick={uploadTicket}>
+                <MdFileUpload size={30} />
+                <div>티켓 업로드</div>
+              </Button>
+            </div>
           </TicketInfo>
         </Wrapper>
       )}
@@ -561,7 +629,6 @@ const Button = styled.button`
   z-index: 100;
   border-radius: 50px;
   gap: 0 10px;
-  float: right;
   margin-top: 20px;
   div {
     font-size: 20px;
