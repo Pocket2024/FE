@@ -8,6 +8,7 @@ import { MdNavigateBefore } from "react-icons/md";
 const List = styled.div`
   display: block;
   margin-top: 30px;
+  padding-bottom: 10vh;
 `;
 const TicketDiv = styled.div`
   margin-bottom: 30px;
