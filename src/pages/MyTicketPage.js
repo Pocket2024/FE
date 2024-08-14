@@ -55,6 +55,7 @@ const PocketTitle = styled.div`
   display: flex;
   gap: 0 10px;
   margin: 40px 0 15px 0;
+  padding: ${(props) => props.padding};
   div {
     color: white;
     font-size: 15px;
@@ -133,13 +134,11 @@ const MyTicketPage = () => {
             <div onClick={handleTicket}>
               <Ticket />
             </div>
-            <div style={{ width: "100%", padding: "0 30px" }}>
-              <PocketTitle>
-                <FaGetPocket color="white" />
-                <div>{infoData.nickName}님의 포켓</div>
-              </PocketTitle>
-              <Pocket />
-            </div>
+            <PocketTitle padding="0 30px">
+              <FaGetPocket color="white" />
+              <div>{infoData.nickName}님의 포켓</div>
+            </PocketTitle>
+            <Pocket />
           </div>
         </Wrapper>
       )}

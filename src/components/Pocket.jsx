@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import PocketModal from "./PocketModal";
 import api from "../api/api";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -73,6 +74,7 @@ const Pocket = () => {
   const [modal, setModal] = useState(false);
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [pocket, setPocket] = useState([]);
+  const { isDesktop } = useResponsive();
 
   const getPocket = () => {
     api
@@ -98,28 +100,92 @@ const Pocket = () => {
     getPocket();
   }, []);
   return (
-    <Wrapper>
-      <PocketGrid>
-        {pocket.map((pocket) => (
-          <PocketDiv
-            color={pocket.color}
-            onClick={() => onClickPocket(pocket.id, pocket.category)}
-            key={pocket.id}
-            id={pocket.id}
-          >
-            <div style={{ color: `${getTextColor(pocket.color)}` }}>
-              <div className="category-name">{pocket.category}</div>
-              <div className="ticket-count">{pocket.reviewCount}</div>
+    <>
+      {isDesktop ? (
+        <Wrapper>
+          <PocketGrid>
+            {pocket.map((pocket) => (
+              <PocketDiv
+                color={pocket.color}
+                onClick={() => onClickPocket(pocket.id, pocket.category)}
+                key={pocket.id}
+                id={pocket.id}
+              >
+                <div style={{ color: `${getTextColor(pocket.color)}` }}>
+                  <div className="category-name">{pocket.category}</div>
+                  <div className="ticket-count">{pocket.reviewCount}</div>
+                </div>
+              </PocketDiv>
+            ))}
+            <div className="createBtn" onClick={() => setModal(true)}>
+              <FaPlus color="#929292" size={50} />
             </div>
-          </PocketDiv>
-        ))}
-        <div className="createBtn" onClick={() => setModal(true)}>
-          <FaPlus color="#929292" size={50} />
-        </div>
-      </PocketGrid>
-      <PocketModal isOpen={modal} onRequestClose={() => setModal(false)} />
-    </Wrapper>
+          </PocketGrid>
+          <PocketModal isOpen={modal} onRequestClose={() => setModal(false)} />
+        </Wrapper>
+      ) : (
+        <Wrapper style={{ padding: "0 30px" }}>
+          <MPocketGrid>
+            {pocket.map((pocket) => (
+              <MPocketDiv
+                color={pocket.color}
+                onClick={() => onClickPocket(pocket.id, pocket.category)}
+                key={pocket.id}
+                id={pocket.id}
+              >
+                <div style={{ color: `${getTextColor(pocket.color)}` }}>
+                  <div className="category-name">{pocket.category}</div>
+                  <div className="ticket-count">{pocket.reviewCount}</div>
+                </div>
+              </MPocketDiv>
+            ))}
+            <div className="createBtn" onClick={() => setModal(true)}>
+              <FaPlus color="#929292" size={30} />
+            </div>
+          </MPocketGrid>
+          <PocketModal isOpen={modal} onRequestClose={() => setModal(false)} />
+        </Wrapper>
+      )}
+    </>
   );
 };
 
 export default Pocket;
+
+const MPocketDiv = styled.div`
+  width: 90%; /* 너비 설정 */
+  height: 25vw; /* 높이 설정 */
+  background-color: white; /* 배경 색 설정 */
+  border-radius: 3vw 3vw 50% 50%; /* 반원 모양 설정 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  background-color: ${(props) => props.color || "white"};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  .category-name {
+    font-size: 3vw;
+    font-weight: 700;
+    text-align: center;
+  }
+  .ticket-count {
+    font-size: 8vw;
+    font-weight: 700;
+    text-align: center;
+  }
+`;
+
+const MPocketGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  gap: 30px 0;
+  margin-top: 20px;
+  .createBtn {
+    width: 90%;
+    height: 25vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+`;
