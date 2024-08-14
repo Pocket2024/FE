@@ -87,11 +87,14 @@ const Profile = () => {
         </ProfileBox>
       ) : (
         <MProfileBox>
-          <img src={profileimg} alt="profileimg" />
+          <img
+            src={`http://localhost:8080/images/${infoData.profileImageUrl}`}
+            alt="profileimg"
+          />
           <TxtInfo height="23vw">
             <div>
               <NameLine>
-                <Nickname>{infoData.nickname}</Nickname>
+                <Nickname>{infoData.nickName}</Nickname>
                 <IoMdSettings
                   size={20}
                   className="SettingIcon"
@@ -102,19 +105,19 @@ const Profile = () => {
               <NumLine>
                 <Unit>
                   <Title>포켓</Title>
-                  <Num>0</Num>
+                  <Num>{infoData.ticketCategoryCount}</Num>
                 </Unit>
                 <Unit>
                   <Title>티켓</Title>
-                  <Num>0</Num>
+                  <Num>{infoData.reviewCount}</Num>
                 </Unit>
                 <Unit>
                   <Title>팔로워</Title>
-                  <Num fcolor="#727272">0</Num>
+                  <Num fcolor="#727272">{infoData.followersCount}</Num>
                 </Unit>
                 <Unit>
                   <Title>팔로잉</Title>
-                  <Num fcolor="#727272">0</Num>
+                  <Num fcolor="#727272">{infoData.followingsCount}</Num>
                 </Unit>
               </NumLine>
             </div>
