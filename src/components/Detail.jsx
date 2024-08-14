@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import profileimg from "../images/profileimg.png";
+import { MdNavigateBefore } from "react-icons/md";
 import { MdSaveAlt } from "react-icons/md";
 import { MdPlace } from "react-icons/md";
 import { FaRegCalendar } from "react-icons/fa6";
@@ -10,7 +10,7 @@ import { saveAs } from "file-saver";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useResponsive } from "../context/Responsive";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
 import ImgModal from "./ImgModal";
 import { BsFillPinFill } from "react-icons/bs";
@@ -116,7 +116,6 @@ const ImageLine = styled.div`
   width: 100%;
   gap: 0 10px;
   img {
-    height: 200px;
     border-radius: 10px;
     background-size: cover;
     cursor: pointer;
@@ -146,6 +145,7 @@ const Detail = () => {
   const userId = localStorage.getItem("userId");
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [detail, setDetail] = useState([]);
+  const navigate = useNavigate();
 
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
@@ -324,6 +324,7 @@ const Detail = () => {
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "100%",
+                        height: "200px",
                       }}
                     />
                   ))
@@ -337,6 +338,7 @@ const Detail = () => {
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "50%",
+                        height: "200px",
                       }}
                     />
                   ))
@@ -351,6 +353,7 @@ const Detail = () => {
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "32%",
+                        height: "200px",
                       }}
                     />
                   ))
@@ -396,6 +399,16 @@ const Detail = () => {
         </Wrapper>
       ) : (
         <Wrapper>
+          <div
+            style={{ height: "30px", lineHeight: "30px", marginBottom: "30px" }}
+          >
+            <MdNavigateBefore
+              color="#A9A9A9"
+              size={isDesktop ? 50 : 30}
+              onClick={() => navigate(`/myticket/${detail.ticketcategory.id}`)}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
           <MTicketBox className="ticketimg" ref={ticketRef} id="ticketbox">
             <FirstLine lineHeight="35px">
               <ProfileLine>
@@ -429,6 +442,7 @@ const Detail = () => {
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "100%",
+                        height: "25vw",
                       }}
                     />
                   ))
@@ -442,6 +456,7 @@ const Detail = () => {
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "50%",
+                        height: "25vw",
                       }}
                     />
                   ))
@@ -456,6 +471,7 @@ const Detail = () => {
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "32%",
+                        height: "25vw",
                       }}
                     />
                   ))
