@@ -4,6 +4,7 @@ import "../style/PocketModal.css";
 import { ChromePicker } from "react-color";
 import styled from "styled-components";
 import api from "../api/api";
+import { useResponsive } from "../context/Responsive";
 
 const customStyles = {
   overlay: {
@@ -17,6 +18,34 @@ const customStyles = {
   },
   content: {
     width: "460px",
+    minHeight: "fit-content",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "35px",
+    boxShadow: "0 5px 15px rgba(0, 0, 0, 0.25)",
+    backgroundColor: "#262626",
+    border: "none",
+    justifyContent: "center",
+    overflow: "auto",
+    zIndex: "999",
+    padding: "40px",
+  },
+};
+
+const mobilecustomStyles = {
+  overlay: {
+    backgroundColor: " rgba(0, 0, 0, 0.5)",
+    width: "100%",
+    height: "100vh",
+    zIndex: "998",
+    position: "fixed",
+    top: "0",
+    left: "0",
+  },
+  content: {
+    width: "90vw",
     minHeight: "fit-content",
     position: "absolute",
     top: "50%",
@@ -62,6 +91,7 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
   const [color, setColor] = useState("#fff");
   const userId = localStorage.getItem("userId");
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  const { isDesktop } = useResponsive();
 
   const createPocket = () => {
     api
@@ -91,26 +121,59 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} style={customStyles} onRequestClose={onRequestClose}>
-      <ModalTitle>포켓 이름</ModalTitle>
-      <Input
-        value={category}
-        onChange={onChangeCategory}
-        placeholder="포켓 이름을 입력해주세요."
-      />
-      <ModalTitle>포켓 색상</ModalTitle>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <ChromePicker color={color} onChange={onChangeColor} />
-        <ColorValue>
-          <div style={{ backgroundColor: `${color}` }}>
-            <span style={{ color: `${getTextColor(color)}` }}>
-              {category || "포켓"}
-            </span>
+    <>
+      {isDesktop ? (
+        <Modal
+          isOpen={isOpen}
+          style={customStyles}
+          onRequestClose={onRequestClose}
+        >
+          <ModalTitle>포켓 이름</ModalTitle>
+          <Input
+            value={category}
+            onChange={onChangeCategory}
+            placeholder="포켓 이름을 입력해주세요."
+          />
+          <ModalTitle>포켓 색상</ModalTitle>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <ChromePicker color={color} onChange={onChangeColor} />
+            <ColorValue>
+              <div style={{ backgroundColor: `${color}` }}>
+                <span style={{ color: `${getTextColor(color)}` }}>
+                  {category || "포켓"}
+                </span>
+              </div>
+              <CreateBtn onClick={createPocket}>만들기!</CreateBtn>
+            </ColorValue>
           </div>
-          <CreateBtn onClick={createPocket}>만들기!</CreateBtn>
-        </ColorValue>
-      </div>
-    </Modal>
+        </Modal>
+      ) : (
+        <Modal
+          isOpen={isOpen}
+          style={mobilecustomStyles}
+          onRequestClose={onRequestClose}
+        >
+          <ModalTitle>포켓 이름</ModalTitle>
+          <Input
+            value={category}
+            onChange={onChangeCategory}
+            placeholder="포켓 이름을 입력해주세요."
+          />
+          <ModalTitle>포켓 색상</ModalTitle>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <ChromePicker color={color} onChange={onChangeColor} />
+            <MColorValue>
+              <div style={{ backgroundColor: `${color}` }}>
+                <span style={{ color: `${getTextColor(color)}` }}>
+                  {category || "포켓"}
+                </span>
+              </div>
+              <MCreateBtn onClick={createPocket}>만들기!</MCreateBtn>
+            </MColorValue>
+          </div>
+        </Modal>
+      )}
+    </>
   );
 };
 
@@ -167,5 +230,38 @@ const ColorValue = styled.div`
       font-size: 20px;
       font-weight: 700;
     }
+  }
+`;
+
+const MColorValue = styled.div`
+  margin-left: 10px;
+  div {
+    width: 100px;
+    height: 90px;
+    border-radius: 10px 10px 50% 50%; /* 반원 모양 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+    }
+  }
+`;
+const MCreateBtn = styled.button`
+  border: none;
+  outline: none;
+  background-color: white;
+  padding: 15px 20px;
+  color: #262626;
+  text-align: center;
+  font-weight: 700;
+  border-radius: 10px;
+  margin-top: 70px;
+  width: 100%;
+  &:hover {
+    background-color: black;
+    color: white;
   }
 `;
