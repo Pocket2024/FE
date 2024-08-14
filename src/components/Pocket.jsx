@@ -113,10 +113,6 @@ const Pocket = () => {
   }, []);
   return (
     <Wrapper>
-      <PocketTitle>
-        <FaGetPocket color="white" />
-        <div>포켓몬님의 포켓</div>
-      </PocketTitle>
       <PocketGrid>
         {pocket.map((pocket) => (
           <PocketDiv

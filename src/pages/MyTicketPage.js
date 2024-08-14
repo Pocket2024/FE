@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import api from "../api/api";
-import { useMediaQuery } from "react-responsive";
+import { FaGetPocket } from "react-icons/fa";
 import { BsFillPinFill } from "react-icons/bs";
 import Profile from "../components/Profile";
 import Ticket from "../components/Ticket";
@@ -51,6 +51,19 @@ const None = styled.div`
   font-size: 25px;
   font-weight: 600;
 `;
+const PocketTitle = styled.div`
+  display: flex;
+  gap: 0 10px;
+  margin: 40px 0 15px 0;
+  div {
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    height: 15px;
+    line-height: 15px;
+    gap: 0 5px;
+  }
+`;
 
 const MyTicketPage = () => {
   const { isDesktop } = useResponsive();
@@ -61,7 +74,7 @@ const MyTicketPage = () => {
 
   const getMyInfo = () => {
     api
-      .get("/api/users/details", {
+      .get("/api/users/details/1", {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },
@@ -92,11 +105,15 @@ const MyTicketPage = () => {
               <Profile />
               <FavTicket>
                 <BsFillPinFill color="white" />
-                {/*{infoData.nickname}*/}포켓몬님의 대표 티켓
+                {infoData.nickName}님의 대표 티켓
               </FavTicket>
               <div onClick={handleTicket}>
                 <Ticket />
               </div>
+              <PocketTitle>
+                <FaGetPocket color="white" />
+                <div>{infoData.nickName}님의 포켓</div>
+              </PocketTitle>
               <Pocket />
             </div>
           </ProfileArea>
