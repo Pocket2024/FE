@@ -13,6 +13,7 @@ import { useResponsive } from "../context/Responsive";
 import { useParams } from "react-router-dom";
 import api from "../api/api";
 import ImgModal from "./ImgModal";
+import { BsFillPinFill } from "react-icons/bs";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -120,6 +121,19 @@ const ImageLine = styled.div`
     background-size: cover;
     cursor: pointer;
     object-fit: cover;
+  }
+`;
+const FavBtn = styled.button`
+  border-radius: 50%;
+  height: ${(props) => props.lineHeight || "50px"};
+  width: ${(props) => props.lineHeight || "50px"};
+  border: none;
+  background-color: #f4f4f4;
+  &:hover {
+    background-color: #fff6a1;
+    .pin-icon {
+      fill: #f2d84f;
+    }
   }
 `;
 
@@ -244,6 +258,21 @@ const Detail = () => {
     setModal(true);
   };
 
+  const handleFavTicket = () => {
+    api
+      .post(`/api/reviews/${ticket}/feature`, {
+        headers: {
+          Authorization: `${ACCESS_TOKEN}`,
+        },
+      })
+      .then(() => {
+        console.log("대표 티켓으로 설정되었습니다.");
+      })
+      .catch((err) => {
+        console.log("post feature ticket err", err);
+      });
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -259,9 +288,18 @@ const Detail = () => {
                 <ProfileImg src={profileimg} />
                 <Nickname>leeeyez</Nickname>
               </ProfileLine>
-              <SaveBtn onClick={onDownloadBtn}>
-                <MdSaveAlt color="#DEDEDE" size={40} />
-              </SaveBtn>
+              <div style={{ display: "flex", gap: "0 10px" }}>
+                <SaveBtn onClick={onDownloadBtn}>
+                  <MdSaveAlt color="#DEDEDE" size={40} />
+                </SaveBtn>
+                <FavBtn onClick={handleFavTicket}>
+                  <BsFillPinFill
+                    size={25}
+                    color="#E2E2E2"
+                    className="pin-icon"
+                  />
+                </FavBtn>
+              </div>
             </FirstLine>
             <Title>{detail.title}</Title>
             <PlaceLine>
