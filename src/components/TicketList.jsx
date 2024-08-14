@@ -99,7 +99,9 @@ const TicketList = () => {
         </div>
         <CreateBtn
           onClick={() =>
-            navigate("/upload", { categoryName: category, categoryId: pocket })
+            navigate("/upload", {
+              state: { categoryName: category, categoryId: pocket },
+            })
           }
         >
           <FaPlus />

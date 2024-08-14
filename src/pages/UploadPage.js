@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FaPlus } from "react-icons/fa6";
 import DatePicker from "../components/DatePicker";
 import api from "../api/api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MdFileUpload } from "react-icons/md";
 import { useResponsive } from "../context/Responsive";
 import { IoMdImage } from "react-icons/io";
@@ -194,6 +194,7 @@ const MultiImgInput = styled.div`
 
 const UploadPage = () => {
   const { isDesktop } = useResponsive();
+  const location = useLocation();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date());
@@ -204,7 +205,9 @@ const UploadPage = () => {
   const [customImg, setCustomImg] = useState([]);
   const imgRef = useRef();
   const [category, setCategory] = useState([]);
-  const [categoryId, setCategoryId] = useState();
+  const [categoryId, setCategoryId] = useState(
+    location.state != null ? location.state.categoryId : null
+  );
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
 
   const onChangeTitle = (e) => {
@@ -353,13 +356,19 @@ const UploadPage = () => {
           <RightArea>
             <div style={{ width: "100%" }}>
               <Title fontsize="40px" margin="0 0 10px 0">
-                <ItemBox onChange={onChangeCat} value={categoryId}>
-                  {category.map((category) => (
-                    <Item key={category.id} value={category.id}>
-                      {category.category}
-                    </Item>
-                  ))}
-                </ItemBox>{" "}
+                {location.state ? (
+                  <div style={{ color: "#ca3525" }}>
+                    {location.state.categoryName}
+                  </div>
+                ) : (
+                  <ItemBox onChange={onChangeCat} value={categoryId}>
+                    {category.map((category) => (
+                      <Item key={category.id} value={category.id}>
+                        {category.category}
+                      </Item>
+                    ))}
+                  </ItemBox>
+                )}
                 포켓에 티켓 업로드
               </Title>
               <Explain fontsize="18px">
@@ -488,7 +497,10 @@ const UploadPage = () => {
       ) : (
         <Wrapper style={{ padding: "0 30px" }}>
           <Title>
-            <div>아이돌</div>포켓에 티켓 업로드
+            <div style={{ color: "#ca3525" }}>
+              {location.state.categoryName}
+            </div>
+            포켓에 티켓 업로드
           </Title>
           <Explain>
             티켓 이미지를 업로드하여 자동입력해보세요. 🤩
@@ -499,7 +511,7 @@ const UploadPage = () => {
             <IoMdImage size={20} />
             자동입력에 사용할 티켓 이미지 선택하기
           </AutoBtn>
-          <TicketBox height="130px">
+          <TicketBox height="130px" background={imgFile ? "white" : "#262626"}>
             <Circle top="-5px" />
             <Circle bottom="-5px" />
             <FaPlus color="white" size={20} />
