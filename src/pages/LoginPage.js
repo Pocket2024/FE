@@ -45,6 +45,11 @@ const LoginPage = () => {
         console.log("Error handle login", err);
       });
   };
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
   return (
     <>
       {isDesktop ? (
@@ -64,6 +69,7 @@ const LoginPage = () => {
             placeholder="비밀번호를 입력해주세요."
             font="17px"
             padding="20px 30px"
+            onKeyDown={(e) => activeEnter(e)}
           />
           <LoginBtn font="20px" onClick={handleLogin}>
             로그인
@@ -97,6 +103,7 @@ const LoginPage = () => {
             placeholder="비밀번호를 입력해주세요."
             font="12px"
             padding="15px 20px"
+            onKeyDown={(e) => activeEnter(e)}
           />
           <LoginBtn font="15px" onClick={handleLogin}>
             로그인
