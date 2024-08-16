@@ -87,10 +87,7 @@ const Profile = () => {
         </ProfileBox>
       ) : (
         <MProfileBox>
-          <img
-            src={`http://localhost:8080/images/${infoData.profileImageUrl}`}
-            alt="profileimg"
-          />
+          <img src={`${infoData.profileImageUrl}`} alt="profileimg" />
           <TxtInfo height="23vw">
             <div>
               <NameLine>
