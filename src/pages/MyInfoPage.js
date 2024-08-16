@@ -50,10 +50,10 @@ const MyInfoPage = () => {
   let userId = localStorage.getItem("userId");
   const [infoData, setInfoData] = useState([]);
   const [isedit, setIsEdit] = useState(false);
-  const [nickname, setNickname] = useState(infoData.nickname);
+  const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
-  const [phone, setPhone] = useState(infoData.phoneNumber);
+  const [phone, setPhone] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
   const [bio, setBio] = useState("");
 
@@ -299,27 +299,55 @@ const MyInfoPage = () => {
       ) : (
         <MWrapper>
           <Line mbottom="30px" ptop="5vh">
-            <Name size="20px">{infoData.nickname}</Name>
-            <MTxt size="20px">님의 정보</MTxt>
+            <MTxt size="20px">내 정보</MTxt>
           </Line>
+          <ProfileBox>
+            <div className="divbox">
+              {isedit ? (
+                <div style={{ position: "relative" }}>
+                  <MProfileImg
+                    src={img ? img : `${infoData.profileImageUrl}`}
+                  />
+                  <MEditImg>
+                    <input
+                      type="file"
+                      name="profile"
+                      id="profileimg"
+                      ref={imgRef}
+                      onChange={saveImgFile}
+                    />
+                    <label htmlFor="profileimg">
+                      <MdCameraEnhance color="white" />
+                    </label>
+                  </MEditImg>
+                </div>
+              ) : (
+                <MProfileImg src={`${infoData.profileImageUrl}`} />
+              )}
+              <div>
+                <Title mtop="0" mbottom="0">
+                  닉네임
+                </Title>
+                {isedit ? (
+                  <Input
+                    padding="10px 15px"
+                    onChange={onChangeNickname}
+                    defaultValue={infoData.nickName}
+                    placeholder="닉네임을 입력해주세요."
+                  />
+                ) : (
+                  <Contents mbottom="0">{infoData.nickName}</Contents>
+                )}
+              </div>
+            </div>
+            {isedit ? <></> : <Logout onClick={handleLogout}>로그아웃</Logout>}
+          </ProfileBox>
           <Title>이메일</Title>
-          <BlackLine />
           <Contents>{infoData.email}</Contents>
-          <Title>닉네임</Title>
-          <BlackLine style={{ display: isedit ? "none" : "" }} />
-          {isedit ? (
-            <Input
-              onChange={onChangeNickname}
-              defaultValue={infoData.nickname}
-              placeholder="닉네임을 입력해주세요."
-            />
-          ) : (
-            <Contents>{infoData.nickname}</Contents>
-          )}
           <Title>휴대폰 번호</Title>
-          <BlackLine style={{ display: isedit ? "none" : "" }} />
           {isedit ? (
             <Input
+              padding="10px 15px"
               onChange={onChangePhone}
               defaultValue={infoData.phoneNumber}
               placeholder="ex. 010-1234-5678"
@@ -328,9 +356,9 @@ const MyInfoPage = () => {
             <Contents>{infoData.phoneNumber}</Contents>
           )}
           <Title>한 줄 소개</Title>
-          <BlackLine style={{ display: isedit ? "none" : "" }} />
           {isedit ? (
             <Input
+              padding="10px 15px"
               onChange={onChangeBio}
               defaultValue={infoData.bio}
               placeholder="한 줄로 자신을 소개해주세요."
@@ -338,19 +366,19 @@ const MyInfoPage = () => {
           ) : (
             <Contents>{infoData.bio}</Contents>
           )}
-          <Title>프로필 이미지</Title>
-          <BlackLine />
-          <Contents>{infoData.profileImage}</Contents>
-          {isedit ? (
-            <EditBtn fontsize="17px" onClick={handleEdit}>
-              수정 완료
-            </EditBtn>
-          ) : (
-            <EditBtn fontsize="17px" onClick={() => setIsEdit(true)}>
-              정보 수정하기
-            </EditBtn>
-          )}
-          <Logout>로그아웃</Logout>
+          <BottomLine justifycontent="flex-end">
+            {isedit ? (
+              <EditBtn fontsize="17px" onClick={handleEdit}>
+                <MdEdit size={25} />
+                <span>수정 완료</span>
+              </EditBtn>
+            ) : (
+              <EditBtn fontsize="17px" onClick={() => setIsEdit(true)}>
+                <MdEdit size={25} />
+                <span>수정하기</span>
+              </EditBtn>
+            )}
+          </BottomLine>
         </MWrapper>
       )}
     </>
@@ -363,6 +391,7 @@ const MWrapper = styled.div`
   width: 100vw;
   min-height: 100vh;
   padding: 0 10vw;
+  background-color: #262626;
 `;
 const Line = styled.div`
   display: flex;
@@ -371,9 +400,11 @@ const Line = styled.div`
   padding-top: ${(props) => props.ptop};
   align-items: end;
 `;
-const Name = styled.div`
-  color: white;
-  font-size: ${(props) => props.size};
+const MProfileImg = styled.img`
+  border-radius: 50%;
+  width: 15vw;
+  height: 15vw;
+  object-fit: cover;
 `;
 const MTxt = styled.div`
   color: white;
@@ -415,11 +446,6 @@ const EditBtn = styled.button`
     fill: white;
   }
 `;
-const BlackLine = styled.div`
-  background-color: black;
-  height: 1px;
-  width: 100%;
-`;
 const Input = styled.input`
   border: none;
   background-color: rgba(255, 255, 255, 0.22);
@@ -460,6 +486,26 @@ const EditImg = styled.div`
     border-radius: 50%;
     width: 2vw;
     height: 2vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+`;
+
+const MEditImg = styled.div`
+  input {
+    display: none;
+  }
+  label {
+    background-color: rgba(54, 54, 54, 0.7);
+    border-radius: 50%;
+    width: 7vw;
+    height: 7vw;
     position: absolute;
     top: 50%;
     left: 50%;
