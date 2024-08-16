@@ -156,7 +156,14 @@ const MyTicketPage = () => {
               {infoData.nickName}님의 대표 티켓
             </FavTicket>
             <div onClick={handleTicket}>
-              <Ticket />
+              <Ticket
+                title={favticket.title}
+                place={favticket.location}
+                seat={favticket.seat}
+                year={favticket.date ? favticket.date.substr(0, 4) : ""}
+                date={favticket.date ? favticket.date.substr(5, 9) : ""}
+                custom={favticket.customImageUrl}
+              />
             </div>
             <PocketTitle padding="0 30px">
               <FaGetPocket color="white" />
