@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { IoMdSettings } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../context/Responsive";
+import FollowingModal from "./FollowingModal";
 
 const ProfileBox = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ const Profile = () => {
   const [infoData, setInfoData] = useState([]);
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["access"]);
+  const [following, setFollowing] = useState([]);
 
   const getMyInfo = () => {
     api
@@ -44,6 +46,25 @@ const Profile = () => {
   useEffect(() => {
     getMyInfo();
   }, []);
+
+  const [followingModal, setFollowingModal] = useState(false);
+
+  const onClickFollowing = async () => {
+    try {
+      const res = await api.get(`/api/follow/following/${userId}`, {
+        headers: {
+          Authorization: `${cookies.access}`,
+        },
+      });
+
+      // 호출 성공 시 처리
+      console.log("following", res);
+      setFollowing(res.data);
+      setFollowingModal(true);
+    } catch (err) {
+      console.log("팔로잉 목록 조회 실패", err);
+    }
+  };
 
   return (
     <>
@@ -78,8 +99,18 @@ const Profile = () => {
                   <Num fcolor="#727272">{infoData.followersCount}</Num>
                 </Unit>
                 <Unit fsize="18px">
-                  <Title>팔로잉</Title>
+                  <Title
+                    style={{ cursor: "pointer" }}
+                    onClick={onClickFollowing}
+                  >
+                    팔로잉
+                  </Title>
                   <Num fcolor="#727272">{infoData.followingsCount}</Num>
+                  <FollowingModal
+                    isOpen={followingModal}
+                    onRequestClose={() => setFollowingModal(false)}
+                    following={following}
+                  />
                 </Unit>
               </NumLine>
             </div>
