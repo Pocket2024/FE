@@ -73,21 +73,37 @@ const MyTicketPage = () => {
   let userId = localStorage.getItem("userId");
   const [infoData, setInfoData] = useState([]);
   const [clickticket, setClickticket] = useState(false);
+  const [favticket, setFavticket] = useState([]);
 
-  const getMyInfo = () => {
-    api
-      .get(`/api/users/details/${userId}`, {
+  const getMyInfo = async () => {
+    try {
+      // 첫 번째 API 호출
+      const userInfoResponse = await api.get(`/api/users/details/${userId}`, {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },
-      })
-      .then((res) => {
-        console.log(res);
-        setInfoData(res.data);
-      })
-      .catch((err) => {
-        console.error("Error get info", err);
       });
+
+      // 첫 번째 API 호출에서 받은 데이터 처리
+      const fetchedInfoData = userInfoResponse.data;
+      setInfoData(fetchedInfoData); // 상태 업데이트
+
+      // 두 번째 API 호출
+      const featuredReviewResponse = await api.get(
+        `/api/reviews/${fetchedInfoData.featuredReviewId}?userId=${userId}`,
+        {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        }
+      );
+
+      // 두 번째 API 호출에서 받은 데이터 처리
+      console.log("대표티켓정보", featuredReviewResponse);
+      setFavticket(featuredReviewResponse.data);
+    } catch (err) {
+      console.error("Error occurred during API requests", err);
+    }
   };
   useEffect(() => {
     getMyInfo();
@@ -110,7 +126,14 @@ const MyTicketPage = () => {
                 {infoData.nickName}님의 대표 티켓
               </FavTicket>
               <div onClick={handleTicket}>
-                <Ticket />
+                <Ticket
+                  title={favticket.title}
+                  place={favticket.location}
+                  seat={favticket.seat}
+                  year={favticket.date ? favticket.date.substr(0, 4) : ""}
+                  date={favticket.date ? favticket.date.substr(5, 9) : ""}
+                  custom={favticket.customImageUrl}
+                />
               </div>
               <PocketTitle>
                 <FaGetPocket color="white" />
