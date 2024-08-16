@@ -10,9 +10,8 @@ import { saveAs } from "file-saver";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useResponsive } from "../context/Responsive";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ImgModal from "./ImgModal";
-import { useCookies } from "react-cookie";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
