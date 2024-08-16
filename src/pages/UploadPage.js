@@ -10,7 +10,7 @@ import { IoMdImage } from "react-icons/io";
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
 `;
 const RightArea = styled.div`
   width: 50%;
@@ -19,13 +19,14 @@ const RightArea = styled.div`
   align-items: center;
   height: calc(100vh - 80px);
   padding: 0 100px;
+  overflow-y: auto;
 `;
 const LeftArea = styled.div`
   width: 50%;
   background-color: #262626;
   padding: 100px;
   min-height: fit-content;
-  overflow: scroll; // 스크롤 부분
+  overflow-y: auto;
 `;
 const Title = styled.div`
   font-size: ${(props) => props.fontsize || "20px"};
