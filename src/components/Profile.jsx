@@ -18,7 +18,7 @@ const ProfileBox = styled.div`
   }
 `;
 
-const Profile = () => {
+const Profile = ({ otheruserId }) => {
   const { isDesktop } = useResponsive();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   let userId = localStorage.getItem("userId");
@@ -29,12 +29,17 @@ const Profile = () => {
 
   const getMyInfo = () => {
     api
-      .get(`/api/users/details/${userId}`, {
-        headers: {
-          Authorization: `${cookies.access}`,
-          withCredentials: true,
-        },
-      })
+      .get(
+        otheruserId
+          ? `/api/users/details/${otheruserId}`
+          : `/api/users/details/${userId}`,
+        {
+          headers: {
+            Authorization: `${cookies.access}`,
+            withCredentials: true,
+          },
+        }
+      )
       .then((res) => {
         console.log("profile", res);
         setInfoData(res.data);
@@ -51,11 +56,16 @@ const Profile = () => {
 
   const onClickFollowing = async () => {
     try {
-      const res = await api.get(`/api/follow/following/${userId}`, {
-        headers: {
-          Authorization: `${cookies.access}`,
-        },
-      });
+      const res = await api.get(
+        otheruserId
+          ? `/api/follow/following/${otheruserId}`
+          : `/api/follow/following/${userId}`,
+        {
+          headers: {
+            Authorization: `${cookies.access}`,
+          },
+        }
+      );
 
       // 호출 성공 시 처리
       console.log("following", res);
@@ -75,12 +85,16 @@ const Profile = () => {
             <div>
               <NameLine line="3vh">
                 <Nickname fsize="3vh">{infoData.nickName}</Nickname>
-                <IoMdSettings
-                  size={27}
-                  className="SettingIcon"
-                  color="white"
-                  onClick={() => navigate("/myinfo")}
-                />
+                {otheruserId ? (
+                  <></>
+                ) : (
+                  <IoMdSettings
+                    size={27}
+                    className="SettingIcon"
+                    color="white"
+                    onClick={() => navigate("/myinfo")}
+                  />
+                )}
               </NameLine>
               <Bio fsize="2vh" mtop="10px">
                 {infoData.bio}
