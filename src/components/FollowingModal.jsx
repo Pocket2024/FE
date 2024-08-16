@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import "../style/TicketModal.css";
 import api from "../api/api";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   overlay: {
@@ -62,13 +63,16 @@ const mobilecustomStyles = {
 };
 
 const FollowingModal = ({ isOpen, onRequestClose, following }) => {
-  console.log("받아온 팔로잉 목록", following);
+  const navigate = useNavigate();
+  const onClickProfile = (userId) => {
+    navigate(`/user/${userId}`);
+  };
   return (
     <Modal isOpen={isOpen} style={customStyles} onRequestClose={onRequestClose}>
       <Title>팔로잉 목록</Title>
       <ListDiv>
         {following.map((following) => (
-          <List>
+          <List onClick={() => onClickProfile(following.id)} key={following.id}>
             <ProfileImg src={following.profileImage} />
             <NameBio>
               <Nickname>{following.nickname}</Nickname>
