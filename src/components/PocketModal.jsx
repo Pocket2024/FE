@@ -5,6 +5,7 @@ import { ChromePicker } from "react-color";
 import styled from "styled-components";
 import api from "../api/api";
 import { useResponsive } from "../context/Responsive";
+import { useNavigate } from "react-router-dom";
 
 const customStyles = {
   overlay: {
@@ -104,9 +105,9 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
           },
         }
       )
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         alert("포켓이 생성되었습니다.");
+        window.location.reload();
       })
       .catch((err) => {
         console.log("create pocket error", err);
