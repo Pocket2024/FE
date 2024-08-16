@@ -4,6 +4,7 @@ import api from "../api/api";
 import { useResponsive } from "../context/Responsive";
 import { MdEdit } from "react-icons/md";
 import { MdCameraEnhance } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -44,6 +45,7 @@ const BottomLine = styled.div`
 
 const MyInfoPage = () => {
   const { isDesktop } = useResponsive();
+  const navigate = useNavigate();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   let userId = localStorage.getItem("userId");
   const [infoData, setInfoData] = useState([]);
@@ -165,6 +167,26 @@ const MyInfoPage = () => {
       });
   };
 
+  const handleLogout = () => {
+    if (window.confirm("로그아웃하시겠습니까?")) {
+      api
+        .delete("/api/users/logout", {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then((res) => {
+          alert("로그아웃 되었습니다.");
+          navigate("/");
+        })
+        .catch((err) => {
+          alert("로그아웃 실패");
+          console.log(err);
+        });
+    } else {
+    }
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -215,7 +237,7 @@ const MyInfoPage = () => {
                   )}
                 </div>
               </div>
-              <Logout>로그아웃</Logout>
+              <Logout onClick={handleLogout}>로그아웃</Logout>
             </ProfileBox>
             <Title fontsize="22px">이메일</Title>
             {isedit ? (
