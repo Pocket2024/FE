@@ -10,6 +10,7 @@ import UploadBtn from "../components/UploadBtn";
 import Pocket from "../components/Pocket";
 import { useResponsive } from "../context/Responsive";
 import { useParams } from "react-router-dom";
+import FavDetail from "../components/FavDetail";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -147,7 +148,11 @@ const OtherUserPage = () => {
             </div>
           </ProfileArea>
           <TicketArea>
-            {clickticket ? <Detail /> : <None>티켓이 이곳에 표시됩니다.</None>}
+            {clickticket ? (
+              <FavDetail favticket={favticket} />
+            ) : (
+              <None>티켓이 이곳에 표시됩니다.</None>
+            )}
           </TicketArea>
           <UploadBtn />
         </Wrapper>

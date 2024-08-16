@@ -9,6 +9,7 @@ import Detail from "../components/Detail";
 import UploadBtn from "../components/UploadBtn";
 import Pocket from "../components/Pocket";
 import { useResponsive } from "../context/Responsive";
+import FavDetail from "../components/FavDetail";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -143,7 +144,11 @@ const MyTicketPage = () => {
             </div>
           </ProfileArea>
           <TicketArea>
-            {clickticket ? <Detail /> : <None>티켓이 이곳에 표시됩니다.</None>}
+            {clickticket ? (
+              <FavDetail favticket={favticket} />
+            ) : (
+              <None>티켓이 이곳에 표시됩니다.</None>
+            )}
           </TicketArea>
           <UploadBtn />
         </Wrapper>
