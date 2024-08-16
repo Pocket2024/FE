@@ -75,6 +75,27 @@ const Profile = ({ otheruserId }) => {
       console.log("팔로잉 목록 조회 실패", err);
     }
   };
+  const onClickFollower = async () => {
+    try {
+      const res = await api.get(
+        otheruserId
+          ? `/api/follow/followers/${otheruserId}`
+          : `/api/follow/followers/${userId}`,
+        {
+          headers: {
+            Authorization: `${cookies.access}`,
+          },
+        }
+      );
+
+      // 호출 성공 시 처리
+      console.log("follower", res);
+      setFollowing(res.data);
+      setFollowingModal(true);
+    } catch (err) {
+      console.log("팔로잉 목록 조회 실패", err);
+    }
+  };
 
   return (
     <>
@@ -109,7 +130,12 @@ const Profile = ({ otheruserId }) => {
                   <Num>{infoData.reviewCount}</Num>
                 </Unit>
                 <Unit fsize="18px">
-                  <Title>팔로워</Title>
+                  <Title
+                    style={{ cursor: "pointer" }}
+                    onClick={onClickFollower}
+                  >
+                    팔로워
+                  </Title>
                   <Num fcolor="#727272">{infoData.followersCount}</Num>
                 </Unit>
                 <Unit fsize="18px">
@@ -154,11 +180,21 @@ const Profile = ({ otheruserId }) => {
                   <Num>{infoData.reviewCount}</Num>
                 </Unit>
                 <Unit>
-                  <Title>팔로워</Title>
+                  <Title
+                    style={{ cursor: "pointer" }}
+                    onClick={onClickFollower}
+                  >
+                    팔로워
+                  </Title>
                   <Num fcolor="#727272">{infoData.followersCount}</Num>
                 </Unit>
                 <Unit>
-                  <Title>팔로잉</Title>
+                  <Title
+                    style={{ cursor: "pointer" }}
+                    onClick={onClickFollowing}
+                  >
+                    팔로잉
+                  </Title>
                   <Num fcolor="#727272">{infoData.followingsCount}</Num>
                 </Unit>
               </NumLine>
