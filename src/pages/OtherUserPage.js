@@ -149,7 +149,7 @@ const OtherUserPage = () => {
           </ProfileArea>
           <TicketArea>
             {clickticket ? (
-              <FavDetail favticket={favticket} />
+              <FavDetail favticket={favticket} otheruserId={otheruserId} />
             ) : (
               <None>티켓이 이곳에 표시됩니다.</None>
             )}

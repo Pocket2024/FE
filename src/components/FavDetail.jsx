@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { MdNavigateBefore } from "react-icons/md";
 import { MdSaveAlt } from "react-icons/md";
@@ -11,9 +11,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useResponsive } from "../context/Responsive";
 import { useNavigate, useParams } from "react-router-dom";
-import api from "../api/api";
 import ImgModal from "./ImgModal";
-import { BsFillPinFill } from "react-icons/bs";
 import { useCookies } from "react-cookie";
 
 const Wrapper = styled.div``;
@@ -124,31 +122,14 @@ const ImageLine = styled.div`
     object-fit: cover;
   }
 `;
-const FavBtn = styled.button`
-  border-radius: 50%;
-  height: ${(props) => props.lineHeight || "50px"};
-  width: ${(props) => props.lineHeight || "50px"};
-  border: none;
-  background-color: #f4f4f4;
-  &:hover {
-    background-color: #fff6a1;
-    .pin-icon {
-      fill: #f2d84f;
-    }
-  }
-`;
 
-const FavDetail = ({ favticket }) => {
+const FavDetail = ({ favticket, otheruserId }) => {
   const { isDesktop } = useResponsive();
   const ticketRef = useRef();
   const [heart, setHeart] = useState(0);
   const [isHeart, setIsHeart] = useState(false);
-  const { ticket } = useParams();
-  const userId = localStorage.getItem("userId");
-  let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [detail, setDetail] = useState(favticket);
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["access"]);
 
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
@@ -256,11 +237,15 @@ const FavDetail = ({ favticket }) => {
                 <ProfileImg src={`${detail.authorProfileImageUrl}`} />
                 <Nickname>{detail.authorNickname}</Nickname>
               </ProfileLine>
-              <div style={{ display: "flex", gap: "0 10px" }}>
-                <SaveBtn onClick={onDownloadBtn}>
-                  <MdSaveAlt color="#DEDEDE" size={40} />
-                </SaveBtn>
-              </div>
+              {otheruserId ? (
+                <></>
+              ) : (
+                <div style={{ display: "flex", gap: "0 10px" }}>
+                  <SaveBtn onClick={onDownloadBtn}>
+                    <MdSaveAlt color="#DEDEDE" size={40} />
+                  </SaveBtn>
+                </div>
+              )}
             </FirstLine>
             <Title>{detail.title}</Title>
             <PlaceLine>
@@ -374,9 +359,13 @@ const FavDetail = ({ favticket }) => {
                 <MProfileImg src={`${detail.authorProfileImageUrl}`} />
                 <MNickname>{detail.authorNickname}</MNickname>
               </ProfileLine>
-              <SaveBtn onClick={onDownloadBtn}>
-                <MdSaveAlt color="#DEDEDE" size={25} />
-              </SaveBtn>
+              {otheruserId ? (
+                <></>
+              ) : (
+                <SaveBtn onClick={onDownloadBtn}>
+                  <MdSaveAlt color="#DEDEDE" size={25} />
+                </SaveBtn>
+              )}
             </FirstLine>
             <Title fontSize="22px">{detail.title}</Title>
             <PlaceLine height="20px">
