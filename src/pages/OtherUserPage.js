@@ -143,7 +143,7 @@ const OtherUserPage = () => {
                 <FaGetPocket color="white" />
                 <div>{infoData.nickName}님의 포켓</div>
               </PocketTitle>
-              <Pocket />
+              <Pocket otheruserId={otheruserId} />
             </div>
           </ProfileArea>
           <TicketArea>

@@ -70,7 +70,7 @@ function getTextColor(bgColorHex) {
   return average > 127.5 ? "#000000" : "#FFFFFF";
 }
 
-const Pocket = () => {
+const Pocket = ({ otheruserId }) => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
@@ -118,9 +118,13 @@ const Pocket = () => {
                 </div>
               </PocketDiv>
             ))}
-            <div className="createBtn" onClick={() => setModal(true)}>
-              <FaPlus color="#929292" size={50} />
-            </div>
+            {otheruserId ? (
+              <></>
+            ) : (
+              <div className="createBtn" onClick={() => setModal(true)}>
+                <FaPlus color="#929292" size={50} />
+              </div>
+            )}
           </PocketGrid>
           <PocketModal isOpen={modal} onRequestClose={() => setModal(false)} />
         </Wrapper>
