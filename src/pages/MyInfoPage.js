@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import api from "../api/api";
 import { useResponsive } from "../context/Responsive";
@@ -45,6 +45,7 @@ const BottomLine = styled.div`
 const MyInfoPage = () => {
   const { isDesktop } = useResponsive();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  let userId = localStorage.getItem("userId");
   const [infoData, setInfoData] = useState([]);
   const [isedit, setIsEdit] = useState(false);
   const [nickname, setNickname] = useState(infoData.nickname);
@@ -54,25 +55,27 @@ const MyInfoPage = () => {
   const [phoneMessage, setPhoneMessage] = useState("");
   const [bio, setBio] = useState("");
 
+  const imgRef = useRef();
   const [img, setImg] = useState("");
   const [realimg, setRealimg] = useState([]);
 
-  const imgencodeFileToBase64 = (fileBlob) => {
-    const reader1 = new FileReader();
-
-    reader1.readAsDataURL(fileBlob[0]);
-    setRealimg(fileBlob);
-    return new Promise((resolve) => {
-      reader1.onload = () => {
-        setImg(reader1.result);
-        resolve();
+  // 이미지 업로드 input의 onChange
+  const saveImgFile = () => {
+    const file = imgRef.current.files[0] ? imgRef.current.files[0] : "";
+    setRealimg(file);
+    const reader = new FileReader();
+    if (file != "") {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImg(reader.result);
+        console.log(reader.result);
       };
-    });
+    }
   };
 
   const getMyInfo = () => {
     api
-      .get("/api/users/details/1", {
+      .get(`/api/users/details/${userId}`, {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },
@@ -129,28 +132,31 @@ const MyInfoPage = () => {
     setBio(e.target.value);
   };
   const handleEdit = () => {
-    console.log(nickname);
-    console.log(phone);
+    console.log(realimg);
     console.log(bio);
-    console.log(email);
+    const formData = new FormData();
+
+    // formData.append("email", email);
+    formData.append("nickName", nickname);
+    // formData.append("bio", bio);
+    // formData.append("phoneNumber", phonNumber);
+    formData.append("proflieImage", realimg);
+
+    for (let key of formData.keys()) {
+      console.log("key: " + key);
+    }
+    for (let value of formData.values()) {
+      console.log("value: " + value);
+    }
+
     api
-      .put(
-        `/api/users/${infoData.id}`,
-        {
-          email: email,
-          nickName: nickname,
-          bio: bio,
-          phoneNumber: phone,
-          profileImage: realimg,
+      .put(`/api/users/${userId}`, formData, {
+        headers: {
+          Authorization: `${ACCESS_TOKEN}`,
         },
-        {
-          headers: {
-            Authorization: `${ACCESS_TOKEN}`,
-          },
-        }
-      )
+      })
       .then((res) => {
-        console.log(res);
+        console.log("edit", res);
         setIsEdit(false);
         alert("정보가 수정되었습니다.");
       })
@@ -172,20 +178,15 @@ const MyInfoPage = () => {
                 {isedit ? (
                   <div style={{ position: "relative" }}>
                     <ProfileImg
-                      src={
-                        img
-                          ? img
-                          : `http://localhost:8080/images/${infoData.profileImageUrl}`
-                      }
+                      src={img ? img : `${infoData.profileImageUrl}`}
                     />
                     <EditImg>
                       <input
                         type="file"
                         name="profile"
                         id="profileimg"
-                        onChange={(e) => {
-                          imgencodeFileToBase64(e.target.files);
-                        }}
+                        ref={imgRef}
+                        onChange={saveImgFile}
                       />
                       <label htmlFor="profileimg">
                         <MdCameraEnhance color="white" />
@@ -193,9 +194,7 @@ const MyInfoPage = () => {
                     </EditImg>
                   </div>
                 ) : (
-                  <ProfileImg
-                    src={`http://localhost:8080/images/${infoData.profileImageUrl}`}
-                  />
+                  <ProfileImg src={`${infoData.profileImageUrl}`} />
                 )}
                 <div>
                   <Title fontsize="22px" mtop="0" mbottom="0">

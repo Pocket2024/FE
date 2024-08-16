@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useResponsive } from "../context/Responsive";
+import { useCookies } from "react-cookie"; // useCookies import
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -16,6 +17,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
+  const [cookies, setCookie] = useCookies(["access"]); // 쿠키 훅
+
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -29,8 +32,12 @@ const LoginPage = () => {
         password: pw,
       })
       .then((res) => {
-        console.log(res.data.accessToken);
+        console.log(res.data);
         localStorage.setItem("accessToken", res.data.accessToken);
+        // 토큰 값을 쿠키에 저장
+        setCookie("access", res.data.accessToken, { path: "/" });
+
+        localStorage.setItem("userId", res.data.userId);
         alert("로그인 성공");
         navigate("/myticket");
       })

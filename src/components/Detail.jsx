@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
 import ImgModal from "./ImgModal";
 import { BsFillPinFill } from "react-icons/bs";
+import { useCookies } from "react-cookie";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -59,6 +60,7 @@ const ProfileImg = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  object-fit: cover;
 `;
 const Nickname = styled.div`
   font-size: 20px;
@@ -146,6 +148,7 @@ const Detail = () => {
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [detail, setDetail] = useState([]);
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["access"]);
 
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
@@ -260,16 +263,22 @@ const Detail = () => {
 
   const handleFavTicket = () => {
     api
-      .post(`/api/reviews/${ticket}/feature`, {
-        headers: {
-          Authorization: `${ACCESS_TOKEN}`,
-        },
-      })
+      .post(
+        `/api/reviews/${ticket}/feature`,
+        {},
+        {
+          headers: {
+            Authorization: `${cookies.access}`,
+          },
+        }
+      )
       .then(() => {
         console.log("대표 티켓으로 설정되었습니다.");
+        alert("성공");
       })
       .catch((err) => {
         console.log("post feature ticket err", err);
+        alert("실패");
       });
   };
 
@@ -285,9 +294,7 @@ const Detail = () => {
           >
             <FirstLine>
               <ProfileLine>
-                <ProfileImg
-                  src={`http://localhost:8080/images/${detail.authorProfileImageUrl}`}
-                />
+                <ProfileImg src={`${detail.authorProfileImageUrl}`} />
                 <Nickname>{detail.authorNickname}</Nickname>
               </ProfileLine>
               <div style={{ display: "flex", gap: "0 10px" }}>

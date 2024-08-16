@@ -70,12 +70,13 @@ const MyTicketPage = () => {
   const { isDesktop } = useResponsive();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   // eslint-disable-next-line
+  let userId = localStorage.getItem("userId");
   const [infoData, setInfoData] = useState([]);
   const [clickticket, setClickticket] = useState(false);
 
   const getMyInfo = () => {
     api
-      .get("/api/users/details/1", {
+      .get(`/api/users/details/${userId}`, {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import api from "../api/api";
-import profileimg from "../images/profileimg.png";
+import { useCookies } from "react-cookie";
 import { IoMdSettings } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../context/Responsive";
@@ -13,26 +13,29 @@ const ProfileBox = styled.div`
     width: 15vh;
     height: 15vh;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;
 
 const Profile = () => {
   const { isDesktop } = useResponsive();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  let userId = localStorage.getItem("userId");
   const [infoData, setInfoData] = useState([]);
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(["access"]);
 
   const getMyInfo = () => {
     api
-      .get(`/api/users/details/1`, {
+      .get(`/api/users/details/${userId}`, {
         headers: {
-          Authorization: `${ACCESS_TOKEN}`,
+          Authorization: `${cookies.access}`,
+          withCredentials: true,
         },
       })
       .then((res) => {
         console.log("profile", res);
         setInfoData(res.data);
-        localStorage.setItem("userId", res.data.id);
       })
       .catch((err) => {
         console.error("Error get info", err);
@@ -46,10 +49,7 @@ const Profile = () => {
     <>
       {isDesktop ? (
         <ProfileBox>
-          <img
-            src={`http://localhost:8080/images/${infoData.profileImageUrl}`}
-            alt="profileimg"
-          />
+          <img src={`${infoData.profileImageUrl}`} alt="profileimg" />
           <TxtInfo mleft="2vw">
             <div>
               <NameLine line="3vh">
