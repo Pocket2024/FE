@@ -419,9 +419,7 @@ const Detail = () => {
           <MTicketBox className="ticketimg" ref={ticketRef} id="ticketbox">
             <FirstLine lineHeight="35px">
               <ProfileLine>
-                <MProfileImg
-                  src={`http://localhost:8080/images/${detail.authorProfileImageUrl}`}
-                />
+                <MProfileImg src={`${detail.authorProfileImageUrl}`} />
                 <MNickname>{detail.authorNickname}</MNickname>
               </ProfileLine>
               <SaveBtn onClick={onDownloadBtn}>
