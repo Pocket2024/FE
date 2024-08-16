@@ -140,7 +140,7 @@ const MyInfoPage = () => {
     formData.append("nickName", nickname);
     // formData.append("bio", bio);
     // formData.append("phoneNumber", phonNumber);
-    formData.append("proflieImage", realimg);
+    formData.append("profileImage", realimg);
 
     for (let key of formData.keys()) {
       console.log("key: " + key);
