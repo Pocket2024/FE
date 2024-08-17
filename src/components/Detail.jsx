@@ -164,6 +164,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["access"]);
   const [animate, setAnimate] = useState(false);
+  const { otheruserId } = useParams();
 
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
@@ -321,18 +322,22 @@ const Detail = () => {
                 <ProfileImg src={`${detail.authorProfileImageUrl}`} />
                 <Nickname>{detail.authorNickname}</Nickname>
               </ProfileLine>
-              <div style={{ display: "flex", gap: "0 10px" }}>
-                <SaveBtn onClick={onDownloadBtn}>
-                  <MdSaveAlt color="#DEDEDE" size={40} />
-                </SaveBtn>
-                <FavBtn onClick={handleFavTicket}>
-                  <BsFillPinFill
-                    size={25}
-                    color="#E2E2E2"
-                    className="pin-icon"
-                  />
-                </FavBtn>
-              </div>
+              {otheruserId ? (
+                <></>
+              ) : (
+                <div style={{ display: "flex", gap: "0 10px" }}>
+                  <SaveBtn onClick={onDownloadBtn}>
+                    <MdSaveAlt color="#DEDEDE" size={40} />
+                  </SaveBtn>
+                  <FavBtn onClick={handleFavTicket}>
+                    <BsFillPinFill
+                      size={25}
+                      color="#E2E2E2"
+                      className="pin-icon"
+                    />
+                  </FavBtn>
+                </div>
+              )}
             </FirstLine>
             <Title>{detail.title}</Title>
             <PlaceLine>
