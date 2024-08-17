@@ -290,19 +290,22 @@ const UploadPage = () => {
   };
 
   const getmyCat = () => {
-    api
-      .get("/api/categories/getTicketCategories", {
-        headers: {
-          Authorization: `${ACCESS_TOKEN}`,
-        },
-      })
-      .then((res) => {
-        setCategory(res.data.categories);
-      })
-      .catch((err) => {
-        console.log("get category error", err);
-      });
+    if (location.state === null) {
+      api
+        .get("/api/categories/getTicketCategories", {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then((res) => {
+          setCategory(res.data.categories);
+        })
+        .catch((err) => {
+          console.log("get category error", err);
+        });
+    }
   };
+
   useEffect(() => {
     getmyCat();
   }, []);
