@@ -122,6 +122,54 @@ const Profile = ({ otheruserId }) => {
     }
   };
 
+  const handleFollow = () => {
+    if (infoData.followedByCurrentUser === false) {
+      // 팔로우하지 않은 경우 팔로우
+      api
+        .post(
+          "/api/follow/follow",
+          {
+            followingId: otheruserId,
+            followerId: userId,
+          },
+          {
+            headers: {
+              Authorization: `${cookies.access}`,
+            },
+          }
+        )
+        .then(() => {
+          alert("팔로우 성공!");
+          window.location.reload();
+        })
+        .catch(() => {
+          alert("팔로우 실패");
+        });
+    } else {
+      // // 팔로우하는 경우 팔로우 취소
+      // api
+      //   .delete(
+      //     "/api/followDelete",
+      //     {
+      //       followingId: otheruserId,
+      //       followerId: userId,
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: `${cookies.access}`,
+      //       },
+      //     }
+      //   )
+      //   .then(() => {
+      //     alert("팔로우 성공!");
+      //     window.location.reload();
+      //   })
+      //   .catch(() => {
+      //     alert("팔로우 실패");
+      //   });
+    }
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -132,7 +180,7 @@ const Profile = ({ otheruserId }) => {
               <NameLine line="3vh">
                 <Nickname fsize="3vh">{infoData.nickName}</Nickname>
                 {otheruserId ? (
-                  <FollowBtn>
+                  <FollowBtn onClick={handleFollow}>
                     {infoData.followedByCurrentUser ? (
                       <>
                         <GiCancel />
