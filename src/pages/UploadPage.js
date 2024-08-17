@@ -47,7 +47,7 @@ const Explain = styled.div`
   margin-bottom: 30px;
   white-space: nowrap;
 `;
-const AutoBtn = styled.button`
+const AutoBtn = styled.label`
   border: 1px solid #262626;
   background-color: white;
   color: #262626;
@@ -61,6 +61,7 @@ const AutoBtn = styled.button`
   line-height: 20px;
   gap: 0 10px;
   margin-bottom: ${(props) => props.marginbottom || "20px"};
+  cursor: pointer;
 `;
 const TicketBox = styled.label`
   width: 100%;
@@ -355,6 +356,34 @@ const UploadPage = () => {
     });
   };
 
+  const onChangeOcr = async (fileBlob) => {
+    const formData = new FormData();
+
+    formData.append("file", fileBlob[0]);
+
+    for (let key of formData.keys()) {
+      console.log("key: " + key);
+    }
+    for (let value of formData.values()) {
+      console.log("value: " + value);
+    }
+
+    try {
+      const res = await api.post("/api/ocr/upload", formData, {
+        headers: {
+          Authorization: `${ACCESS_TOKEN}`,
+        },
+      });
+
+      console.log("ocr 정보", res);
+      setTitle(res.data.title);
+      setPlace(res.data.location);
+      setSeat(res.data.seat);
+    } catch (err) {
+      console.log("ocr 에러", err);
+    }
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -382,7 +411,16 @@ const UploadPage = () => {
                 <br />
                 자동입력을 원하지 않으면 직접 정보를 입력할 수 있습니다.
               </Explain>
-              <AutoBtn marginbottom="60px">
+              <input
+                type="file"
+                accept="image/*"
+                id="ocrimg"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  onChangeOcr(e.target.files);
+                }}
+              />
+              <AutoBtn marginbottom="60px" htmlFor="ocrimg">
                 <IoMdImage size={20} />
                 자동입력에 사용할 티켓 이미지 선택하기
               </AutoBtn>
