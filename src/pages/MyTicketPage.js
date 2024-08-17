@@ -160,7 +160,7 @@ const MyTicketPage = () => {
               <BsFillPinFill color="white" />
               {infoData.nickName}님의 대표 티켓
             </FavTicket>
-            <div onClick={handleTicket}>
+            <div onClick={handleTicket} style={{ padding: "0 30px" }}>
               <Ticket
                 title={favticket.title}
                 place={favticket.location}

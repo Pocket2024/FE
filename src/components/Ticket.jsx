@@ -103,7 +103,7 @@ const Ticket = ({ title, place, seat, year, date, custom }) => {
           </TicketBox>
         </Wrapper>
       ) : (
-        <Wrapper padding="0 30px">
+        <Wrapper>
           <TicketBox height="130px" onClick={() => navigate(`/detail/${id}`)}>
             <Circle top="-10px" />
             <Title fontsize="13px">{title || "제목"}</Title>

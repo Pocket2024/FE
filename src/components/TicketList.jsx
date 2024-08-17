@@ -10,10 +10,18 @@ import { FaPlus } from "react-icons/fa6";
 const List = styled.div`
   display: block;
   margin-top: 30px;
-  padding-bottom: 10vh;
+  padding: ${(props) => props.padding || "0 0 10vh 0 "};
 `;
 const TicketDiv = styled.div`
   margin-bottom: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: ${(props) =>
+    props.isSelected ? "#4f4f4f" : "transparent"};
+  &:hover {
+    background-color: #4f4f4f;
+  }
+  cursor: pointer;
 `;
 const CategoryLine = styled.div`
   display: flex;
@@ -61,6 +69,7 @@ const TicketList = () => {
   const [category, setCategory] = useState(location.state);
   const navigate = useNavigate();
   const { isDesktop } = useResponsive();
+  const [selectedTicketId, setSelectedTicketId] = useState(null); // 클릭된 티켓 ID를 추적
 
   const getTicketList = () => {
     api
@@ -83,6 +92,13 @@ const TicketList = () => {
   useEffect(() => {
     getTicketList();
   }, []);
+
+  const handleTicketClick = (ticketId) => {
+    setSelectedTicketId(ticketId); // 클릭된 티켓 ID를 설정
+    isDesktop
+      ? navigate(`/myticket/${pocket}/${ticketId}`)
+      : navigate(`/detail/${ticketId}`);
+  };
 
   return (
     <>
@@ -111,15 +127,14 @@ const TicketList = () => {
           <span>티켓 추가하기</span>
         </CreateBtn>
       </CategoryLine>
-      <List>
+      <List padding={isDesktop ? "" : "0 30px 10vh 30px"}>
         {ticketlist.map((ticket) => (
           <>
             <TicketDiv
+              isSelected={ticket.id === selectedTicketId}
               key={ticket.id}
-              onClick={() =>
-                isDesktop
-                  ? navigate(`/myticket/${pocket}/${ticket.id}`)
-                  : navigate(`/detail/${ticket.id}`)
+              onClick={
+                () => handleTicketClick(ticket.id) // 클릭 이벤트 핸들러
               }
             >
               <Ticket
