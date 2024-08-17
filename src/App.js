@@ -35,6 +35,14 @@ function App() {
               element={<MyTicketDetailPage />}
             />
             <Route path="/user/:otheruserId" element={<OtherUserPage />} />
+            <Route
+              path="/user/:otheruserId/:pocket"
+              element={<MyTicketDetailPage />}
+            />
+            <Route
+              path="/user/:otheruserId/:pocket/:ticket"
+              element={<MyTicketDetailPage />}
+            />
           </Routes>
         </Page>
       </ResponsiveProvider>

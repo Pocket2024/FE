@@ -62,6 +62,7 @@ const CreateBtn = styled.button`
 
 const TicketList = () => {
   let { pocket } = useParams();
+  let { otheruserId } = useParams();
   const userId = localStorage.getItem("userId");
   const location = useLocation();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
@@ -95,9 +96,13 @@ const TicketList = () => {
 
   const handleTicketClick = (ticketId) => {
     setSelectedTicketId(ticketId); // 클릭된 티켓 ID를 설정
-    isDesktop
-      ? navigate(`/myticket/${pocket}/${ticketId}`)
-      : navigate(`/detail/${ticketId}`);
+    if (isDesktop) {
+      otheruserId
+        ? navigate(`/user/${otheruserId}/${pocket}/${ticketId}`)
+        : navigate(`/myticket/${pocket}/${ticketId}`);
+    } else {
+      navigate(`/detail/${ticketId}`);
+    }
   };
 
   return (

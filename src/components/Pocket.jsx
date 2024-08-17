@@ -101,7 +101,9 @@ const Pocket = ({ otheruserId }) => {
   };
 
   const onClickPocket = (pocketId, category) => {
-    navigate(`/myticket/${pocketId}`, { state: category });
+    otheruserId
+      ? navigate(`/user/${otheruserId}/${pocketId}`, { state: category })
+      : navigate(`/myticket/${pocketId}`, { state: category });
   };
 
   useEffect(() => {
