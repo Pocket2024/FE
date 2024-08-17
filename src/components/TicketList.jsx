@@ -110,7 +110,7 @@ const TicketList = () => {
           <MdNavigateBefore
             color="#A9A9A9"
             size={isDesktop ? 50 : 30}
-            onClick={() => navigate("/myticket")}
+            onClick={() => navigate(-1)}
             style={{ cursor: "pointer" }}
           />
           <div className="name">{category}</div>
