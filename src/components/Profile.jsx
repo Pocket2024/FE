@@ -6,6 +6,8 @@ import { IoMdSettings } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../context/Responsive";
 import FollowingModal from "./FollowingModal";
+import { BsPersonFillAdd } from "react-icons/bs";
+import { GiCancel } from "react-icons/gi";
 
 const ProfileBox = styled.div`
   display: flex;
@@ -17,10 +19,30 @@ const ProfileBox = styled.div`
     object-fit: cover;
   }
 `;
+const FollowBtn = styled.button`
+  border: none;
+  outline: none;
+  background-color: #323232;
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0 5px;
+  color: #c8c8c8;
+  fill: #c8c8c8;
+  font-size: 15px;
+  font-weight: 500;
+
+  &:hover {
+    color: white;
+    fill: white;
+    background-color: #4a4a4a;
+  }
+`;
 
 const Profile = ({ otheruserId }) => {
   const { isDesktop } = useResponsive();
-  let ACCESS_TOKEN = localStorage.getItem("accessToken");
   let userId = localStorage.getItem("userId");
   const [infoData, setInfoData] = useState([]);
   const navigate = useNavigate();
@@ -110,7 +132,19 @@ const Profile = ({ otheruserId }) => {
               <NameLine line="3vh">
                 <Nickname fsize="3vh">{infoData.nickName}</Nickname>
                 {otheruserId ? (
-                  <></>
+                  <FollowBtn>
+                    {infoData.followedByCurrentUser ? (
+                      <>
+                        <GiCancel />
+                        <span>팔로우 취소</span>
+                      </>
+                    ) : (
+                      <>
+                        <BsPersonFillAdd />
+                        <span>팔로우</span>
+                      </>
+                    )}
+                  </FollowBtn>
                 ) : (
                   <IoMdSettings
                     size={27}
@@ -237,6 +271,8 @@ const TxtInfo = styled.div`
 `;
 const NameLine = styled.div`
   display: flex;
+  align-items: center;
+  gap: 0 10px;
   line-height: ${(props) => props.line || "20px"};
   .SettingIcon {
     cursor: pointer;
