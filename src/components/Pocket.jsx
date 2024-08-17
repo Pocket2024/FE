@@ -77,14 +77,20 @@ const Pocket = ({ otheruserId }) => {
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [pocket, setPocket] = useState([]);
   const { isDesktop } = useResponsive();
+  const userId = localStorage.getItem("userId");
 
   const getPocket = () => {
     api
-      .get("/api/categories/getTicketCategories", {
-        headers: {
-          Authorization: `${ACCESS_TOKEN}`,
-        },
-      })
+      .get(
+        otheruserId
+          ? `/api/categories/getTicketCategories/${otheruserId}`
+          : `/api/categories/getTicketCategories/${userId}`,
+        {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        }
+      )
       .then((res) => {
         console.log("pocket", res);
         setPocket(res.data.categories);
