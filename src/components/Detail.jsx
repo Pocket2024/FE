@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { MdNavigateBefore } from "react-icons/md";
 import { MdSaveAlt } from "react-icons/md";
 import { MdPlace } from "react-icons/md";
@@ -15,6 +15,17 @@ import api from "../api/api";
 import ImgModal from "./ImgModal";
 import { BsFillPinFill } from "react-icons/bs";
 import { useCookies } from "react-cookie";
+
+const slideDown = keyframes`
+  0% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -46,6 +57,9 @@ const TicketBox = styled.div`
       black 20px
     );
   mask-composite: intersect;
+
+  // 애니메이션 적용
+  animation: ${(props) => (props.animate ? slideDown : "none")} 0.5s ease-out;
 `;
 const FirstLine = styled.div`
   width: 100%;
@@ -149,6 +163,7 @@ const Detail = () => {
   const [detail, setDetail] = useState([]);
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["access"]);
+  const [animate, setAnimate] = useState(false);
 
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
@@ -251,6 +266,14 @@ const Detail = () => {
 
   useEffect(() => {
     getDetail();
+
+    // 티켓 변경 시 애니메이션 트리거
+    setAnimate(true);
+    const timeoutId = setTimeout(() => {
+      setAnimate(false);
+    }, 500); // 애니메이션 지속 시간과 동일하게 설정
+
+    return () => clearTimeout(timeoutId);
   }, [ticket]);
 
   const [modal, setModal] = useState(false);
@@ -291,6 +314,7 @@ const Detail = () => {
             ref={ticketRef}
             id="ticketbox"
             y="315px"
+            animate={animate}
           >
             <FirstLine>
               <ProfileLine>
