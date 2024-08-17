@@ -62,14 +62,14 @@ const mobilecustomStyles = {
   },
 };
 
-const FollowingModal = ({ isOpen, onRequestClose, following }) => {
+const FollowingModal = ({ isOpen, onRequestClose, following, follower }) => {
   const navigate = useNavigate();
   const onClickProfile = (userId) => {
     navigate(`/user/${userId}`);
   };
   return (
     <Modal isOpen={isOpen} style={customStyles} onRequestClose={onRequestClose}>
-      <Title>팔로잉 목록</Title>
+      <Title>{follower ? "팔로워 목록" : "팔로잉 목록"}</Title>
       <ListDiv>
         {following.map((following) => (
           <List onClick={() => onClickProfile(following.id)} key={following.id}>

@@ -53,6 +53,7 @@ const Profile = ({ otheruserId }) => {
   }, []);
 
   const [followingModal, setFollowingModal] = useState(false);
+  const [follower, setFollower] = useState(false);
 
   const onClickFollowing = async () => {
     try {
@@ -71,6 +72,7 @@ const Profile = ({ otheruserId }) => {
       console.log("following", res);
       setFollowing(res.data);
       setFollowingModal(true);
+      setFollower(false);
     } catch (err) {
       console.log("팔로잉 목록 조회 실패", err);
     }
@@ -92,6 +94,7 @@ const Profile = ({ otheruserId }) => {
       console.log("follower", res);
       setFollowing(res.data);
       setFollowingModal(true);
+      setFollower(true);
     } catch (err) {
       console.log("팔로잉 목록 조회 실패", err);
     }
@@ -150,6 +153,7 @@ const Profile = ({ otheruserId }) => {
                     isOpen={followingModal}
                     onRequestClose={() => setFollowingModal(false)}
                     following={following}
+                    follower={follower} // 팔로워 클릭 이벤트 감지
                   />
                 </Unit>
               </NumLine>
