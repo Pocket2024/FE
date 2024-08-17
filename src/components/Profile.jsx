@@ -146,27 +146,27 @@ const Profile = ({ otheruserId }) => {
           alert("팔로우 실패");
         });
     } else {
-      // // 팔로우하는 경우 팔로우 취소
-      // api
-      //   .delete(
-      //     "/api/followDelete",
-      //     {
-      //       followingId: otheruserId,
-      //       followerId: userId,
-      //     },
-      //     {
-      //       headers: {
-      //         Authorization: `${cookies.access}`,
-      //       },
-      //     }
-      //   )
-      //   .then(() => {
-      //     alert("팔로우 성공!");
-      //     window.location.reload();
-      //   })
-      //   .catch(() => {
-      //     alert("팔로우 실패");
-      //   });
+      // 팔로우하는 경우 팔로우 취소
+      api
+        .post(
+          "/api/follow/unfollow",
+          {
+            followingId: otheruserId,
+            followerId: userId,
+          },
+          {
+            headers: {
+              Authorization: `${cookies.access}`,
+            },
+          }
+        )
+        .then(() => {
+          alert("팔로우 취소");
+          window.location.reload();
+        })
+        .catch(() => {
+          alert("팔로우 취소 실패");
+        });
     }
   };
 
