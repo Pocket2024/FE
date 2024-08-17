@@ -21,7 +21,7 @@ const ProfileBox = styled.div`
   background-color: ${(props) => props.background};
   border-radius: 13px;
   width: 100%;
-  padding: 20px 30px;
+  padding: ${(props) => props.padding};
   align-items: center;
   margin-bottom: 20px;
   justify-content: space-between;
@@ -195,7 +195,10 @@ const MyInfoPage = () => {
             <Line mbottom="30px" ptop="5vh">
               <MTxt size="30px">내 정보</MTxt>
             </Line>
-            <ProfileBox background={isedit ? "" : "#333333"}>
+            <ProfileBox
+              background={isedit ? "" : "#333333"}
+              padding={isedit ? "" : "20px 30px"}
+            >
               <div className="divbox">
                 {isedit ? (
                   <div style={{ position: "relative" }}>
@@ -305,7 +308,10 @@ const MyInfoPage = () => {
           <Line mbottom="30px" ptop="5vh">
             <MTxt size="20px">내 정보</MTxt>
           </Line>
-          <ProfileBox background={isedit ? "" : "#333333"}>
+          <ProfileBox
+            background={isedit ? "" : "#333333"}
+            padding={isedit ? "" : "20px 30px"}
+          >
             <div className="divbox">
               {isedit ? (
                 <div style={{ position: "relative" }}>
