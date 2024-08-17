@@ -211,6 +211,7 @@ const UploadPage = () => {
     location.state != null ? location.state.categoryId : null
   );
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  let userId = localStorage.getItem("userId");
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -292,7 +293,7 @@ const UploadPage = () => {
   const getmyCat = () => {
     if (location.state === null) {
       api
-        .get("/api/categories/getTicketCategories", {
+        .get(`/api/categories/getTicketCategories/${userId}`, {
           headers: {
             Authorization: `${ACCESS_TOKEN}`,
           },
