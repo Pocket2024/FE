@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { MdFileUpload } from "react-icons/md";
 import { useResponsive } from "../context/Responsive";
 import { IoMdImage } from "react-icons/io";
+import TicketScan from "../components/TicketScan";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -356,6 +357,8 @@ const UploadPage = () => {
     });
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const onChangeOcr = async (fileBlob) => {
     const formData = new FormData();
 
@@ -369,6 +372,8 @@ const UploadPage = () => {
     }
 
     try {
+      setIsLoading(true); // 로딩 시작
+
       const res = await api.post("/api/ocr/upload", formData, {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
@@ -379,15 +384,18 @@ const UploadPage = () => {
       setTitle(res.data.title);
       setPlace(res.data.location);
       setSeat(res.data.seat);
+      //setDate(res.data.date);
     } catch (err) {
       console.log("ocr 에러", err);
+    } finally {
+      setIsLoading(false); // 로딩 끝
     }
   };
 
   return (
     <>
       {isDesktop ? (
-        <Wrapper style={{ display: "flex" }}>
+        <Wrapper style={{ display: "flex", position: "relative" }}>
           <RightArea>
             <div style={{ width: "100%" }}>
               <Title fontsize="40px" margin="0 0 10px 0">
@@ -545,6 +553,7 @@ const UploadPage = () => {
               </Button>
             </div>
           </LeftArea>
+          {isLoading && <TicketScan />}
         </Wrapper>
       ) : (
         <Wrapper style={{ padding: "0 30px" }}>
