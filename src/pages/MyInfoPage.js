@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 const ProfileBox = styled.div`
   display: flex;
-  background-color: #333333;
+  background-color: ${(props) => props.background};
   border-radius: 13px;
   width: 100%;
   padding: 20px 30px;
@@ -195,7 +195,7 @@ const MyInfoPage = () => {
             <Line mbottom="30px" ptop="5vh">
               <MTxt size="30px">내 정보</MTxt>
             </Line>
-            <ProfileBox>
+            <ProfileBox background={isedit ? "" : "#333333"}>
               <div className="divbox">
                 {isedit ? (
                   <div style={{ position: "relative" }}>
@@ -237,7 +237,11 @@ const MyInfoPage = () => {
                   )}
                 </div>
               </div>
-              <Logout onClick={handleLogout}>로그아웃</Logout>
+              {isedit ? (
+                <></>
+              ) : (
+                <Logout onClick={handleLogout}>로그아웃</Logout>
+              )}
             </ProfileBox>
             <Title fontsize="22px">이메일</Title>
             {isedit ? (
@@ -301,7 +305,7 @@ const MyInfoPage = () => {
           <Line mbottom="30px" ptop="5vh">
             <MTxt size="20px">내 정보</MTxt>
           </Line>
-          <ProfileBox>
+          <ProfileBox background={isedit ? "" : "#333333"}>
             <div className="divbox">
               {isedit ? (
                 <div style={{ position: "relative" }}>
