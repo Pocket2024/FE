@@ -15,6 +15,7 @@ import api from "../api/api";
 import ImgModal from "./ImgModal";
 import { BsFillPinFill } from "react-icons/bs";
 import { useCookies } from "react-cookie";
+import line from "../images/line.svg";
 
 const slideDown = keyframes`
   0% {
@@ -114,7 +115,7 @@ const Seat = styled.div`
 const Comment = styled.div`
   font-size: ${(props) => props.fontSize || "15px"};
   font-weight: 500;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 const HeartLine = styled.div`
   display: flex;
@@ -399,15 +400,7 @@ const Detail = () => {
                 )}
               </ImageLine>
             )}
-            <svg width="500" height="3" style={{ marginTop: "35px" }}>
-              <line
-                x1="0"
-                x2="500"
-                stroke="#E9E9E9"
-                strokeWidth="5"
-                strokeDasharray="15,10" // 10px 선, 5px 간격
-              />
-            </svg>
+            <Line src={line} />
             <Comment>{detail.content}</Comment>
           </TicketBox>
           <HeartLine height="20px">
@@ -518,15 +511,7 @@ const Detail = () => {
                 )}
               </ImageLine>
             )}
-            <svg width="100%" height="2" style={{ marginTop: "20px" }}>
-              <line
-                x1="0"
-                x2="100%"
-                stroke="#E9E9E9"
-                strokeWidth="3"
-                strokeDasharray="10,8" // 10px 선, 8px 간격
-              />
-            </svg>
+            <Line src={line} />
             <Comment fontSize="12px">{detail.content}</Comment>
           </MTicketBox>
           <HeartLine>
@@ -572,4 +557,9 @@ const MNickname = styled.div`
   font-size: 15px;
   font-weight: 700;
   margin-left: 10px;
+`;
+
+const Line = styled.img`
+  width: 100%;
+  margin-top: 30px;
 `;
