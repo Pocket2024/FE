@@ -156,7 +156,6 @@ const FavBtn = styled.button`
 const Detail = () => {
   const { isDesktop } = useResponsive();
   const ticketRef = useRef();
-  const [heart, setHeart] = useState(0);
   const [isHeart, setIsHeart] = useState(false);
   const { ticket } = useParams();
   const userId = localStorage.getItem("userId");
@@ -243,11 +242,37 @@ const Detail = () => {
   };
   const handleHeart = () => {
     if (isHeart) {
-      setIsHeart(!isHeart);
-      setHeart(0);
+      api
+        .delete(`/api/likes/unlike/${ticket}?userId=${userId}`, {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then(() => {
+          alert("좋아요 취소");
+          setIsHeart(false);
+        })
+        .catch((err) => {
+          console.log("좋아요 취소 err", err);
+        });
     } else {
-      setIsHeart(!isHeart);
-      setHeart(1);
+      api
+        .post(
+          `/api/likes/like/${ticket}?userId=${userId}`,
+          {},
+          {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          }
+        )
+        .then(() => {
+          alert("좋아요");
+          setIsHeart(true);
+        })
+        .catch((err) => {
+          console.log("좋아요 err", err);
+        });
     }
   };
 
@@ -261,6 +286,7 @@ const Detail = () => {
       .then((res) => {
         console.log(res);
         setDetail(res.data);
+        setIsHeart(res.data.likedByCurrentUser);
       })
       .catch((err) => {
         console.log("get detail err", err);
@@ -277,7 +303,7 @@ const Detail = () => {
     }, 500); // 애니메이션 지속 시간과 동일하게 설정
 
     return () => clearTimeout(timeoutId);
-  }, [ticket]);
+  }, [ticket, isHeart]);
 
   const [modal, setModal] = useState(false);
   const [clickimgurl, setClickimgurl] = useState(""); // 지금 클릭한 이미지 url
@@ -419,7 +445,7 @@ const Detail = () => {
                 style={{ cursor: "pointer" }}
               />
             )}
-            <div>{heart}</div>
+            <div>{detail.likes}</div>
           </HeartLine>
           <ImgModal
             isOpen={modal}
@@ -520,7 +546,7 @@ const Detail = () => {
             ) : (
               <FaRegHeart color="#8F8F8F" onClick={handleHeart} />
             )}
-            <div>{heart}</div>
+            <div>{detail.likes}</div>
           </HeartLine>
         </Wrapper>
       )}
