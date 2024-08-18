@@ -178,6 +178,7 @@ const Detail = () => {
         const canvas = await html2canvas(ticket, {
           backgroundColor: null, // 배경을 투명하게 설정
           scale: 4,
+          useCORS: true, // 이미지 로드 문제 해결
           ignoreElements: (element) => {
             return element.tagName === "BUTTON"; // Ignore button elements
           },
@@ -477,6 +478,7 @@ const Detail = () => {
                       style={{
                         width: "100%",
                         height: "25vw",
+                        objectFit: "cover",
                       }}
                     />
                   ))
@@ -491,6 +493,7 @@ const Detail = () => {
                       style={{
                         width: "50%",
                         height: "25vw",
+                        objectFit: "cover",
                       }}
                     />
                   ))
@@ -506,6 +509,7 @@ const Detail = () => {
                       style={{
                         width: "32%",
                         height: "25vw",
+                        objectFit: "cover",
                       }}
                     />
                   ))
