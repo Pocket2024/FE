@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import ticket_component from "../images/ticket_component.png";
 
@@ -60,7 +60,7 @@ const ScanLine = styled.div`
 
 // 티켓 스캔 컴포넌트
 const TicketScan = () => {
-  const [scanning, setScanning] = useState(true);
+  let scanning = true;
 
   //   useEffect(() => {
   //     const timer = setTimeout(() => {
