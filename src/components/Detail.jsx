@@ -162,7 +162,7 @@ const Detail = () => {
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [detail, setDetail] = useState([]);
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["access"]);
+  const [cookies] = useCookies(["access"]);
   const [animate, setAnimate] = useState(false);
   const { otheruserId } = useParams();
 
@@ -276,24 +276,24 @@ const Detail = () => {
     }
   };
 
-  const getDetail = () => {
-    api
-      .get(`/api/reviews/${ticket}?userId=${userId}`, {
-        headers: {
-          Authorization: `${ACCESS_TOKEN}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setDetail(res.data);
-        setIsHeart(res.data.likedByCurrentUser);
-      })
-      .catch((err) => {
-        console.log("get detail err", err);
-      });
-  };
-
   useEffect(() => {
+    const getDetail = () => {
+      api
+        .get(`/api/reviews/${ticket}?userId=${userId}`, {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setDetail(res.data);
+          setIsHeart(res.data.likedByCurrentUser);
+        })
+        .catch((err) => {
+          console.log("get detail err", err);
+        });
+    };
+
     getDetail();
 
     // 티켓 변경 시 애니메이션 트리거
@@ -303,7 +303,7 @@ const Detail = () => {
     }, 500); // 애니메이션 지속 시간과 동일하게 설정
 
     return () => clearTimeout(timeoutId);
-  }, [ticket, isHeart]);
+  }, [ticket, isHeart, userId, ACCESS_TOKEN]);
 
   const [modal, setModal] = useState(false);
   const [clickimgurl, setClickimgurl] = useState(""); // 지금 클릭한 이미지 url
@@ -381,10 +381,11 @@ const Detail = () => {
               <></>
             ) : (
               <ImageLine>
-                {detail.images && detail.images.length == 1 ? (
+                {detail.images && detail.images.length === 1 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "100%",
@@ -395,10 +396,11 @@ const Detail = () => {
                 ) : (
                   <></>
                 )}
-                {detail.images && detail.images.length == 2 ? (
+                {detail.images && detail.images.length === 2 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "50%",
@@ -410,10 +412,11 @@ const Detail = () => {
                   <></>
                 )}
 
-                {detail.images && detail.images.length == 3 ? (
+                {detail.images && detail.images.length === 3 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "32%",
@@ -489,10 +492,11 @@ const Detail = () => {
               <></>
             ) : (
               <ImageLine>
-                {detail.images && detail.images.length == 1 ? (
+                {detail.images && detail.images.length === 1 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "100%",
@@ -504,10 +508,11 @@ const Detail = () => {
                 ) : (
                   <></>
                 )}
-                {detail.images && detail.images.length == 2 ? (
+                {detail.images && detail.images.length === 2 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "50%",
@@ -520,10 +525,11 @@ const Detail = () => {
                   <></>
                 )}
 
-                {detail.images && detail.images.length == 3 ? (
+                {detail.images && detail.images.length === 3 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "32%",
