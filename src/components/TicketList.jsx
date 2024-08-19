@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Ticket from "./Ticket";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -72,27 +72,27 @@ const TicketList = () => {
   const { isDesktop } = useResponsive();
   const [selectedTicketId, setSelectedTicketId] = useState(null); // 클릭된 티켓 ID를 추적
 
-  const getTicketList = () => {
-    api
-      .get(`/api/reviews/category/${pocket}?userId=${userId}`, {
-        headers: {
-          Authorization: `${ACCESS_TOKEN}`,
-        },
-      })
-      .then((res) => {
-        if (res.data[0].ticketcategory.category) {
-          setCategory(res.data[0].ticketcategory.category);
-        }
-        setTicketList(res.data);
-      })
-      .catch((err) => {
-        console.log("get ticketlist error", err);
-      });
-  };
-
   useEffect(() => {
+    const getTicketList = () => {
+      api
+        .get(`/api/reviews/category/${pocket}?userId=${userId}`, {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then((res) => {
+          if (res.data[0].ticketcategory.category) {
+            setCategory(res.data[0].ticketcategory.category);
+          }
+          setTicketList(res.data);
+        })
+        .catch((err) => {
+          console.log("get ticketlist error", err);
+        });
+    };
+
     getTicketList();
-  }, []);
+  }, [pocket, userId, ACCESS_TOKEN]);
 
   const handleTicketClick = (ticketId) => {
     setSelectedTicketId(ticketId); // 클릭된 티켓 ID를 설정
