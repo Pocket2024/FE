@@ -12,6 +12,7 @@ import { FaHeart } from "react-icons/fa";
 import { useResponsive } from "../context/Responsive";
 import { useNavigate } from "react-router-dom";
 import ImgModal from "./ImgModal";
+import line from "../images/line.svg";
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -97,7 +98,7 @@ const Seat = styled.div`
 const Comment = styled.div`
   font-size: ${(props) => props.fontSize || "15px"};
   font-weight: 500;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 const HeartLine = styled.div`
   display: flex;
@@ -127,7 +128,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
   const ticketRef = useRef();
   const [heart, setHeart] = useState(0);
   const [isHeart, setIsHeart] = useState(false);
-  const [detail, setDetail] = useState(favticket);
+  let detail = favticket;
   const navigate = useNavigate();
 
   const onDownloadBtn = async () => {
@@ -260,10 +261,11 @@ const FavDetail = ({ favticket, otheruserId }) => {
               <></>
             ) : (
               <ImageLine>
-                {detail.images && detail.images.length == 1 ? (
+                {detail.images && detail.images.length === 1 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt="img1"
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "100%",
@@ -274,10 +276,11 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 ) : (
                   <></>
                 )}
-                {detail.images && detail.images.length == 2 ? (
+                {detail.images && detail.images.length === 2 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "50%",
@@ -289,10 +292,11 @@ const FavDetail = ({ favticket, otheruserId }) => {
                   <></>
                 )}
 
-                {detail.images && detail.images.length == 3 ? (
+                {detail.images && detail.images.length === 3 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "32%",
@@ -305,15 +309,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 )}
               </ImageLine>
             )}
-            <svg width="500" height="3" style={{ marginTop: "35px" }}>
-              <line
-                x1="0"
-                x2="500"
-                stroke="#E9E9E9"
-                strokeWidth="5"
-                strokeDasharray="15,10" // 10px 선, 5px 간격
-              />
-            </svg>
+            <Line src={line} />
             <Comment>{detail.content}</Comment>
           </TicketBox>
           <HeartLine height="20px">
@@ -380,10 +376,11 @@ const FavDetail = ({ favticket, otheruserId }) => {
               <></>
             ) : (
               <ImageLine>
-                {detail.images && detail.images.length == 1 ? (
+                {detail.images && detail.images.length === 1 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt="img1"
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "100%",
@@ -394,10 +391,11 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 ) : (
                   <></>
                 )}
-                {detail.images && detail.images.length == 2 ? (
+                {detail.images && detail.images.length === 2 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "50%",
@@ -409,10 +407,11 @@ const FavDetail = ({ favticket, otheruserId }) => {
                   <></>
                 )}
 
-                {detail.images && detail.images.length == 3 ? (
+                {detail.images && detail.images.length === 3 ? (
                   detail.images.map((img) => (
                     <img
                       src={img.url}
+                      alt={img.id}
                       onClick={() => handleClickimg(img.url)}
                       style={{
                         width: "32%",
@@ -425,15 +424,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 )}
               </ImageLine>
             )}
-            <svg width="100%" height="2" style={{ marginTop: "20px" }}>
-              <line
-                x1="0"
-                x2="100%"
-                stroke="#E9E9E9"
-                strokeWidth="3"
-                strokeDasharray="10,8" // 10px 선, 8px 간격
-              />
-            </svg>
+            <Line src={line} />
             <Comment fontSize="12px">{detail.content}</Comment>
           </MTicketBox>
           <HeartLine>
@@ -479,4 +470,9 @@ const MNickname = styled.div`
   font-size: 15px;
   font-weight: 700;
   margin-left: 10px;
+`;
+
+const Line = styled.img`
+  width: 100%;
+  margin-top: 30px;
 `;
