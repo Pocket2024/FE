@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import HotTicket from "../components/HotTicket";
 import RecentTicket from "../components/RecentTicket";
 import api from "../api/api";
+import SearchResult from "../components/SearchResult";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -71,6 +72,7 @@ const SearchPage = () => {
   const [selectedType, setSelectedType] = useState("title");
   const [isSearch, setIsSearch] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const onChangeSearch = (e) => setKeyword(e.target.value);
   const handleTypeChange = (id, type) => {
     setSelectedTypeId(id); // 선택된 타입을 업데이트
@@ -97,6 +99,7 @@ const SearchPage = () => {
         console.log(res);
         setSearchResult(res.data);
         setIsSearch(true);
+        setSearchKeyword(keyword);
       })
       .catch((err) => {
         console.log("검색 에러", err);
@@ -135,8 +138,14 @@ const SearchPage = () => {
           onKeyDown={(e) => activeEnter(e)}
         />
       </SearchDiv>
-      <HotTicket />
-      <RecentTicket />
+      {isSearch ? (
+        <SearchResult results={searchResult} keyword={searchKeyword} />
+      ) : (
+        <>
+          <HotTicket />
+          <RecentTicket />
+        </>
+      )}
     </Wrapper>
   );
 };
