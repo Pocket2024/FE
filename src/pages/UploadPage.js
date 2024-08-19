@@ -232,7 +232,7 @@ const UploadPage = () => {
     const file = imgRef.current.files[0] ? imgRef.current.files[0] : "";
     setCustomImg(file);
     const reader = new FileReader();
-    if (file != "") {
+    if (file !== "") {
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         setImgFile(reader.result);
@@ -292,26 +292,26 @@ const UploadPage = () => {
       });
   };
 
-  const getmyCat = () => {
-    if (location.state === null) {
-      api
-        .get(`/api/categories/getTicketCategories/${userId}`, {
-          headers: {
-            Authorization: `${ACCESS_TOKEN}`,
-          },
-        })
-        .then((res) => {
-          setCategory(res.data.categories);
-        })
-        .catch((err) => {
-          console.log("get category error", err);
-        });
-    }
-  };
-
   useEffect(() => {
+    const getmyCat = () => {
+      if (location.state === null) {
+        api
+          .get(`/api/categories/getTicketCategories/${userId}`, {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          })
+          .then((res) => {
+            setCategory(res.data.categories);
+          })
+          .catch((err) => {
+            console.log("get category error", err);
+          });
+      }
+    };
+
     getmyCat();
-  }, []);
+  }, [userId, ACCESS_TOKEN, location.state]);
 
   const onChangeCat = (e) => {
     setCategoryId(e.target.value);
@@ -449,7 +449,11 @@ const UploadPage = () => {
                 <Circle bottom="-5px" />
                 <FaPlus color="white" size={20} />
                 <div>커스텀 이미지 선택하기</div>
-                {imgFile ? <img src={imgFile} className="custom-img" /> : <></>}
+                {imgFile ? (
+                  <img src={imgFile} className="custom-img" alt="" />
+                ) : (
+                  <></>
+                )}
               </TicketBox>
               <Explain fontsize="18px">
                 티켓 표지를 꾸며보세요! 🎫 <br />
@@ -589,7 +593,11 @@ const UploadPage = () => {
             <Circle bottom="-5px" />
             <FaPlus color="white" size={20} />
             <div>커스텀 이미지 선택하기</div>
-            {imgFile ? <img src={imgFile} className="custom-img" /> : <></>}
+            {imgFile ? (
+              <img src={imgFile} className="custom-img" alt="" />
+            ) : (
+              <></>
+            )}
           </TicketBox>
           <TicketInfo>
             <InfoTitle className="ticket-info">티켓 정보</InfoTitle>
