@@ -69,7 +69,7 @@ const SearchResult = ({ results, keyword }) => {
           <SearchTitle>'{keyword}' 검색 결과</SearchTitle>
           <HotList>
             {results.map((result) => (
-              <div>
+              <div key={result.id}>
                 <FlexLine>
                   <ProfileLine>
                     <img src={result.authorProfileImageUrl} alt="profile" />

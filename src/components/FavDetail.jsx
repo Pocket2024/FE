@@ -264,6 +264,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 {detail.images && detail.images.length === 1 ? (
                   detail.images.map((img) => (
                     <img
+                      key={img.id}
                       src={img.url}
                       alt="img1"
                       onClick={() => handleClickimg(img.url)}
@@ -279,6 +280,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 {detail.images && detail.images.length === 2 ? (
                   detail.images.map((img) => (
                     <img
+                      key={img.id}
                       src={img.url}
                       alt={img.id}
                       onClick={() => handleClickimg(img.url)}
@@ -295,6 +297,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 {detail.images && detail.images.length === 3 ? (
                   detail.images.map((img) => (
                     <img
+                      key={img.id}
                       src={img.url}
                       alt={img.id}
                       onClick={() => handleClickimg(img.url)}
@@ -379,6 +382,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 {detail.images && detail.images.length === 1 ? (
                   detail.images.map((img) => (
                     <img
+                      key={img.id}
                       src={img.url}
                       alt="img1"
                       onClick={() => handleClickimg(img.url)}
@@ -394,6 +398,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 {detail.images && detail.images.length === 2 ? (
                   detail.images.map((img) => (
                     <img
+                      key={img.id}
                       src={img.url}
                       alt={img.id}
                       onClick={() => handleClickimg(img.url)}
@@ -410,6 +415,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
                 {detail.images && detail.images.length === 3 ? (
                   detail.images.map((img) => (
                     <img
+                      key={img.id}
                       src={img.url}
                       alt={img.id}
                       onClick={() => handleClickimg(img.url)}
