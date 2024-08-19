@@ -46,33 +46,34 @@ const Profile = ({ otheruserId }) => {
   let userId = localStorage.getItem("userId");
   const [infoData, setInfoData] = useState([]);
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(["access"]);
+  const [cookies] = useCookies(["access"]);
   const [following, setFollowing] = useState([]);
 
-  const getMyInfo = () => {
-    api
-      .get(
-        otheruserId
-          ? `/api/users/details/${otheruserId}`
-          : `/api/users/details/${userId}`,
-        {
-          headers: {
-            Authorization: `${cookies.access}`,
-            withCredentials: true,
-          },
-        }
-      )
-      .then((res) => {
-        console.log("profile", res);
-        setInfoData(res.data);
-      })
-      .catch((err) => {
-        console.error("Error get info", err);
-      });
-  };
   useEffect(() => {
+    const getMyInfo = () => {
+      api
+        .get(
+          otheruserId
+            ? `/api/users/details/${otheruserId}`
+            : `/api/users/details/${userId}`,
+          {
+            headers: {
+              Authorization: `${cookies.access}`,
+              withCredentials: true,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("profile", res);
+          setInfoData(res.data);
+        })
+        .catch((err) => {
+          console.error("Error get info", err);
+        });
+    };
+
     getMyInfo();
-  }, []);
+  }, [otheruserId, userId, cookies.access]);
 
   const [followingModal, setFollowingModal] = useState(false);
   const [follower, setFollower] = useState(false);
