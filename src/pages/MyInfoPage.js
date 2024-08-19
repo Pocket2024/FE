@@ -66,7 +66,7 @@ const MyInfoPage = () => {
     const file = imgRef.current.files[0] ? imgRef.current.files[0] : "";
     setRealimg(file);
     const reader = new FileReader();
-    if (file != "") {
+    if (file !== "") {
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         setImg(reader.result);
