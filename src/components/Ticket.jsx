@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import dummy_img from "../images/profileimg.png";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../context/Responsive";
 

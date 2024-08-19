@@ -72,7 +72,7 @@ const SearchResult = ({ results, keyword }) => {
               <div>
                 <FlexLine>
                   <ProfileLine>
-                    <img src={result.authorProfileImageUrl} />
+                    <img src={result.authorProfileImageUrl} alt="profile" />
                     <div>{result.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
