@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
 import "../style/TicketModal.css";
-import api from "../api/api";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 const customStyles = {
@@ -34,33 +32,33 @@ const customStyles = {
   },
 };
 
-const mobilecustomStyles = {
-  overlay: {
-    backgroundColor: " rgba(0, 0, 0, 0.5)",
-    width: "100%",
-    height: "100vh",
-    zIndex: "998",
-    position: "fixed",
-    top: "0",
-    left: "0",
-  },
-  content: {
-    width: "90vw",
-    minHeight: "fit-content",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    borderRadius: "35px",
-    boxShadow: "0 5px 15px rgba(0, 0, 0, 0.25)",
-    backgroundColor: "#262626",
-    border: "none",
-    justifyContent: "center",
-    overflow: "auto",
-    zIndex: "999",
-    padding: "40px",
-  },
-};
+// const mobilecustomStyles = {
+//   overlay: {
+//     backgroundColor: " rgba(0, 0, 0, 0.5)",
+//     width: "100%",
+//     height: "100vh",
+//     zIndex: "998",
+//     position: "fixed",
+//     top: "0",
+//     left: "0",
+//   },
+//   content: {
+//     width: "90vw",
+//     minHeight: "fit-content",
+//     position: "absolute",
+//     top: "50%",
+//     left: "50%",
+//     transform: "translate(-50%, -50%)",
+//     borderRadius: "35px",
+//     boxShadow: "0 5px 15px rgba(0, 0, 0, 0.25)",
+//     backgroundColor: "#262626",
+//     border: "none",
+//     justifyContent: "center",
+//     overflow: "auto",
+//     zIndex: "999",
+//     padding: "40px",
+//   },
+// };
 
 const FollowingModal = ({ isOpen, onRequestClose, following, follower }) => {
   const navigate = useNavigate();
