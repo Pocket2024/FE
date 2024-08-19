@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import api from "../api/api";
 import { FaGetPocket } from "react-icons/fa";
 import { BsFillPinFill } from "react-icons/bs";
 import Profile from "../components/Profile";
 import Ticket from "../components/Ticket";
-import Detail from "../components/Detail";
 import UploadBtn from "../components/UploadBtn";
 import Pocket from "../components/Pocket";
 import { useResponsive } from "../context/Responsive";
