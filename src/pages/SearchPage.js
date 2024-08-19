@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import HotTicket from "../components/HotTicket";
