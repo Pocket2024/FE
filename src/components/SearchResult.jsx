@@ -46,6 +46,15 @@ const Heart = styled.div`
   align-items: center;
   font-weight: 500;
 `;
+const NoResult = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: #afafaf;
+  font-size: 20px;
+  font-size: 500;
+  margin-top: 100px;
+`;
 
 const SearchResult = ({ results, keyword }) => {
   const { isDesktop } = useResponsive();
@@ -67,6 +76,7 @@ const SearchResult = ({ results, keyword }) => {
       {isDesktop ? (
         <>
           <SearchTitle>'{keyword}' 검색 결과</SearchTitle>
+          {results.length === 0 && <NoResult>검색 결과가 없습니다.</NoResult>}
           <HotList>
             {results.map((result) => (
               <div key={result.id}>
