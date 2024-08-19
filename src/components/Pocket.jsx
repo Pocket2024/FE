@@ -79,27 +79,6 @@ const Pocket = ({ otheruserId }) => {
   const { isDesktop } = useResponsive();
   const userId = localStorage.getItem("userId");
 
-  const getPocket = () => {
-    api
-      .get(
-        otheruserId
-          ? `/api/categories/getTicketCategories/${otheruserId}`
-          : `/api/categories/getTicketCategories/${userId}`,
-        {
-          headers: {
-            Authorization: `${ACCESS_TOKEN}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log("pocket", res);
-        setPocket(res.data.categories);
-      })
-      .catch((err) => {
-        console.log("get pocket error", err);
-      });
-  };
-
   const onClickPocket = (pocketId, category) => {
     otheruserId
       ? navigate(`/user/${otheruserId}/${pocketId}`, { state: category })
@@ -107,8 +86,29 @@ const Pocket = ({ otheruserId }) => {
   };
 
   useEffect(() => {
+    const getPocket = () => {
+      api
+        .get(
+          otheruserId
+            ? `/api/categories/getTicketCategories/${otheruserId}`
+            : `/api/categories/getTicketCategories/${userId}`,
+          {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("pocket", res);
+          setPocket(res.data.categories);
+        })
+        .catch((err) => {
+          console.log("get pocket error", err);
+        });
+    };
+
     getPocket();
-  }, []);
+  }, [otheruserId, userId, ACCESS_TOKEN]);
   return (
     <>
       {isDesktop ? (
