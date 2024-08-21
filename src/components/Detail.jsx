@@ -16,6 +16,7 @@ import ImgModal from "./ImgModal";
 import { BsFillPinFill } from "react-icons/bs";
 import { useCookies } from "react-cookie";
 import line from "../images/line.svg";
+import { MdDelete } from "react-icons/md";
 
 const slideDown = keyframes`
   0% {
@@ -150,6 +151,23 @@ const FavBtn = styled.button`
     .pin-icon {
       fill: #f2d84f;
     }
+  }
+`;
+
+const Delete = styled.button`
+  display: flex;
+  align-items: center;
+  border: none;
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 10px;
+  gap: 0 5px;
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
@@ -334,10 +352,34 @@ const Detail = () => {
       });
   };
 
+  const handleDelete = () => {
+    api
+      .delete(`/api/reviews/${ticket}?userId=${userId}`, {
+        headers: {
+          Authorization: `${cookies.access}`,
+        },
+      })
+      .then(() => {
+        alert("삭제되었습니다.");
+        if (otheruserId) {
+          navigate(`/user/${otheruserId}`);
+        } else {
+          navigate("/myticket");
+        }
+      })
+      .catch((err) => {
+        console.log("delete err", err);
+      });
+  };
+
   return (
     <>
-      {isDesktop ? (
+      {detail && isDesktop ? (
         <Wrapper>
+          <Delete onClick={handleDelete}>
+            <MdDelete />
+            <div>삭제하기</div>
+          </Delete>
           <TicketBox
             className="ticketimg"
             ref={ticketRef}
