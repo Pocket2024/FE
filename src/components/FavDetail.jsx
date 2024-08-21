@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
+import styled, { keyframes } from "styled-components";
 import { MdNavigateBefore } from "react-icons/md";
 import { MdSaveAlt } from "react-icons/md";
 import { MdPlace } from "react-icons/md";
@@ -13,6 +13,17 @@ import { useResponsive } from "../context/Responsive";
 import { useNavigate } from "react-router-dom";
 import ImgModal from "./ImgModal";
 import line from "../images/line.svg";
+
+const slideDown = keyframes`
+  0% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
 
 const Wrapper = styled.div``;
 const TicketBox = styled.div`
@@ -44,6 +55,9 @@ const TicketBox = styled.div`
       black 20px
     );
   mask-composite: intersect;
+
+  // 애니메이션 적용
+  animation: ${(props) => (props.animate ? slideDown : "none")} 0.5s ease-out;
 `;
 const FirstLine = styled.div`
   width: 100%;
@@ -222,6 +236,18 @@ const FavDetail = ({ favticket, otheruserId }) => {
     setModal(true);
   };
 
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    // 티켓 변경 시 애니메이션 트리거
+    setAnimate(true);
+    const timeoutId = setTimeout(() => {
+      setAnimate(false);
+    }, 500); // 애니메이션 지속 시간과 동일하게 설정
+
+    return () => clearTimeout(timeoutId);
+  }, [favticket]);
+
   return (
     <>
       {isDesktop ? (
@@ -231,6 +257,7 @@ const FavDetail = ({ favticket, otheruserId }) => {
             ref={ticketRef}
             id="ticketbox"
             y="315px"
+            animate={animate}
           >
             <FirstLine>
               <ProfileLine>
