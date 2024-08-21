@@ -136,6 +136,7 @@ const TicketList = () => {
           <span>티켓 추가하기</span>
         </CreateBtn>
       </CategoryLine>
+      {ticketlist.length === 0 && <None>티켓이 없습니다.</None>}
       <List padding={isDesktop ? "" : "0 30px 10vh 30px"}>
         {ticketlist.map((ticket) => (
           <>
@@ -163,3 +164,13 @@ const TicketList = () => {
 };
 
 export default TicketList;
+
+const None = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: #afafaf;
+  font-size: 20px;
+  font-size: 500;
+  margin-top: 100px;
+`;
