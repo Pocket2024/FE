@@ -9,6 +9,7 @@ import UploadBtn from "../components/UploadBtn";
 import Pocket from "../components/Pocket";
 import { useResponsive } from "../context/Responsive";
 import FavDetail from "../components/FavDetail";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -74,6 +75,7 @@ const MyTicketPage = () => {
   const [infoData, setInfoData] = useState([]);
   const [clickticket, setClickticket] = useState(false);
   const [favticket, setFavticket] = useState([]);
+  const navigate = useNavigate();
 
   const getMyInfo = async () => {
     try {
@@ -112,6 +114,9 @@ const MyTicketPage = () => {
 
   const handleTicket = () => {
     setClickticket(true);
+  };
+  const handleMobileTicket = (ticketId) => {
+    navigate(`/detail/${ticketId}`);
   };
 
   return (
@@ -159,7 +164,10 @@ const MyTicketPage = () => {
               <BsFillPinFill color="white" />
               {infoData.nickName}님의 대표 티켓
             </FavTicket>
-            <div onClick={handleTicket} style={{ padding: "0 30px" }}>
+            <div
+              onClick={() => handleMobileTicket(favticket.id)}
+              style={{ padding: "0 30px" }}
+            >
               <Ticket
                 title={favticket.title}
                 place={favticket.location}
