@@ -121,10 +121,30 @@ const SearchResult = ({ results, keyword }) => {
           <TicketModal isOpen={modal} onRequestClose={() => setModal(false)} />
         </>
       ) : (
-        <Ticket />
+        <>
+          <MSearchTitle>'{keyword}' 검색 결과</MSearchTitle>
+          {results.length === 0 && <MNoResult>검색 결과가 없습니다.</MNoResult>}
+        </>
       )}
     </>
   );
 };
 
 export default SearchResult;
+
+const MSearchTitle = styled.div`
+  font-weight: 700;
+  font-size: 20px;
+  color: white;
+  margin: 30px 0;
+`;
+
+const MNoResult = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: #afafaf;
+  font-size: 15px;
+  font-size: 500;
+  margin-top: 100px;
+`;
