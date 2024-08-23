@@ -304,6 +304,7 @@ const MProfileBox = styled.div`
     width: 23vw;
     height: 23vw;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;
 
