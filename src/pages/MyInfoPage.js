@@ -134,15 +134,13 @@ const MyInfoPage = () => {
     setBio(e.target.value);
   };
   const handleEdit = () => {
-    console.log(realimg);
-    console.log(bio);
     const formData = new FormData();
 
     // formData.append("email", email);
-    formData.append("nickName", nickname);
-    // formData.append("bio", bio);
-    // formData.append("phoneNumber", phonNumber);
-    formData.append("profileImage", realimg);
+    nickname && formData.append("nickName", nickname);
+    bio && formData.append("bio", bio);
+    phone && formData.append("phoneNumber", phone);
+    realimg && formData.append("profileImage", realimg);
 
     for (let key of formData.keys()) {
       console.log("key: " + key);
