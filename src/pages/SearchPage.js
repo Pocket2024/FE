@@ -5,22 +5,23 @@ import HotTicket from "../components/HotTicket";
 import RecentTicket from "../components/RecentTicket";
 import api from "../api/api";
 import SearchResult from "../components/SearchResult";
+import { useResponsive } from "../context/Responsive";
 
 const Wrapper = styled.div`
   width: 100vw;
   min-height: calc(100vw - 80px);
   background-color: #262626;
-  padding: 50px 100px;
+  padding: ${(props) => props.padding};
 `;
 const SearchTitle = styled.div`
-  font-size: 30px;
+  font-size: ${(props) => props.fontSize};
   font-weight: 700;
   color: white;
 `;
 const SearchDiv = styled.div`
   margin-top: 20px;
   width: 100%;
-  padding: 20px 40px;
+  padding: ${(props) => props.padding};
   background-color: #3d3d3d;
   display: flex;
   align-items: center;
@@ -32,7 +33,7 @@ const SearchInput = styled.input`
   border: none;
   outline: none;
   width: 100%;
-  font-size: 20px;
+  font-size: ${(props) => props.fontSize};
   color: white;
   font-weight: 500;
 `;
@@ -51,9 +52,9 @@ const TypeInput = styled.input`
   }
 `;
 const TypeLabel = styled.label`
-  padding: 8px 25px;
+  padding: ${(props) => props.padding};
   background-color: #656565;
-  border-radius: 20px;
+  border-radius: ${(props) => props.borderRadius};
   cursor: pointer;
   &:hover {
     background-color: #8a8a8a;
@@ -61,11 +62,12 @@ const TypeLabel = styled.label`
 `;
 const TypeSpan = styled.span`
   color: white;
-  font-size: 17px;
+  font-size: ${(props) => props.fontSize};
   font-weight: 500;
 `;
 
 const SearchPage = () => {
+  const { isDesktop } = useResponsive();
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [keyword, setKeyword] = useState("");
   const [selectedTypeId, setSelectedTypeId] = useState(1); // 기본값을 1로 설정
@@ -111,8 +113,10 @@ const SearchPage = () => {
     }
   };
   return (
-    <Wrapper>
-      <SearchTitle>키워드 검색을 통한 티켓 탐색 🔍</SearchTitle>
+    <Wrapper padding={isDesktop ? "50px 100px" : "30px 5vh"}>
+      <SearchTitle fontSize={isDesktop ? "30px" : "20px"}>
+        키워드 검색을 통한 티켓 탐색 🔍
+      </SearchTitle>
       <TypeRadioBox>
         {searchType.map((type) => (
           <>
@@ -123,19 +127,27 @@ const SearchPage = () => {
               checked={selectedTypeId === type.id} // 선택된 타입을 확인
               onChange={() => handleTypeChange(type.id, type.value)}
             />
-            <TypeLabel htmlFor={type.id} key={type.id}>
-              <TypeSpan>{type.name}</TypeSpan>
+            <TypeLabel
+              htmlFor={type.id}
+              key={type.id}
+              padding={isDesktop ? "8px 25px" : "5px 15px"}
+              borderRadius={isDesktop ? "20px" : "15px"}
+            >
+              <TypeSpan fontSize={isDesktop ? "17px" : "13px"}>
+                {type.name}
+              </TypeSpan>
             </TypeLabel>
           </>
         ))}
       </TypeRadioBox>
-      <SearchDiv>
-        <IoSearch color="white" size={30} />
+      <SearchDiv padding={isDesktop ? "20px 40px" : "10px 20px"}>
+        <IoSearch color="white" size={isDesktop ? 30 : 20} />
         <SearchInput
           placeholder="키워드를 입력해주세요"
           value={keyword}
           onChange={onChangeSearch}
           onKeyDown={(e) => activeEnter(e)}
+          fontSize={isDesktop ? "20px" : "15px"}
         />
       </SearchDiv>
       {isSearch ? (
