@@ -13,7 +13,7 @@ const SearchTitle = styled.div`
   margin: 50px 0 20px 0;
 `;
 
-const HotList = styled.div`
+const ResultList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 45%);
   justify-content: space-between;
@@ -32,6 +32,7 @@ const ProfileLine = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    object-fit: cover;
   }
   div {
     color: white;
@@ -77,7 +78,7 @@ const SearchResult = ({ results, keyword }) => {
         <>
           <SearchTitle>'{keyword}' 검색 결과</SearchTitle>
           {results.length === 0 && <NoResult>검색 결과가 없습니다.</NoResult>}
-          <HotList>
+          <ResultList>
             {results.map((result) => (
               <div key={result.id}>
                 <FlexLine>
@@ -117,13 +118,54 @@ const SearchResult = ({ results, keyword }) => {
                 </div>
               </div>
             ))}
-          </HotList>
+          </ResultList>
           <TicketModal isOpen={modal} onRequestClose={() => setModal(false)} />
         </>
       ) : (
         <>
           <MSearchTitle>'{keyword}' 검색 결과</MSearchTitle>
           {results.length === 0 && <MNoResult>검색 결과가 없습니다.</MNoResult>}
+          <MResultList>
+            {results.map((result) => (
+              <div key={result.id} className="resultdiv">
+                <FlexLine>
+                  <ProfileLine>
+                    <img src={result.authorProfileImageUrl} alt="profile" />
+                    <div>{result.authorNickname}</div>
+                  </ProfileLine>
+                  <Heart>
+                    {isHeart ? (
+                      <FaHeart
+                        color="white"
+                        onClick={handleHeart}
+                        size={20}
+                        style={{ cursor: "pointer" }}
+                      />
+                    ) : (
+                      <FaRegHeart
+                        color="#8F8F8F"
+                        onClick={handleHeart}
+                        size={20}
+                        style={{ cursor: "pointer" }}
+                      />
+                    )}
+                    {result.likes}
+                  </Heart>
+                </FlexLine>
+                <div onClick={handleTicket}>
+                  <Ticket
+                    key={result.id}
+                    title={result.title}
+                    place={result.location}
+                    seat={result.seat}
+                    year={result.date.substr(0, 4)}
+                    date={result.date.substr(5, 9)}
+                    custom={result.customImageUrl}
+                  />
+                </div>
+              </div>
+            ))}
+          </MResultList>
         </>
       )}
     </>
@@ -147,4 +189,10 @@ const MNoResult = styled.div`
   font-size: 15px;
   font-size: 500;
   margin-top: 100px;
+`;
+
+const MResultList = styled.div`
+  .resultdiv {
+    margin-bottom: 40px;
+  }
 `;
