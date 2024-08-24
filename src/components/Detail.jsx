@@ -632,6 +632,7 @@ const MProfileImg = styled.img`
   width: 35px;
   height: 35px;
   border-radius: 50%;
+  object-fit: cover;
 `;
 const MNickname = styled.div`
   font-size: 15px;
