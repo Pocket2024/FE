@@ -158,7 +158,7 @@ const OtherUserPage = () => {
       ) : (
         <Wrapper>
           <div style={{ width: "100%" }}>
-            <Profile />
+            <Profile otheruserId={otheruserId} />
             <FavTicket padding="0 30px">
               <BsFillPinFill color="white" />
               {infoData.nickName}님의 대표 티켓
@@ -177,7 +177,7 @@ const OtherUserPage = () => {
               <FaGetPocket color="white" />
               <div>{infoData.nickName}님의 포켓</div>
             </PocketTitle>
-            <Pocket />
+            <Pocket otheruserId={otheruserId} />
           </div>
         </Wrapper>
       )}
