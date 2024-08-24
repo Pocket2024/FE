@@ -259,11 +259,28 @@ const Profile = ({ otheruserId }) => {
             <div>
               <NameLine>
                 <Nickname>{infoData.nickName}</Nickname>
-                <IoMdSettings
-                  size={20}
-                  className="SettingIcon"
-                  onClick={() => navigate("/myinfo")}
-                />
+                {otheruserId ? (
+                  <FollowBtn onClick={handleFollow}>
+                    {infoData.followedByCurrentUser ? (
+                      <>
+                        <GiCancel />
+                        <span>팔로우 취소</span>
+                      </>
+                    ) : (
+                      <>
+                        <BsPersonFillAdd />
+                        <span>팔로우</span>
+                      </>
+                    )}
+                  </FollowBtn>
+                ) : (
+                  <IoMdSettings
+                    size={27}
+                    className="SettingIcon"
+                    color="white"
+                    onClick={() => navigate("/myinfo")}
+                  />
+                )}
               </NameLine>
               <Bio>{infoData.bio}</Bio>
               <NumLine>
