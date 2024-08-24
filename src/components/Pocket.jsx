@@ -153,9 +153,13 @@ const Pocket = ({ otheruserId }) => {
                 </div>
               </MPocketDiv>
             ))}
-            <div className="createBtn" onClick={() => setModal(true)}>
-              <FaPlus color="#929292" size={30} />
-            </div>
+            {otheruserId ? (
+              <></>
+            ) : (
+              <div className="createBtn" onClick={() => setModal(true)}>
+                <FaPlus color="#929292" size={50} />
+              </div>
+            )}
           </MPocketGrid>
           <PocketModal isOpen={modal} onRequestClose={() => setModal(false)} />
         </Wrapper>
