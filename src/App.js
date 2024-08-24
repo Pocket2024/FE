@@ -13,6 +13,7 @@ import UploadPage from "./pages/UploadPage";
 import MyTicketDetailPage from "./pages/MyTicketDetailPage";
 import { ResponsiveProvider } from "./context/Responsive";
 import OtherUserPage from "./pages/OtherUserPage";
+import FollowPage from "./pages/FollowPage";
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
               path="/user/:otheruserId/:pocket/:ticket"
               element={<MyTicketDetailPage />}
             />
+            <Route path="/following" element={<FollowPage />} />
+            <Route path="/follower" element={<FollowPage />} />
           </Routes>
         </Page>
       </ResponsiveProvider>

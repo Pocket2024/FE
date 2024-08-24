@@ -92,9 +92,14 @@ const Profile = ({ otheruserId }) => {
       );
 
       // 호출 성공 시 처리
-      console.log("following", res);
-      setFollowing(res.data);
-      setFollowingModal(true);
+      if (isDesktop) {
+        console.log("following", res);
+        setFollowing(res.data);
+        isDesktop && setFollowingModal(true);
+      } else {
+        navigate("/following");
+      }
+
       setFollower(false);
     } catch (err) {
       console.log("팔로잉 목록 조회 실패", err);
@@ -114,9 +119,13 @@ const Profile = ({ otheruserId }) => {
       );
 
       // 호출 성공 시 처리
-      console.log("follower", res);
-      setFollowing(res.data);
-      setFollowingModal(true);
+      if (isDesktop) {
+        console.log("follower", res);
+        setFollowing(res.data);
+        setFollowingModal(true);
+      } else {
+        navigate("/follower");
+      }
       setFollower(true);
     } catch (err) {
       console.log("팔로잉 목록 조회 실패", err);
