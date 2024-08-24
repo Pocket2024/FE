@@ -26,6 +26,7 @@ const TitleLine = styled.div`
   .name {
     font-weight: 700;
     color: white;
+    margin-right: 5px;
   }
   .pocket {
     font-weight: 700;
@@ -74,7 +75,7 @@ const FollowPage = ({ otheruserId }) => {
   return (
     <Wrapper>
       <TitleLine>
-        <div>
+        <div gap="0 5px">
           <MdNavigateBefore
             color="#A9A9A9"
             size={isDesktop ? 50 : 30}
