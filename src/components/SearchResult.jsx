@@ -116,10 +116,14 @@ const SearchResult = ({ results, keyword }) => {
                     custom={result.customImageUrl}
                   />
                 </div>
+                <TicketModal
+                  isOpen={modal}
+                  onRequestClose={() => setModal(false)}
+                  info={result}
+                />
               </div>
             ))}
           </ResultList>
-          <TicketModal isOpen={modal} onRequestClose={() => setModal(false)} />
         </>
       ) : (
         <>
