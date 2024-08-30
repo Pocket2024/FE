@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import Ticket from "./Ticket";
 import profileimg from "../images/profileimg.png";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import api from "../api/api";
+import TicketModal from "./TicketModal";
 
 const RecentTitle = styled.div`
   font-weight: 700;
@@ -32,6 +34,7 @@ const ProfileLine = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    object-fit: cover;
   }
   div {
     color: white;
@@ -97,6 +100,29 @@ let dummy = [
 const RecentTicket = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
   const [isHeart, setIsHeart] = useState(false);
+  const [recentticket, setRecentticket] = useState([]);
+  let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    const getRecentTicket = () => {
+      api
+        .get("/api/reviews/popular", {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setRecentticket(res.data);
+        })
+        .catch((err) => {
+          console.log("get recent ticket err", err);
+        });
+    };
+
+    getRecentTicket();
+  }, [ACCESS_TOKEN]);
 
   const handleHeart = () => {
     if (isHeart) {
@@ -105,18 +131,23 @@ const RecentTicket = () => {
       setIsHeart(!isHeart);
     }
   };
+
+  const handleTicket = () => {
+    setModal(true);
+  };
+
   return (
     <>
       {isDesktop ? (
         <>
           <RecentTitle>🚀 가장 최신 티켓</RecentTitle>
           <RecentList>
-            {dummy.map((hot) => (
+            {recentticket.map((hot) => (
               <div>
                 <FlexLine>
                   <ProfileLine>
-                    <img src={hot.profileimg} />
-                    <div>{hot.nickname}</div>
+                    <img src={hot.authorProfileImageUrl} />
+                    <div>{hot.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
                     {isHeart ? (
@@ -134,16 +165,24 @@ const RecentTicket = () => {
                         style={{ cursor: "pointer" }}
                       />
                     )}
-                    {hot.heart}
+                    {hot.likes}
                   </Heart>
                 </FlexLine>
-                <Ticket
-                  key={hot.id}
-                  title={hot.title}
-                  place={hot.place}
-                  seat={hot.seat}
-                  year={hot.year}
-                  date={hot.date}
+                <div onClick={handleTicket}>
+                  <Ticket
+                    key={hot.id}
+                    title={hot.title}
+                    place={hot.place}
+                    seat={hot.seat}
+                    year={hot.date.substr(0, 4)}
+                    date={hot.date.substr(5, 9)}
+                    custom={hot.customImageUrl}
+                  />
+                </div>
+                <TicketModal
+                  isOpen={modal}
+                  onRequestClose={() => setModal(false)}
+                  info={hot}
                 />
               </div>
             ))}
