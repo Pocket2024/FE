@@ -51,10 +51,11 @@ const Heart = styled.div`
 
 const HotTicket = () => {
   const { isDesktop } = useResponsive();
-  const [isHeart, setIsHeart] = useState(false);
   const [modal, setModal] = useState(false);
   const [hotticket, setHotticket] = useState([]);
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  const userId = localStorage.getItem("userId");
+  const [islike, setIslike] = useState(false); // 유저가 좋아요를 눌렀을 때 다시 useEffect 실행시키기 위함
 
   useEffect(() => {
     const getHotTicket = () => {
@@ -67,6 +68,7 @@ const HotTicket = () => {
         .then((res) => {
           console.log(res.data);
           setHotticket(res.data.slice(0, 4));
+          setIslike(false);
         })
         .catch((err) => {
           console.log("get hot ticket err", err);
@@ -74,15 +76,44 @@ const HotTicket = () => {
     };
 
     getHotTicket();
-  }, [ACCESS_TOKEN]);
+  }, [ACCESS_TOKEN, islike]);
 
-  const handleHeart = () => {
+  const handleHeart = (ticketId, isHeart) => {
     if (isHeart) {
-      setIsHeart(!isHeart);
+      api
+        .delete(`/api/likes/unlike/${ticketId}?userId=${userId}`, {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then(() => {
+          alert("좋아요 취소");
+          setIslike(true);
+        })
+        .catch((err) => {
+          console.log("좋아요 취소 err", err);
+        });
     } else {
-      setIsHeart(!isHeart);
+      api
+        .post(
+          `/api/likes/like/${ticketId}?userId=${userId}`,
+          {},
+          {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          }
+        )
+        .then(() => {
+          alert("좋아요");
+          setIslike(true);
+        })
+        .catch((err) => {
+          console.log("좋아요 err", err);
+        });
     }
   };
+
   const handleTicket = () => {
     setModal(true);
   };
@@ -100,17 +131,21 @@ const HotTicket = () => {
                     <div>{hot.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
-                    {isHeart ? (
+                    {hot.likedByCurrentUser ? (
                       <FaHeart
                         color="white"
-                        onClick={handleHeart}
+                        onClick={() =>
+                          handleHeart(hot.id, hot.likedByCurrentUser)
+                        }
                         size={20}
                         style={{ cursor: "pointer" }}
                       />
                     ) : (
                       <FaRegHeart
                         color="#8F8F8F"
-                        onClick={handleHeart}
+                        onClick={() =>
+                          handleHeart(hot.id, hot.likedByCurrentUser)
+                        }
                         size={20}
                         style={{ cursor: "pointer" }}
                       />
@@ -122,7 +157,7 @@ const HotTicket = () => {
                   <Ticket
                     key={hot.id}
                     title={hot.title}
-                    place={hot.place}
+                    place={hot.location}
                     seat={hot.seat}
                     year={hot.date.substr(0, 4)}
                     date={hot.date.substr(5, 9)}

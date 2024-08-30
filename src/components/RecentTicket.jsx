@@ -51,15 +51,16 @@ const Heart = styled.div`
 
 const RecentTicket = () => {
   const isDesktop = useMediaQuery({ minWidth: 1220 });
-  const [isHeart, setIsHeart] = useState(false);
   const [recentticket, setRecentticket] = useState([]);
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [modal, setModal] = useState(false);
+  const userId = localStorage.getItem("userId");
+  const [islike, setIslike] = useState(false); // 유저가 좋아요를 눌렀을 때 다시 useEffect 실행시키기 위함
 
   useEffect(() => {
     const getRecentTicket = () => {
       api
-        .get("/api/reviews/popular", {
+        .get("/api/reviews/latest", {
           headers: {
             Authorization: `${ACCESS_TOKEN}`,
           },
@@ -67,6 +68,7 @@ const RecentTicket = () => {
         .then((res) => {
           console.log(res.data);
           setRecentticket(res.data.slice(0, 4));
+          setIslike(false);
         })
         .catch((err) => {
           console.log("get recent ticket err", err);
@@ -74,13 +76,41 @@ const RecentTicket = () => {
     };
 
     getRecentTicket();
-  }, [ACCESS_TOKEN]);
+  }, [ACCESS_TOKEN, islike]);
 
-  const handleHeart = () => {
+  const handleHeart = (ticketId, isHeart) => {
     if (isHeart) {
-      setIsHeart(!isHeart);
+      api
+        .delete(`/api/likes/unlike/${ticketId}?userId=${userId}`, {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then(() => {
+          alert("좋아요 취소");
+          setIslike(true);
+        })
+        .catch((err) => {
+          console.log("좋아요 취소 err", err);
+        });
     } else {
-      setIsHeart(!isHeart);
+      api
+        .post(
+          `/api/likes/like/${ticketId}?userId=${userId}`,
+          {},
+          {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          }
+        )
+        .then(() => {
+          alert("좋아요");
+          setIslike(true);
+        })
+        .catch((err) => {
+          console.log("좋아요 err", err);
+        });
     }
   };
 
@@ -102,17 +132,21 @@ const RecentTicket = () => {
                     <div>{hot.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
-                    {isHeart ? (
+                    {hot.likedByCurrentUser ? (
                       <FaHeart
                         color="white"
-                        onClick={handleHeart}
+                        onClick={() =>
+                          handleHeart(hot.id, hot.likedByCurrentUser)
+                        }
                         size={20}
                         style={{ cursor: "pointer" }}
                       />
                     ) : (
                       <FaRegHeart
                         color="#8F8F8F"
-                        onClick={handleHeart}
+                        onClick={() =>
+                          handleHeart(hot.id, hot.likedByCurrentUser)
+                        }
                         size={20}
                         style={{ cursor: "pointer" }}
                       />
@@ -124,7 +158,7 @@ const RecentTicket = () => {
                   <Ticket
                     key={hot.id}
                     title={hot.title}
-                    place={hot.place}
+                    place={hot.location}
                     seat={hot.seat}
                     year={hot.date.substr(0, 4)}
                     date={hot.date.substr(5, 9)}
