@@ -555,6 +555,9 @@ const UploadPage = () => {
                 onChange={() => setChecked(!checked)}
               />
               <StyledP>비공개</StyledP>
+              <div className="explain">
+                *비공개를 체크하면 해당 티켓은 나만 볼 수 있어요
+              </div>
             </StyledLabel>
             <div
               style={{
@@ -717,6 +720,13 @@ const StyledLabel = styled.label`
   font-size: ${(props) => props.fontsize || "15px"};
   font-weight: 600;
   margin-top: 30px;
+  .explain {
+    color: #b1b1b1;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 40px;
+    margin-left: 15px;
+  }
 `;
 
 const StyledP = styled.div`
