@@ -150,7 +150,7 @@ const MyInfoPage = () => {
     }
 
     api
-      .put(`/api/users/${userId}`, formData, {
+      .post(`/api/users/${userId}`, formData, {
         headers: {
           Authorization: `${ACCESS_TOKEN}`,
         },
