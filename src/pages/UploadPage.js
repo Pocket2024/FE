@@ -746,7 +746,7 @@ const Button = styled.button`
 
 const ItemBox = styled.select`
   padding: 5px 20px;
-  width: 150px;
+  width: fit-content;
   font-size: 40px;
   font-weight: 700;
   border: 1.5px solid #c6c6c6;
