@@ -117,6 +117,7 @@ const Comment = styled.div`
   font-size: ${(props) => props.fontSize || "15px"};
   font-weight: 500;
   margin-top: 30px;
+  white-space: pre-wrap;
 `;
 const HeartLine = styled.div`
   display: flex;

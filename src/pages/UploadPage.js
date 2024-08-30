@@ -215,6 +215,7 @@ const UploadPage = () => {
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   let userId = localStorage.getItem("userId");
   const [checked, setChecked] = useState(false);
+  const [isocr, setIsocr] = useState(false);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -262,6 +263,7 @@ const UploadPage = () => {
     formData.append("date", dateToString(date));
     formData.append("location", place);
     formData.append("private", checked);
+    formData.append("ocr", isocr);
     if (realimg) {
       for (let i = 0; i < realimg.length; i++) {
         formData.append("images", realimg[i]); //반복문을 활용하여 파일들을 formDataR객체에 추가
@@ -387,6 +389,7 @@ const UploadPage = () => {
       setPlace(res.data.location);
       setSeat(res.data.seat);
       setDate(new Date(res.data.date));
+      setIsocr(true);
     } catch (err) {
       console.log("ocr 에러", err);
     } finally {
