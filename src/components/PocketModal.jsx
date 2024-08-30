@@ -92,28 +92,34 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
   const userId = localStorage.getItem("userId");
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const { isDesktop } = useResponsive();
+  const [categoryMessage, setCategoryMessage] = useState("");
 
   const createPocket = () => {
-    api
-      .post(
-        `/api/categories/${userId}`,
-        { category: category, color: color },
-        {
-          headers: {
-            Authorization: `${ACCESS_TOKEN}`,
-          },
-        }
-      )
-      .then(() => {
-        alert("포켓이 생성되었습니다.");
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log("create pocket error", err);
-      });
+    if (category !== "") {
+      api
+        .post(
+          `/api/categories/${userId}`,
+          { category: category, color: color },
+          {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          }
+        )
+        .then(() => {
+          alert("포켓이 생성되었습니다.");
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log("create pocket error", err);
+        });
+    }
   };
 
-  const onChangeCategory = (e) => setCategory(e.target.value);
+  const onChangeCategory = (e) => {
+    setCategory(e.target.value);
+    setCategoryMessage("포켓 이름을 작성해주세요.");
+  };
 
   const onChangeColor = (color) => {
     setColor(color.hex);
@@ -134,6 +140,7 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
             onChange={onChangeCategory}
             placeholder="포켓 이름을 입력해주세요."
           />
+          <Message>{categoryMessage}</Message>
           <ModalTitle>포켓 색상</ModalTitle>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <ChromePicker color={color} onChange={onChangeColor} />
@@ -195,7 +202,6 @@ const Input = styled.input`
   font-weight: 600;
   border-radius: 10px;
   width: 100%;
-  margin-bottom: 20px;
   font-weight: 500;
   &::placeholder {
     font-weight: 600;
@@ -264,4 +270,11 @@ const MCreateBtn = styled.button`
     background-color: black;
     color: white;
   }
+`;
+
+const Message = styled.div`
+  font-weight: 500;
+  margin: 5px 10px 20px 10px;
+  color: #fe334c;
+  font-size: 15px;
 `;
