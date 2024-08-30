@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Ticket from "./Ticket";
 import { FaHeart } from "react-icons/fa";
@@ -6,6 +6,7 @@ import { FaRegHeart } from "react-icons/fa";
 import dummy from "../dummy/hot.json";
 import TicketModal from "./TicketModal";
 import { useResponsive } from "../context/Responsive";
+import api from "../api/api";
 
 const HotTitle = styled.div`
   font-weight: 700;
@@ -33,6 +34,7 @@ const ProfileLine = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    object-fit: cover;
   }
   div {
     color: white;
@@ -52,6 +54,28 @@ const HotTicket = () => {
   const { isDesktop } = useResponsive();
   const [isHeart, setIsHeart] = useState(false);
   const [modal, setModal] = useState(false);
+  const [hotticket, setHotticket] = useState([]);
+  let ACCESS_TOKEN = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    const getHotTicket = () => {
+      api
+        .get("/api/reviews/popular", {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setHotticket(res.data);
+        })
+        .catch((err) => {
+          console.log("get hot ticket err", err);
+        });
+    };
+
+    getHotTicket();
+  }, [ACCESS_TOKEN]);
 
   const handleHeart = () => {
     if (isHeart) {
@@ -69,12 +93,12 @@ const HotTicket = () => {
         <>
           <HotTitle>🔥 지금 핫한 티켓</HotTitle>
           <HotList>
-            {dummy.data.map((hot) => (
+            {hotticket.map((hot) => (
               <div>
                 <FlexLine>
                   <ProfileLine>
-                    <img src={hot.profileimg} />
-                    <div>{hot.nickname}</div>
+                    <img src={hot.authorProfileImageUrl} />
+                    <div>{hot.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
                     {isHeart ? (
@@ -92,7 +116,7 @@ const HotTicket = () => {
                         style={{ cursor: "pointer" }}
                       />
                     )}
-                    {hot.heart}
+                    {hot.likes}
                   </Heart>
                 </FlexLine>
                 <div onClick={handleTicket}>
@@ -101,9 +125,9 @@ const HotTicket = () => {
                     title={hot.title}
                     place={hot.place}
                     seat={hot.seat}
-                    year={hot.year}
-                    date={hot.date}
-                    custom={hot.customimg}
+                    year={hot.date.substr(0, 4)}
+                    date={hot.date.substr(5, 9)}
+                    custom={hot.customImageUrl}
                   />
                 </div>
               </div>
