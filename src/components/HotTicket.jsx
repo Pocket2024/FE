@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Ticket from "./Ticket";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-import dummy from "../dummy/hot.json";
 import TicketModal from "./TicketModal";
 import { useResponsive } from "../context/Responsive";
 import api from "../api/api";
@@ -67,7 +66,7 @@ const HotTicket = () => {
         })
         .then((res) => {
           console.log(res.data);
-          setHotticket(res.data);
+          setHotticket(res.data.slice(0, 4));
         })
         .catch((err) => {
           console.log("get hot ticket err", err);
