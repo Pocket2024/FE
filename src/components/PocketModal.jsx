@@ -118,7 +118,11 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
 
   const onChangeCategory = (e) => {
     setCategory(e.target.value);
-    setCategoryMessage("포켓 이름을 작성해주세요.");
+    if (e.target.value === "") {
+      setCategoryMessage("포켓 이름을 작성해주세요.");
+    } else {
+      setCategoryMessage("");
+    }
   };
 
   const onChangeColor = (color) => {
