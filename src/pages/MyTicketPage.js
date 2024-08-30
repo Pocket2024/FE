@@ -132,7 +132,7 @@ const MyTicketPage = () => {
                 {infoData.nickName}님의 대표 티켓
               </FavTicket>
               {infoData.featuredReviewId === null ? (
-                <NoneMsg>대표 티켓이 없습니다.</NoneMsg>
+                <NoneMsg>대표 티켓을 설정하지 않았습니다.</NoneMsg>
               ) : (
                 <div onClick={handleTicket}>
                   <Ticket
@@ -169,19 +169,23 @@ const MyTicketPage = () => {
               <BsFillPinFill color="white" />
               {infoData.nickName}님의 대표 티켓
             </FavTicket>
-            <div
-              onClick={() => handleMobileTicket(favticket.id)}
-              style={{ padding: "0 30px" }}
-            >
-              <Ticket
-                title={favticket.title}
-                place={favticket.location}
-                seat={favticket.seat}
-                year={favticket.date ? favticket.date.substr(0, 4) : ""}
-                date={favticket.date ? favticket.date.substr(5, 9) : ""}
-                custom={favticket.customImageUrl}
-              />
-            </div>
+            {infoData.featuredReviewId === null ? (
+              <NoneMsg height="130px">대표 티켓을 설정하지 않았습니다.</NoneMsg>
+            ) : (
+              <div
+                onClick={() => handleMobileTicket(favticket.id)}
+                style={{ padding: "0 30px" }}
+              >
+                <Ticket
+                  title={favticket.title}
+                  place={favticket.location}
+                  seat={favticket.seat}
+                  year={favticket.date ? favticket.date.substr(0, 4) : ""}
+                  date={favticket.date ? favticket.date.substr(5, 9) : ""}
+                  custom={favticket.customImageUrl}
+                />
+              </div>
+            )}
             <PocketTitle padding="0 30px">
               <FaGetPocket color="white" />
               <div>{infoData.nickName}님의 포켓</div>
@@ -203,6 +207,6 @@ const NoneMsg = styled.div`
   display: flex;
   justify-content: center;
   color: #afafaf;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
 `;
