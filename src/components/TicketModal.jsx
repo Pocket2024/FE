@@ -31,10 +31,11 @@ const customStyles = {
   },
 };
 
-const TicketModal = ({ isOpen, onRequestClose }) => {
+const TicketModal = ({ isOpen, onRequestClose, info }) => {
+  console.log("ticketmodal", info);
   return (
     <Modal isOpen={isOpen} style={customStyles} onRequestClose={onRequestClose}>
-      <Detail />
+      <Detail info={info} />
     </Modal>
   );
 };

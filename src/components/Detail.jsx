@@ -171,14 +171,14 @@ const Delete = styled.button`
   }
 `;
 
-const Detail = () => {
+const Detail = ({ info }) => {
   const { isDesktop } = useResponsive();
   const ticketRef = useRef();
   const [isHeart, setIsHeart] = useState(false);
   const { ticket } = useParams();
   const userId = localStorage.getItem("userId");
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
-  const [detail, setDetail] = useState([]);
+  const [detail, setDetail] = useState(info ? info : []);
   const navigate = useNavigate();
   const [cookies] = useCookies(["access"]);
   const [animate, setAnimate] = useState(false);
@@ -296,20 +296,21 @@ const Detail = () => {
 
   useEffect(() => {
     const getDetail = () => {
-      api
-        .get(`/api/reviews/${ticket}?userId=${userId}`, {
-          headers: {
-            Authorization: `${ACCESS_TOKEN}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          setDetail(res.data);
-          setIsHeart(res.data.likedByCurrentUser);
-        })
-        .catch((err) => {
-          console.log("get detail err", err);
-        });
+      !info &&
+        api
+          .get(`/api/reviews/${ticket}?userId=${userId}`, {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+            setDetail(res.data);
+            setIsHeart(res.data.likedByCurrentUser);
+          })
+          .catch((err) => {
+            console.log("get detail err", err);
+          });
     };
 
     getDetail();

@@ -130,10 +130,14 @@ const HotTicket = () => {
                     custom={hot.customImageUrl}
                   />
                 </div>
+                <TicketModal
+                  isOpen={modal}
+                  onRequestClose={() => setModal(false)}
+                  info={hot}
+                />
               </div>
             ))}
           </HotList>
-          <TicketModal isOpen={modal} onRequestClose={() => setModal(false)} />
         </>
       ) : (
         <Ticket />
