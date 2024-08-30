@@ -146,7 +146,7 @@ const FavBtn = styled.button`
   height: ${(props) => props.lineHeight || "50px"};
   width: ${(props) => props.lineHeight || "50px"};
   border: none;
-  background-color: #f4f4f4;
+  background-color: ${(props) => props.bgColor};
   &:hover {
     background-color: #fff6a1;
     .pin-icon {
@@ -184,6 +184,8 @@ const Detail = ({ info }) => {
   const [cookies] = useCookies(["access"]);
   const [animate, setAnimate] = useState(false);
   const { otheruserId } = useParams();
+  const favticketId = localStorage.getItem("favticketId");
+  console.log(ticket, favticketId);
 
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
@@ -323,7 +325,7 @@ const Detail = ({ info }) => {
     }, 500); // 애니메이션 지속 시간과 동일하게 설정
 
     return () => clearTimeout(timeoutId);
-  }, [ticket, isHeart, userId, ACCESS_TOKEN]);
+  }, [ticket, isHeart, userId, ACCESS_TOKEN, favticketId]);
 
   const [modal, setModal] = useState(false);
   const [clickimgurl, setClickimgurl] = useState(""); // 지금 클릭한 이미지 url
@@ -401,10 +403,13 @@ const Detail = ({ info }) => {
                   <SaveBtn onClick={onDownloadBtn}>
                     <MdSaveAlt color="#DEDEDE" size={40} />
                   </SaveBtn>
-                  <FavBtn onClick={handleFavTicket}>
+                  <FavBtn
+                    onClick={handleFavTicket}
+                    bgColor={favticketId === ticket ? "#fff6a1" : "#f4f4f4"}
+                  >
                     <BsFillPinFill
                       size={25}
-                      color="#E2E2E2"
+                      color={favticketId === ticket ? "#f2d84f" : "#E2E2E2"}
                       className="pin-icon"
                     />
                   </FavBtn>
