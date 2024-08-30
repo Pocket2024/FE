@@ -214,6 +214,7 @@ const UploadPage = () => {
   );
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   let userId = localStorage.getItem("userId");
+  const [checked, setChecked] = useState(false);
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -260,6 +261,7 @@ const UploadPage = () => {
     formData.append("seat", seat);
     formData.append("date", dateToString(date));
     formData.append("location", place);
+    formData.append("private", checked);
     if (realimg) {
       for (let i = 0; i < realimg.length; i++) {
         formData.append("images", realimg[i]); //반복문을 활용하여 파일들을 formDataR객체에 추가
@@ -384,7 +386,7 @@ const UploadPage = () => {
       setTitle(res.data.title);
       setPlace(res.data.location);
       setSeat(res.data.seat);
-      //setDate(res.data.date);
+      setDate(new Date(res.data.date));
     } catch (err) {
       console.log("ocr 에러", err);
     } finally {
@@ -544,6 +546,16 @@ const UploadPage = () => {
                 />
               )}
             </FileUpload>
+            <StyledLabel htmlFor="private" fontsize="20px">
+              <StyledInput
+                type="checkbox"
+                id="private"
+                name="private"
+                checked={checked}
+                onChange={() => setChecked(!checked)}
+              />
+              <StyledP>비공개</StyledP>
+            </StyledLabel>
             <div
               style={{
                 display: "flex",
@@ -678,6 +690,39 @@ const UploadPage = () => {
 };
 
 export default UploadPage;
+
+const StyledInput = styled.input`
+  appearance: none;
+  border: 1.5px solid gainsboro;
+  border-radius: 0.35rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+
+  &:checked {
+    border-color: transparent;
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='black' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
+    background-size: 100% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-color: white;
+  }
+`;
+
+const StyledLabel = styled.label`
+  display: flex;
+  align-items: center;
+  user-select: none;
+  align-items: center;
+  font-size: ${(props) => props.fontsize || "15px"};
+  font-weight: 600;
+  margin-top: 30px;
+`;
+
+const StyledP = styled.div`
+  margin-left: 10px;
+  color: white;
+`;
 
 const Button = styled.button`
   background-color: white;
