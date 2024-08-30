@@ -92,7 +92,8 @@ const MyTicketPage = () => {
 
       // 두 번째 API 호출
       const featuredReviewResponse = await api.get(
-        `/api/reviews/${fetchedInfoData.featuredReviewId}?userId=${userId}`,
+        fetchedInfoData.featuredReviewId !== null &&
+          `/api/reviews/${fetchedInfoData.featuredReviewId}?userId=${userId}`,
         {
           headers: {
             Authorization: `${ACCESS_TOKEN}`,
@@ -130,16 +131,20 @@ const MyTicketPage = () => {
                 <BsFillPinFill color="white" />
                 {infoData.nickName}님의 대표 티켓
               </FavTicket>
-              <div onClick={handleTicket}>
-                <Ticket
-                  title={favticket.title}
-                  place={favticket.location}
-                  seat={favticket.seat}
-                  year={favticket.date ? favticket.date.substr(0, 4) : ""}
-                  date={favticket.date ? favticket.date.substr(5, 9) : ""}
-                  custom={favticket.customImageUrl}
-                />
-              </div>
+              {infoData.featuredReviewId === null ? (
+                <NoneMsg>대표 티켓이 없습니다.</NoneMsg>
+              ) : (
+                <div onClick={handleTicket}>
+                  <Ticket
+                    title={favticket.title}
+                    place={favticket.location}
+                    seat={favticket.seat}
+                    year={favticket.date ? favticket.date.substr(0, 4) : ""}
+                    date={favticket.date ? favticket.date.substr(5, 9) : ""}
+                    custom={favticket.customImageUrl}
+                  />
+                </div>
+              )}
               <PocketTitle>
                 <FaGetPocket color="white" />
                 <div>{infoData.nickName}님의 포켓</div>
@@ -190,3 +195,14 @@ const MyTicketPage = () => {
 };
 
 export default MyTicketPage;
+
+const NoneMsg = styled.div`
+  width: 100%;
+  height: ${(props) => props.height || "20vh"};
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #afafaf;
+  font-size: 18px;
+  font-weight: 600;
+`;
