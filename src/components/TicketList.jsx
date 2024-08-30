@@ -85,6 +85,7 @@ const TicketList = () => {
             setCategory(res.data[0].ticketcategory.category);
           }
           setTicketList(res.data);
+          console.log(res.data);
         })
         .catch((err) => {
           console.log("get ticketlist error", err);
@@ -154,6 +155,7 @@ const TicketList = () => {
                 year={ticket.date.substr(0, 4)}
                 date={ticket.date.substr(5, 9)}
                 custom={ticket.customImageUrl}
+                isprivate={ticket.private}
               />
             </TicketDiv>
           </>

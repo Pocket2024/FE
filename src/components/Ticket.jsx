@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../context/Responsive";
+import { IoIosLock } from "react-icons/io";
 
 const Wrapper = styled.div`
   cursor: pointer;
@@ -75,8 +76,21 @@ const Circle = styled.div`
   top: ${(props) => props.top};
   bottom: ${(props) => props.bottom};
 `;
+const PrivateBadge = styled.div`
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: #262626;
+  position: absolute;
+  right: 2vh;
+  top: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+`;
 
-const Ticket = ({ title, place, seat, year, date, custom }) => {
+const Ticket = ({ title, place, seat, year, date, custom, isprivate }) => {
   const { isDesktop } = useResponsive();
   const navigate = useNavigate();
   const id = 1;
@@ -94,6 +108,11 @@ const Ticket = ({ title, place, seat, year, date, custom }) => {
             )}
             <Place>{place || "장소"}</Place>
             <Seat>{seat || "좌석"}</Seat>
+            {isprivate && (
+              <PrivateBadge>
+                <IoIosLock fill="#FFF069" size={25} />
+              </PrivateBadge>
+            )}
             <Date>
               <div className="year">{year || "2024"}</div>
               <div>{date || "02.07"}</div>
