@@ -19,12 +19,14 @@ const TicketBox = styled.div`
   z-index: 1;
   .custom-img {
     width: 100%;
+    min-height: 100%;
     position: absolute;
     z-index: 2;
     background-blend-mode: overlay;
     opacity: 0.45;
     border-radius: 10px;
     left: 0;
+    object-fit: cover;
   }
 `;
 const Title = styled.div`
