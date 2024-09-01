@@ -349,6 +349,7 @@ const Detail = ({ info }) => {
       .then(() => {
         console.log("대표 티켓으로 설정되었습니다.");
         alert("성공");
+        localStorage.setItem("favticketId", ticket);
       })
       .catch((err) => {
         console.log("post feature ticket err", err);
