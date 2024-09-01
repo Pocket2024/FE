@@ -590,7 +590,16 @@ const UploadPage = () => {
             <br />
             자동입력을 원하지 않으면 직접 정보를 입력할 수 있습니다.
           </Explain>
-          <AutoBtn>
+          <input
+            type="file"
+            accept="image/*"
+            id="ocrimg"
+            style={{ display: "none" }}
+            onChange={(e) => {
+              onChangeOcr(e.target.files);
+            }}
+          />
+          <AutoBtn htmlFor="ocrimg">
             <IoMdImage size={20} />
             자동입력에 사용할 티켓 이미지 선택하기
           </AutoBtn>
@@ -676,6 +685,19 @@ const UploadPage = () => {
                 />
               )}
             </FileUpload>
+            <StyledLabel htmlFor="private" fontsize="20px">
+              <StyledInput
+                type="checkbox"
+                id="private"
+                name="private"
+                checked={checked}
+                onChange={() => setChecked(!checked)}
+              />
+              <StyledP>비공개</StyledP>
+            </StyledLabel>
+            <PrivateExplain>
+              *비공개를 체크하면 해당 티켓은 나만 볼 수 있어요
+            </PrivateExplain>
             <div
               style={{
                 display: "flex",
@@ -689,6 +711,7 @@ const UploadPage = () => {
               </Button>
             </div>
           </TicketInfo>
+          {isLoading && <TicketScan />}
         </Wrapper>
       )}
     </>
@@ -769,3 +792,11 @@ const ItemBox = styled.select`
   color: #ca3525;
 `;
 const Item = styled.option``;
+
+const PrivateExplain = styled.div`
+  color: #b1b1b1;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 40px;
+  margin-bottom: 30px;
+`;
