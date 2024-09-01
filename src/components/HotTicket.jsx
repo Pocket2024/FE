@@ -6,6 +6,7 @@ import { FaRegHeart } from "react-icons/fa";
 import TicketModal from "./TicketModal";
 import { useResponsive } from "../context/Responsive";
 import api from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 const HotTitle = styled.div`
   font-weight: 700;
@@ -15,13 +16,13 @@ const HotTitle = styled.div`
 `;
 
 const HotList = styled.div`
-  .pc {
+  .pcdiv {
     display: grid;
     grid-template-columns: repeat(2, 45%);
     justify-content: space-between;
     gap: 30px 0;
   }
-  .mobile {
+  .mobilediv {
   }
 `;
 const FlexLine = styled.div`
@@ -33,6 +34,7 @@ const ProfileLine = styled.div`
   display: flex;
   align-items: center;
   gap: 0 10px;
+  cursor: pointer;
   img.pc {
     width: 40px;
     height: 40px;
@@ -132,62 +134,74 @@ const HotTicket = () => {
   const handleTicket = () => {
     setModal(true);
   };
+
+  const navigate = useNavigate();
+
   return (
     <>
       <HotTitle fontSize={isDesktop ? "25px" : "17px"}>
         🔥 지금 핫한 티켓
       </HotTitle>
-      <HotList className={isDesktop ? "pc" : "mobile"}>
-        {hotticket.map((hot) => (
-          <div style={!isDesktop && { marginBottom: "20px" }}>
-            <FlexLine>
-              <ProfileLine>
-                <img
-                  src={hot.authorProfileImageUrl}
-                  alt="profileimg"
-                  className={isDesktop ? "pc" : "mobile"}
+      <HotList>
+        <div className={isDesktop ? "pcdiv" : "mobilediv"}>
+          {hotticket.map((hot) => (
+            <div
+              key={hot.id}
+              style={!isDesktop ? { marginBottom: "20px" } : {}}
+            >
+              <FlexLine>
+                <ProfileLine onClick={() => navigate(`/user/${hot.authorId}`)}>
+                  <img
+                    src={hot.authorProfileImageUrl}
+                    alt="profileimg"
+                    className={isDesktop ? "pc" : "mobile"}
+                  />
+                  <div className={isDesktop ? "pc" : "mobile"}>
+                    {hot.authorNickname}
+                  </div>
+                </ProfileLine>
+                <Heart>
+                  {hot.likedByCurrentUser ? (
+                    <FaHeart
+                      color="white"
+                      onClick={() =>
+                        handleHeart(hot.id, hot.likedByCurrentUser)
+                      }
+                      size={isDesktop ? 20 : 15}
+                      style={{ cursor: "pointer" }}
+                    />
+                  ) : (
+                    <FaRegHeart
+                      color="#8F8F8F"
+                      onClick={() =>
+                        handleHeart(hot.id, hot.likedByCurrentUser)
+                      }
+                      size={isDesktop ? 20 : 15}
+                      style={{ cursor: "pointer" }}
+                    />
+                  )}
+                  {hot.likes}
+                </Heart>
+              </FlexLine>
+              <div onClick={handleTicket}>
+                <Ticket
+                  key={hot.id}
+                  title={hot.title}
+                  place={hot.location}
+                  seat={hot.seat}
+                  year={hot.date.substr(0, 4)}
+                  date={hot.date.substr(5, 9)}
+                  custom={hot.customImageUrl}
                 />
-                <div className={isDesktop ? "pc" : "mobile"}>
-                  {hot.authorNickname}
-                </div>
-              </ProfileLine>
-              <Heart>
-                {hot.likedByCurrentUser ? (
-                  <FaHeart
-                    color="white"
-                    onClick={() => handleHeart(hot.id, hot.likedByCurrentUser)}
-                    size={isDesktop ? 20 : 15}
-                    style={{ cursor: "pointer" }}
-                  />
-                ) : (
-                  <FaRegHeart
-                    color="#8F8F8F"
-                    onClick={() => handleHeart(hot.id, hot.likedByCurrentUser)}
-                    size={isDesktop ? 20 : 15}
-                    style={{ cursor: "pointer" }}
-                  />
-                )}
-                {hot.likes}
-              </Heart>
-            </FlexLine>
-            <div onClick={handleTicket}>
-              <Ticket
-                key={hot.id}
-                title={hot.title}
-                place={hot.location}
-                seat={hot.seat}
-                year={hot.date.substr(0, 4)}
-                date={hot.date.substr(5, 9)}
-                custom={hot.customImageUrl}
+              </div>
+              <TicketModal
+                isOpen={modal}
+                onRequestClose={() => setModal(false)}
+                info={hot}
               />
             </div>
-            <TicketModal
-              isOpen={modal}
-              onRequestClose={() => setModal(false)}
-              info={hot}
-            />
-          </div>
-        ))}
+          ))}
+        </div>
       </HotList>
     </>
   );
