@@ -610,6 +610,11 @@ const Detail = ({ info }) => {
             )}
             <div>{detail.likes}</div>
           </HeartLine>
+          <ImgModal
+            isOpen={modal}
+            onRequestClose={() => setModal(false)}
+            imgUrl={clickimgurl}
+          />
         </Wrapper>
       )}
     </>
