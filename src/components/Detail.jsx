@@ -381,10 +381,14 @@ const Detail = ({ info }) => {
     <>
       {detail && isDesktop ? (
         <Wrapper>
-          <Delete onClick={handleDelete}>
-            <MdDelete />
-            <div>삭제하기</div>
-          </Delete>
+          {otheruserId || info ? (
+            <></>
+          ) : (
+            <Delete onClick={handleDelete}>
+              <MdDelete />
+              <div>삭제하기</div>
+            </Delete>
+          )}
           <TicketBox
             className="ticketimg"
             ref={ticketRef}
@@ -397,7 +401,7 @@ const Detail = ({ info }) => {
                 <ProfileImg src={`${detail.authorProfileImageUrl}`} />
                 <Nickname>{detail.authorNickname}</Nickname>
               </ProfileLine>
-              {otheruserId ? (
+              {otheruserId || info ? (
                 <></>
               ) : (
                 <div style={{ display: "flex", gap: "0 10px" }}>
