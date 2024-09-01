@@ -136,6 +136,11 @@ const Ticket = ({ title, place, seat, year, date, custom, isprivate }) => {
               {place || "장소"}
             </Place>
             <Seat fontsize="10px">{seat || "좌석"}</Seat>
+            {isprivate && (
+              <PrivateBadge>
+                <IoIosLock fill="#FFF069" size={25} />
+              </PrivateBadge>
+            )}
             <Date fontsize="17px">
               <div className="year">{year || "2024"}</div>
               <div>{date || "02.07"}</div>
