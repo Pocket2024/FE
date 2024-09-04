@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 const DetailPage = () => {
-  // 배포 확인을 위한 주석 추가
+  // 배포 확인을 위한 주석 수정
   return (
     <Wrapper>
       <Detail />
