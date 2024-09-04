@@ -73,6 +73,7 @@ const RecentTicket = () => {
   const [modal, setModal] = useState(false);
   const userId = localStorage.getItem("userId");
   const [islike, setIslike] = useState(false); // 유저가 좋아요를 눌렀을 때 다시 useEffect 실행시키기 위함
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     const getRecentTicket = () => {
@@ -131,8 +132,9 @@ const RecentTicket = () => {
     }
   };
 
-  const handleTicket = () => {
+  const handleTicket = (recent) => {
     setModal(true);
+    setSelected(recent);
   };
 
   const navigate = useNavigate();
@@ -146,8 +148,13 @@ const RecentTicket = () => {
         <div className={isDesktop ? "pcdiv" : "mobilediv"}>
           {recentticket.map((hot) => (
             <div style={!isDesktop ? { marginBottom: "20px" } : {}}>
+              <TicketModal
+                isOpen={modal}
+                onRequestClose={() => setModal(false)}
+                info={selected}
+              />
               <FlexLine>
-                <ProfileLine>
+                <ProfileLine onClick={() => navigate(`/user/${hot.authorId}`)}>
                   <img
                     src={hot.authorProfileImageUrl}
                     className={isDesktop ? "pc" : "mobile"}
@@ -179,7 +186,7 @@ const RecentTicket = () => {
                   {hot.likes}
                 </Heart>
               </FlexLine>
-              <div onClick={handleTicket}>
+              <div onClick={() => handleTicket(hot)}>
                 <Ticket
                   key={hot.id}
                   title={hot.title}
@@ -190,11 +197,6 @@ const RecentTicket = () => {
                   custom={hot.customImageUrl}
                 />
               </div>
-              <TicketModal
-                isOpen={modal}
-                onRequestClose={() => setModal(false)}
-                info={hot}
-              />
             </div>
           ))}
         </div>

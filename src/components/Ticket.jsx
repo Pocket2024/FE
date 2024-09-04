@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { useResponsive } from "../context/Responsive";
 import { IoIosLock } from "react-icons/io";
 
@@ -94,8 +93,7 @@ const PrivateBadge = styled.div`
 
 const Ticket = ({ title, place, seat, year, date, custom, isprivate }) => {
   const { isDesktop } = useResponsive();
-  const navigate = useNavigate();
-  const id = 1;
+
   return (
     <>
       {isDesktop ? (
@@ -124,7 +122,7 @@ const Ticket = ({ title, place, seat, year, date, custom, isprivate }) => {
         </Wrapper>
       ) : (
         <Wrapper>
-          <TicketBox height="130px" onClick={() => navigate(`/detail/${id}`)}>
+          <TicketBox height="130px">
             <Circle top="-10px" />
             <Title fontsize="13px">{title || "제목"}</Title>
             {custom ? (

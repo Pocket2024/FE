@@ -73,6 +73,7 @@ const HotTicket = () => {
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const userId = localStorage.getItem("userId");
   const [islike, setIslike] = useState(false); // 유저가 좋아요를 눌렀을 때 다시 useEffect 실행시키기 위함
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     const getHotTicket = () => {
@@ -131,8 +132,9 @@ const HotTicket = () => {
     }
   };
 
-  const handleTicket = () => {
+  const handleTicket = (hot) => {
     setModal(true);
+    setSelected(hot);
   };
 
   const navigate = useNavigate();
@@ -149,6 +151,11 @@ const HotTicket = () => {
               key={hot.id}
               style={!isDesktop ? { marginBottom: "20px" } : {}}
             >
+              <TicketModal
+                isOpen={modal}
+                onRequestClose={() => setModal(false)}
+                info={selected}
+              />
               <FlexLine>
                 <ProfileLine onClick={() => navigate(`/user/${hot.authorId}`)}>
                   <img
@@ -183,7 +190,7 @@ const HotTicket = () => {
                   {hot.likes}
                 </Heart>
               </FlexLine>
-              <div onClick={handleTicket}>
+              <div onClick={() => handleTicket(hot)}>
                 <Ticket
                   key={hot.id}
                   title={hot.title}
@@ -194,11 +201,6 @@ const HotTicket = () => {
                   custom={hot.customImageUrl}
                 />
               </div>
-              <TicketModal
-                isOpen={modal}
-                onRequestClose={() => setModal(false)}
-                info={hot}
-              />
             </div>
           ))}
         </div>
