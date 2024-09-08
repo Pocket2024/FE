@@ -11,6 +11,7 @@ import { useResponsive } from "../context/Responsive";
 import FavDetail from "../components/FavDetail";
 import { useNavigate } from "react-router-dom";
 import { FaCalendarAlt } from "react-icons/fa";
+import CustomCalendar from "../components/CustomCalendar";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -179,7 +180,7 @@ const MyTicketPage = () => {
                   <FaCalendarAlt fill="white" />
                 </CalendatBtn>
               </PocketTitleDiv>
-              {iscalendar ? <></> : <Pocket />}
+              {iscalendar ? <CustomCalendar /> : <Pocket />}
             </div>
           </ProfileArea>
           <TicketArea>
