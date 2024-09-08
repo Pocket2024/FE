@@ -78,10 +78,10 @@ const StyledCalendarWrapper = styled.div`
   .dot {
     height: 8px;
     width: 8px;
-    background-color: #f87171;
+    background-color: #e65e2e;
     border-radius: 50%;
     display: flex;
-    margin-left: 1px;
+    margin: auto;
   }
 `;
 
