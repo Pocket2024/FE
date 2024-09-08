@@ -10,6 +10,7 @@ import Pocket from "../components/Pocket";
 import { useResponsive } from "../context/Responsive";
 import FavDetail from "../components/FavDetail";
 import { useNavigate } from "react-router-dom";
+import { FaCalendarAlt } from "react-icons/fa";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -55,8 +56,8 @@ const None = styled.div`
 const PocketTitle = styled.div`
   display: flex;
   gap: 0 10px;
-  margin: 40px 0 15px 0;
   padding: ${(props) => props.padding};
+  cursor: pointer;
   div {
     color: white;
     font-size: 15px;
@@ -65,6 +66,22 @@ const PocketTitle = styled.div`
     line-height: 15px;
     gap: 0 5px;
   }
+`;
+const CalendatBtn = styled.button`
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  &:hover {
+    background-color: #4a4a4a;
+  }
+`;
+const PocketTitleDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 0 15px 0;
 `;
 
 const MyTicketPage = () => {
@@ -76,6 +93,7 @@ const MyTicketPage = () => {
   const [clickticket, setClickticket] = useState(false);
   const [favticket, setFavticket] = useState([]);
   const navigate = useNavigate();
+  const [iscalendar, setIscalendar] = useState(false);
 
   const getMyInfo = async () => {
     try {
@@ -145,11 +163,23 @@ const MyTicketPage = () => {
                   />
                 </div>
               )}
-              <PocketTitle>
-                <FaGetPocket color="white" />
-                <div>{infoData.nickName}님의 포켓</div>
-              </PocketTitle>
-              <Pocket />
+              <PocketTitleDiv>
+                <PocketTitle onClick={() => setIscalendar(false)}>
+                  <FaGetPocket color="white" />
+                  <div>{infoData.nickName}님의 포켓</div>
+                </PocketTitle>
+                <CalendatBtn
+                  onClick={() => setIscalendar(!iscalendar)}
+                  style={{
+                    backgroundColor: iscalendar
+                      ? "#4a4a4a"
+                      : "rgba(0, 0, 0, 0)",
+                  }}
+                >
+                  <FaCalendarAlt fill="white" />
+                </CalendatBtn>
+              </PocketTitleDiv>
+              {iscalendar ? <></> : <Pocket />}
             </div>
           </ProfileArea>
           <TicketArea>
