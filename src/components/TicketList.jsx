@@ -60,7 +60,7 @@ const CreateBtn = styled.button`
   }
 `;
 
-const TicketList = () => {
+const TicketList = ({ date }) => {
   let { pocket } = useParams();
   let { otheruserId } = useParams();
   const userId = localStorage.getItem("userId");
@@ -75,11 +75,16 @@ const TicketList = () => {
   useEffect(() => {
     const getTicketList = () => {
       api
-        .get(`/api/reviews/category/${pocket}?userId=${userId}`, {
-          headers: {
-            Authorization: `${ACCESS_TOKEN}`,
-          },
-        })
+        .get(
+          date !== null
+            ? `/api/reviews/bydates?userId=${userId}&date=${date}`
+            : `/api/reviews/category/${pocket}?userId=${userId}`,
+          {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          }
+        )
         .then((res) => {
           if (res.data[0].ticketcategory.category) {
             setCategory(res.data[0].ticketcategory.category);

@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
 import moment from "moment";
 import api from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 const StyledCalendarWrapper = styled.div`
   width: 100%;
@@ -86,10 +87,18 @@ const StyledCalendarWrapper = styled.div`
 `;
 
 const CustomCalendar = () => {
-  const [value, onChange] = useState(new Date()); // 초기값은 현재 날짜
+  const [value, setValue] = useState(new Date()); // 초기값은 현재 날짜
   const userId = localStorage.getItem("userId");
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [reviewdate, setReviewdate] = useState([]);
+  const navigate = useNavigate();
+
+  const handleChange = (date) => {
+    setValue(date);
+    const formattedDate = moment(date).format("YYYY.MM.DD");
+    // 선택된 날짜로 라우팅
+    navigate(`/myticket/calendar/${formattedDate}`);
+  };
 
   useEffect(() => {
     const getDate = () => {
@@ -114,7 +123,7 @@ const CustomCalendar = () => {
   return (
     <StyledCalendarWrapper>
       <Calendar
-        onChange={onChange}
+        onChange={handleChange}
         value={value}
         calendarType="gregory"
         formatDay={(locale, date) => moment(date).format("DD")}

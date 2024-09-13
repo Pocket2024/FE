@@ -14,6 +14,7 @@ import MyTicketDetailPage from "./pages/MyTicketDetailPage";
 import { ResponsiveProvider } from "./context/Responsive";
 import OtherUserPage from "./pages/OtherUserPage";
 import FollowPage from "./pages/FollowPage";
+import CalendarDetailPage from "./pages/CalendarDetailPage";
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
             <Route path="/detail/:ticket" element={<DetailPage />} />
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/myticket/:pocket" element={<MyTicketDetailPage />} />
+            <Route
+              path="/myticket/calendar/:date"
+              element={<CalendarDetailPage />}
+            />
             <Route
               path="/myticket/:pocket/:ticket"
               element={<MyTicketDetailPage />}
