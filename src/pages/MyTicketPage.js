@@ -15,7 +15,7 @@ import CustomCalendar from "../components/CustomCalendar";
 
 const Wrapper = styled.div`
   width: 100vw;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   background-color: #262626;
   display: flex;
 `;

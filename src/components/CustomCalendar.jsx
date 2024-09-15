@@ -5,12 +5,14 @@ import styled from "styled-components";
 import moment from "moment";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { useResponsive } from "../context/Responsive";
 
 const StyledCalendarWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   position: relative;
+  padding: ${(props) => props.padding};
   .react-calendar {
     width: 100%;
     border: none;
@@ -21,7 +23,7 @@ const StyledCalendarWrapper = styled.div`
   .react-calendar__month-view {
     abbr {
       color: white;
-      font-size: 1.3rem;
+      font-size: ${(props) => props.fontsize};
     }
   }
   /* 네비게이션 가운데 정렬 */
@@ -31,7 +33,7 @@ const StyledCalendarWrapper = styled.div`
   /* 네비게이션 폰트 설정 */
   .react-calendar__navigation button {
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: ${(props) => props.fontsize};
     color: white;
   }
   /* 네비게이션 버튼 컬러 */
@@ -62,7 +64,7 @@ const StyledCalendarWrapper = styled.div`
   }
   /* 오늘 날짜 폰트 컬러 */
   .react-calendar__tile--now {
-    background-color: #3c8fdb;
+    background-color: #4a4a4a;
     abbr {
       color: white;
     }
@@ -78,6 +80,12 @@ const StyledCalendarWrapper = styled.div`
   .react-calendar__tile {
     aspect-ratio: 1 / 1;
     border-radius: 50%;
+  }
+  /* 년월 레이블 스타일 */
+  .react-calendar__year-view__months {
+    abbr {
+      color: white;
+    }
   }
 
   .dot {
@@ -96,6 +104,7 @@ const CustomCalendar = () => {
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const [reviewdate, setReviewdate] = useState([]);
   const navigate = useNavigate();
+  const { isDesktop } = useResponsive();
 
   const handleChange = (date) => {
     setValue(date);
@@ -125,7 +134,10 @@ const CustomCalendar = () => {
     getDate();
   }, [userId, ACCESS_TOKEN]);
   return (
-    <StyledCalendarWrapper>
+    <StyledCalendarWrapper
+      padding={!isDesktop && "0 30px"}
+      fontsize={isDesktop ? "1.2rem" : "1rem"}
+    >
       <Calendar
         onChange={handleChange}
         value={value}
