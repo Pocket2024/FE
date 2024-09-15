@@ -126,9 +126,7 @@ const TicketList = ({ date }) => {
             color="#A9A9A9"
             size={isDesktop ? 50 : 30}
             onClick={() =>
-              otheruserId
-                ? navigate(`/user/${otheruserId}`)
-                : navigate("/myticket")
+              otheruserId ? navigate(`/user/${otheruserId}`) : navigate(-1)
             }
             style={{ cursor: "pointer" }}
           />
