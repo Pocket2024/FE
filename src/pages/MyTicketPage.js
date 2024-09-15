@@ -217,11 +217,21 @@ const MyTicketPage = () => {
                 />
               </div>
             )}
-            <PocketTitle padding="0 30px">
-              <FaGetPocket color="white" />
-              <div>{infoData.nickName}님의 포켓</div>
-            </PocketTitle>
-            <Pocket />
+            <PocketTitleDiv style={{ marginRight: "30px" }}>
+              <PocketTitle padding="0 30px">
+                <FaGetPocket color="white" />
+                <div>{infoData.nickName}님의 포켓</div>
+              </PocketTitle>
+              <CalendatBtn
+                onClick={() => setIscalendar(!iscalendar)}
+                style={{
+                  backgroundColor: iscalendar ? "#4a4a4a" : "rgba(0, 0, 0, 0)",
+                }}
+              >
+                <FaCalendarAlt fill="white" />
+              </CalendatBtn>
+            </PocketTitleDiv>
+            {iscalendar ? <CustomCalendar /> : <Pocket />}
           </div>
         </Wrapper>
       )}
