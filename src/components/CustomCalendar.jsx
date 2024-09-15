@@ -21,7 +21,7 @@ const StyledCalendarWrapper = styled.div`
   .react-calendar__month-view {
     abbr {
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
   }
   /* 네비게이션 가운데 정렬 */
@@ -35,14 +35,15 @@ const StyledCalendarWrapper = styled.div`
     color: white;
   }
   /* 네비게이션 버튼 컬러 */
+  .react-calendar__navigation button:hover,
   .react-calendar__navigation button:focus {
-    background-color: white;
+    color: #ff7a00;
+    background-color: #323232;
   }
 
   /* 네비게이션 비활성화 됐을때 스타일 */
   .react-calendar__navigation button:disabled {
     background-color: white;
-    color: ${(props) => props.theme.darkBlack};
   }
 
   /* 년/월 상단 네비게이션 칸 크기 줄이기 */
@@ -57,19 +58,22 @@ const StyledCalendarWrapper = styled.div`
   }
   /* 일요일에만 빨간 폰트 */
   .react-calendar__month-view__weekdays__weekday--weekend abbr[title="일요일"] {
-    color: red;
+    color: #d85656;
   }
   /* 오늘 날짜 폰트 컬러 */
   .react-calendar__tile--now {
-    background: none;
+    background-color: #3c8fdb;
     abbr {
-      color: yellow;
+      color: white;
     }
   }
   /* hover 했을 때 타일 색상 변경 */
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
-    background: var(--festie-primary-orange, #ff7a00);
+    abbr {
+      color: #ff7a00;
+    }
+    background-color: #323232;
   }
   .react-calendar__tile {
     aspect-ratio: 1 / 1;
