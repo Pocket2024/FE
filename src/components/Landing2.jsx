@@ -66,7 +66,6 @@ const SubTxt = styled.div`
 `;
 const SmallLogo = styled.div`
   height: 25px;
-  margin-top: 5px;
   margin-left: 10px;
 `;
 const Title = styled.div`
@@ -91,7 +90,7 @@ const RuleBox = styled.div`
   width: 100%;
   background-color: #393939;
   border-radius: 20px;
-  padding: 30px 0;
+  padding: 30px;
   margin-bottom: 10px;
 `;
 const Number = styled.div`
@@ -99,7 +98,6 @@ const Number = styled.div`
   > img {
     height: 25px;
     margin-right: 10px;
-    margin-left: 50px;
   }
   > div {
     font-size: 20px;
