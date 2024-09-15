@@ -76,7 +76,7 @@ const TicketList = ({ date }) => {
     const getTicketList = () => {
       api
         .get(
-          date !== null
+          date
             ? `/api/reviews/bydates?userId=${userId}&date=${date}`
             : `/api/reviews/category/${pocket}?userId=${userId}`,
           {
