@@ -34,6 +34,7 @@ const Tab = styled.div`
   height: 23px;
   cursor: pointer;
   align-items: center;
+  width: fit-content;
 `;
 const TabTxt = styled.div`
   color: white;
@@ -45,6 +46,8 @@ const TabTxt = styled.div`
 const TopBar = () => {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery({ minWidth: 800 });
+  const ACCESS_TOKEN = localStorage.getItem("accessToken");
+  console.log(ACCESS_TOKEN);
 
   return (
     <>
@@ -54,22 +57,43 @@ const TopBar = () => {
             <LogoIcon fill="white" />
           </Logo>
           <TabContainer>
-            <Tab
-              onClick={() => {
-                navigate("/search");
-              }}
-            >
-              <FaCompass color="white" size={23} />
-              <TabTxt>탐색</TabTxt>
-            </Tab>
-            <Tab
-              onClick={() => {
-                navigate("/myticket");
-              }}
-            >
-              <IoTicket color="white" size={23} />
-              <TabTxt>내 티켓</TabTxt>
-            </Tab>
+            {ACCESS_TOKEN ? (
+              <>
+                <Tab
+                  onClick={() => {
+                    navigate("/search");
+                  }}
+                >
+                  <FaCompass color="white" size={23} />
+                  <TabTxt>탐색</TabTxt>
+                </Tab>
+                <Tab
+                  onClick={() => {
+                    navigate("/myticket");
+                  }}
+                >
+                  <IoTicket color="white" size={23} />
+                  <TabTxt>내 티켓</TabTxt>
+                </Tab>
+              </>
+            ) : (
+              <>
+                <Tab
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  <TabTxt>로그인</TabTxt>
+                </Tab>
+                <Tab
+                  onClick={() => {
+                    navigate("/signup");
+                  }}
+                >
+                  <TabTxt>회원가입</TabTxt>
+                </Tab>
+              </>
+            )}
           </TabContainer>
         </TopBarWrapper>
       ) : (
