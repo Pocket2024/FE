@@ -103,20 +103,39 @@ const TopBar = () => {
           </Logo>
           <DropdownContainer>
             <DropdownButton id="dropdown-basic-button" title="메뉴">
-              <Dropdown.Item
-                className="item"
-                onClick={() => navigate("/search")}
-              >
-                <FaCompass color="#262626" size={23} />
-                <span>탐색</span>
-              </Dropdown.Item>
-              <Dropdown.Item
-                className="item"
-                onClick={() => navigate("/myticket")}
-              >
-                <IoTicket color="#262626" size={23} />
-                <span>내 티켓</span>
-              </Dropdown.Item>
+              {ACCESS_TOKEN ? (
+                <>
+                  <Dropdown.Item
+                    className="item"
+                    onClick={() => navigate("/search")}
+                  >
+                    <FaCompass color="#262626" size={23} />
+                    <span>탐색</span>
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className="item"
+                    onClick={() => navigate("/myticket")}
+                  >
+                    <IoTicket color="#262626" size={23} />
+                    <span>내 티켓</span>
+                  </Dropdown.Item>
+                </>
+              ) : (
+                <>
+                  <Dropdown.Item
+                    className="item"
+                    onClick={() => navigate("/login")}
+                  >
+                    <span>로그인</span>
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className="item"
+                    onClick={() => navigate("/signup")}
+                  >
+                    <span>회원가입</span>
+                  </Dropdown.Item>
+                </>
+              )}
             </DropdownButton>
           </DropdownContainer>
         </MTopBarWrapper>
