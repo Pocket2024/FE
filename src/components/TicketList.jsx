@@ -103,9 +103,13 @@ const TicketList = ({ date }) => {
   const handleTicketClick = (ticketId) => {
     setSelectedTicketId(ticketId); // 클릭된 티켓 ID를 설정
     if (isDesktop) {
-      otheruserId
-        ? navigate(`/user/${otheruserId}/${pocket}/${ticketId}`)
-        : navigate(`/myticket/${pocket}/${ticketId}`);
+      if (date) {
+        navigate(`/myticket/calendar/${date}/${ticketId}`);
+      } else {
+        otheruserId
+          ? navigate(`/user/${otheruserId}/${pocket}/${ticketId}`)
+          : navigate(`/myticket/${pocket}/${ticketId}`);
+      }
     } else {
       navigate(`/detail/${ticketId}`);
     }
@@ -128,19 +132,21 @@ const TicketList = ({ date }) => {
             }
             style={{ cursor: "pointer" }}
           />
-          <div className="name">{category}</div>
-          <div className="pocket">포켓</div>
+          <div className="name">{date ? date : category}</div>
+          {!date && <div className="pocket">포켓</div>}
         </div>
-        <CreateBtn
-          onClick={() =>
-            navigate("/upload", {
-              state: { categoryName: category, categoryId: pocket },
-            })
-          }
-        >
-          <FaPlus />
-          <span>티켓 추가하기</span>
-        </CreateBtn>
+        {!date && (
+          <CreateBtn
+            onClick={() =>
+              navigate("/upload", {
+                state: { categoryName: category, categoryId: pocket },
+              })
+            }
+          >
+            <FaPlus />
+            <span>티켓 추가하기</span>
+          </CreateBtn>
+        )}
       </CategoryLine>
       {ticketlist.length === 0 && <None>티켓이 없습니다.</None>}
       <List padding={isDesktop ? "" : "0 30px 10vh 30px"}>

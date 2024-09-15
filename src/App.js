@@ -33,10 +33,6 @@ function App() {
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/myticket/:pocket" element={<MyTicketDetailPage />} />
             <Route
-              path="/myticket/calendar/:date"
-              element={<CalendarDetailPage />}
-            />
-            <Route
               path="/myticket/:pocket/:ticket"
               element={<MyTicketDetailPage />}
             />
@@ -51,6 +47,14 @@ function App() {
             />
             <Route path="/following" element={<FollowPage />} />
             <Route path="/follower" element={<FollowPage />} />
+            <Route
+              path="/myticket/calendar/:date"
+              element={<CalendarDetailPage />}
+            />
+            <Route
+              path="/myticket/calendar/:date/:ticket"
+              element={<CalendarDetailPage />}
+            />
           </Routes>
         </Page>
       </ResponsiveProvider>

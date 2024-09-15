@@ -40,6 +40,7 @@ const None = styled.div`
 const CalendarDetailPage = () => {
   const { isDesktop } = useResponsive();
   const { date } = useParams();
+  const { ticket } = useParams();
 
   function convertDateFormat(dateString) {
     // 입력받은 문자열이 'yyyy.mm.dd' 형식일 경우
@@ -59,7 +60,7 @@ const CalendarDetailPage = () => {
             </div>
           </ProfileArea>
           <TicketArea>
-            {date ? <Detail /> : <None>티켓이 이곳에 표시됩니다.</None>}
+            {ticket ? <Detail /> : <None>티켓이 이곳에 표시됩니다.</None>}
           </TicketArea>
           <UploadBtn />
         </Wrapper>
