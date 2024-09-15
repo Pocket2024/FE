@@ -67,7 +67,7 @@ const CalendarDetailPage = () => {
       ) : (
         <MWrapper>
           <div style={{ width: "100%" }}>
-            <TicketList />
+            <TicketList date={convertedDate} />
           </div>
         </MWrapper>
       )}
