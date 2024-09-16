@@ -12,6 +12,7 @@ import FavDetail from "../components/FavDetail";
 import { useNavigate } from "react-router-dom";
 import { FaCalendarAlt } from "react-icons/fa";
 import CustomCalendar from "../components/CustomCalendar";
+import ChatBotBtn from "../components/ChatBotBtn";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -191,6 +192,7 @@ const MyTicketPage = () => {
             )}
           </TicketArea>
           <UploadBtn />
+          <ChatBotBtn />
         </Wrapper>
       ) : (
         <Wrapper>
