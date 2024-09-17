@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { RiRobot2Fill } from "react-icons/ri";
+import ChatBotDisplay from "./ChatBotDisplay";
 
 const ChatBotButton = styled.button`
   position: fixed;
@@ -14,10 +15,20 @@ const ChatBotButton = styled.button`
 `;
 
 const ChatBotBtn = () => {
+  const [openDisplay, setOpenDisplay] = useState(false);
+  const handleClick = () => {
+    setOpenDisplay(false);
+  };
   return (
-    <ChatBotButton>
-      <RiRobot2Fill size={30} />
-    </ChatBotButton>
+    <>
+      {openDisplay ? (
+        <ChatBotDisplay onClick={handleClick} />
+      ) : (
+        <ChatBotButton onClick={() => setOpenDisplay(!openDisplay)}>
+          <RiRobot2Fill size={30} />
+        </ChatBotButton>
+      )}
+    </>
   );
 };
 
