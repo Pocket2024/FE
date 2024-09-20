@@ -15,11 +15,15 @@ import { ResponsiveProvider } from "./context/Responsive";
 import OtherUserPage from "./pages/OtherUserPage";
 import FollowPage from "./pages/FollowPage";
 import CalendarDetailPage from "./pages/CalendarDetailPage";
+import { useIsLoading } from "./store/store";
+import Loading from "./components/Loading";
 
 function App() {
+  const { isLoading } = useIsLoading();
   return (
     <>
       <ResponsiveProvider>
+        {isLoading && <Loading />}
         <TopBar />
         <Page>
           <Routes>
