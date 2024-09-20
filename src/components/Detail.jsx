@@ -569,6 +569,14 @@ const Detail = ({ info }) => {
               onClick={() => navigate(`/myticket/${detail.ticketcategory.id}`)}
               style={{ cursor: "pointer" }}
             />
+            {otheruserId || info ? (
+              <></>
+            ) : (
+              <Delete onClick={handleDelete}>
+                <MdDelete />
+                <div>삭제하기</div>
+              </Delete>
+            )}
           </div>
           <MTicketBox className="ticketimg" ref={ticketRef} id="ticketbox">
             <FirstLine lineHeight="35px">
@@ -580,11 +588,15 @@ const Detail = ({ info }) => {
                 <MdSaveAlt color="#DEDEDE" size={25} />
               </SaveBtn>
             </FirstLine>
-            <Title fontSize="22px">{detail.title}</Title>
+            <Title fontSize="22px">
+              {istranslate ? translateResult.title : detail.title}
+            </Title>
             <PlaceLine height="20px">
               <MdPlace size={20} />
               <Place fontSize="15px">{detail.location}</Place>
-              <Seat fontSize="10px">{detail.seat}</Seat>
+              <Seat fontSize="10px">
+                {istranslate ? translateResult.seat : detail.seat}
+              </Seat>
             </PlaceLine>
             <PlaceLine height="20px">
               <FaRegCalendar size={15} />
@@ -649,7 +661,9 @@ const Detail = ({ info }) => {
               </ImageLine>
             )}
             <Line src={line} />
-            <Comment fontSize="12px">{detail.content}</Comment>
+            <Comment fontSize="12px">
+              {istranslate ? translateResult.content : detail.content}
+            </Comment>
           </MTicketBox>
           <HeartLine>
             {isHeart ? (
@@ -658,6 +672,16 @@ const Detail = ({ info }) => {
               <FaRegHeart color="#8F8F8F" onClick={handleHeart} />
             )}
             <div>{detail.likes}</div>
+            <div
+              className="translate-btn"
+              onClick={() =>
+                istranslate
+                  ? setIstranslate(false)
+                  : handleTranslate(detail.title, detail.seat, detail.content)
+              }
+            >
+              {istranslate ? "본문보기" : "번역하기(translate)"}
+            </div>
           </HeartLine>
           <ImgModal
             isOpen={modal}
