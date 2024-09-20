@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  z-index: 1000; /* 다른 요소보다 위에 표시 */
+  z-index: 1000;
 `;
 const ChatBotTopbar = styled.div`
   width: 100%;
@@ -31,7 +31,6 @@ const InputBar = styled.div`
   width: 100%;
   height: 60px;
   display: flex;
-  align-items: center;
   gap: 0 10px;
   padding: 0 20px;
   input {
@@ -64,7 +63,7 @@ const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: calc(60vh - 100px); /* InputBar와 Topbar를 제외한 높이 */
+  max-height: calc(60vh - 100px);
 `;
 
 const Message = styled.div`
@@ -82,37 +81,47 @@ const Message = styled.div`
 const ChatBotDisplay = ({ onClick }) => {
   const [chatinput, setChatinput] = useState("");
   const [messages, setMessages] = useState([]); // 대화 메시지를 저장할 상태
-  const chatEndRef = useRef(null); // 마지막 메시지의 ref 생성
+  const chatEndRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
   const ACCESS_TOKEN = localStorage.getItem("accessToken");
 
-  // 채팅이 업데이트될 때마다 스크롤을 최신 메시지로 이동
+  // 컴포넌트가 처음 마운트될 때 환영 메시지 추가
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    const welcomeMessage = {
+      sender: "bot",
+      text: "챗봇 서비스에 오신 것을 환영합니다. 궁금한 점을 입력해주세요.",
+    };
+    setMessages([welcomeMessage]);
 
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 배경 스크롤 방지
+    // 배경 스크롤 방지
     document.body.style.overflow = "hidden";
     return () => {
-      // 컴포넌트가 언마운트될 때 배경 스크롤 허용
       document.body.style.overflow = "auto";
     };
   }, []);
 
-  // Input change handler
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   const onChangeInput = (e) => {
     setChatinput(e.target.value);
   };
 
-  // 메시지 전송 함수
   const handleSendBtn = () => {
-    if (!chatinput.trim()) return; // 빈 메시지일 경우 전송하지 않음
+    if (!chatinput.trim()) return;
 
-    // 사용자의 메시지를 추가
     const userMessage = { sender: "user", text: chatinput };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-    // API 호출
+    // '답변 중...' 메시지를 추가하고 로딩 상태로 설정
+    const loadingMessage = {
+      sender: "bot",
+      text: "답변 중.. 잠시만 기다려주세요.",
+    };
+    setMessages((prevMessages) => [...prevMessages, loadingMessage]);
+    setIsLoading(true);
+
     api
       .post(
         "/api/chatbot/ask",
@@ -124,9 +133,13 @@ const ChatBotDisplay = ({ onClick }) => {
         }
       )
       .then((res) => {
-        // 챗봇 응답 메시지 추가
-        const botMessage = { sender: "bot", text: res.data };
-        setMessages((prevMessages) => [...prevMessages, botMessage]);
+        console.log(res);
+        // '답변 중...' 메시지를 제거하고 실제 응답 메시지를 추가
+        setMessages((prevMessages) => [
+          ...prevMessages.slice(0, -1), // 마지막 메시지 ('답변 중...') 제거
+          { sender: "bot", text: res.data },
+        ]);
+        setIsLoading(false);
         setChatinput("");
       })
       .catch((err) => {
@@ -149,7 +162,7 @@ const ChatBotDisplay = ({ onClick }) => {
             {msg.text}
           </Message>
         ))}
-        <div ref={chatEndRef} /> {/* 스크롤을 위한 ref */}
+        <div ref={chatEndRef} />
       </ChatContainer>
       <InputBar>
         <input
