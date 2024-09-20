@@ -578,7 +578,7 @@ const UploadPage = () => {
           {isLoading && <TicketScan />}
         </Wrapper>
       ) : (
-        <Wrapper style={{ padding: "0 30px" }}>
+        <Wrapper style={{ padding: "0 30px", minHeight: "fit-content" }}>
           <Title>
             <div style={{ color: "#ca3525" }}>
               {location.state.categoryName}
@@ -693,7 +693,7 @@ const UploadPage = () => {
                 checked={checked}
                 onChange={() => setChecked(!checked)}
               />
-              <StyledP>비공개</StyledP>
+              <StyledP style={{ fontSize: "15px" }}>비공개</StyledP>
             </StyledLabel>
             <PrivateExplain>
               *비공개를 체크하면 해당 티켓은 나만 볼 수 있어요
