@@ -19,8 +19,9 @@ api.interceptors.response.use(
       // localStorage에서 access token 삭제
       localStorage.removeItem("accessToken");
 
-      // // 로그아웃 처리 (예: 페이지 리다이렉션 또는 상태 관리)
-      // window.location.href = "/login"; // 로그아웃 후 로그인 페이지로 이동
+      // 로그아웃 처리 (예: 페이지 리다이렉션 또는 상태 관리)
+      window.alert("로그아웃되었습니다. 다시 로그인해주세요.");
+      window.location.href = "/login"; // 로그아웃 후 로그인 페이지로 이동
     }
 
     // 다른 에러는 그대로 throw
