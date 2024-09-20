@@ -129,6 +129,11 @@ const HeartLine = styled.div`
     color: #8f8f8f;
     font-size: ${(props) => props.height || "15px"};
   }
+  .translate-btn {
+    font-size: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 const ImageLine = styled.div`
   display: flex;
@@ -377,6 +382,34 @@ const Detail = ({ info }) => {
       });
   };
 
+  const [translateResult, setTranslateResult] = useState([]);
+  const [istranslate, setIstranslate] = useState(false);
+
+  const handleTranslate = (title, seat, content) => {
+    api
+      .post(
+        "/api/reviews/translate",
+        {
+          title: title,
+          seat: seat,
+          content: content,
+        },
+        {
+          headers: {
+            Authorization: `${cookies.access}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setTranslateResult(res.data);
+        setIstranslate(true);
+      })
+      .catch((err) => {
+        console.log("translate error", err);
+      });
+  };
+
   return (
     <>
       {detail && isDesktop ? (
@@ -421,11 +454,11 @@ const Detail = ({ info }) => {
                 </div>
               )}
             </FirstLine>
-            <Title>{detail.title}</Title>
+            <Title>{istranslate ? translateResult.title : detail.title}</Title>
             <PlaceLine>
               <MdPlace size={25} />
               <Place>{detail.location}</Place>
-              <Seat>{detail.seat}</Seat>
+              <Seat>{istranslate ? translateResult.seat : detail.seat}</Seat>
             </PlaceLine>
             <PlaceLine>
               <FaRegCalendar size={23} />
@@ -487,7 +520,9 @@ const Detail = ({ info }) => {
               </ImageLine>
             )}
             <Line src={line} />
-            <Comment>{detail.content}</Comment>
+            <Comment>
+              {istranslate ? translateResult.content : detail.content}
+            </Comment>
           </TicketBox>
           <HeartLine height="20px">
             {isHeart ? (
@@ -506,6 +541,16 @@ const Detail = ({ info }) => {
               />
             )}
             <div>{detail.likes}</div>
+            <div
+              className="translate-btn"
+              onClick={() =>
+                istranslate
+                  ? setIstranslate(false)
+                  : handleTranslate(detail.title, detail.seat, detail.content)
+              }
+            >
+              {istranslate ? "본문보기" : "번역하기(translate)"}
+            </div>
           </HeartLine>
           <ImgModal
             isOpen={modal}
