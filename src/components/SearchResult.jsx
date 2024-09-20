@@ -5,6 +5,7 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import TicketModal from "./TicketModal";
 import { useResponsive } from "../context/Responsive";
+import { useNavigate } from "react-router-dom";
 
 const SearchTitle = styled.div`
   font-weight: 700;
@@ -29,14 +30,14 @@ const ProfileLine = styled.div`
   align-items: center;
   gap: 0 10px;
   img {
-    width: 40px;
-    height: 40px;
+    width: ${(props) => props.width};
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     object-fit: cover;
   }
   div {
     color: white;
-    font-size: 18px;
+    font-size: ${(props) => props.fontSize};
     font-weight: 600;
   }
 `;
@@ -61,6 +62,7 @@ const SearchResult = ({ results, keyword }) => {
   const { isDesktop } = useResponsive();
   const [isHeart, setIsHeart] = useState(false);
   const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleHeart = () => {
     if (isHeart) {
@@ -83,8 +85,12 @@ const SearchResult = ({ results, keyword }) => {
               <div key={result.id}>
                 <FlexLine>
                   <ProfileLine>
-                    <img src={result.authorProfileImageUrl} alt="profile" />
-                    <div>{result.authorNickname}</div>
+                    <img
+                      src={result.authorProfileImageUrl}
+                      alt="profile"
+                      width="40px"
+                    />
+                    <div fontSize="18px">{result.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
                     {isHeart ? (
@@ -133,23 +139,29 @@ const SearchResult = ({ results, keyword }) => {
             {results.map((result) => (
               <div key={result.id} className="resultdiv">
                 <FlexLine>
-                  <ProfileLine>
-                    <img src={result.authorProfileImageUrl} alt="profile" />
-                    <div>{result.authorNickname}</div>
+                  <ProfileLine
+                    onClick={() => navigate(`/user/${result.authorId}`)}
+                  >
+                    <img
+                      src={result.authorProfileImageUrl}
+                      alt="profile"
+                      width="30px"
+                    />
+                    <div fontSize="15px">{result.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
                     {isHeart ? (
                       <FaHeart
                         color="white"
                         onClick={handleHeart}
-                        size={20}
+                        size={15}
                         style={{ cursor: "pointer" }}
                       />
                     ) : (
                       <FaRegHeart
                         color="#8F8F8F"
                         onClick={handleHeart}
-                        size={20}
+                        size={15}
                         style={{ cursor: "pointer" }}
                       />
                     )}
