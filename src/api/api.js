@@ -2,13 +2,19 @@ import axios from "axios";
 import { loadingStore } from "../store/store"; // 기본 스토어 경로에 맞게 수정
 
 const api = axios.create({
-  baseURL: "http://3.37.150.125",
+  baseURL: "http://localhost:8080",
 });
 
 // 요청 응답에 대한 인터셉터 설정
 api.interceptors.request.use((config) => {
-  const { startLoading } = loadingStore.getState(); // Zustand에서 startLoading 함수 가져오기
-  startLoading(); // API 호출 시작 시 로딩 상태 증가
+  const excludedUrls = ["/api/ocr/upload"]; // 로딩 처리 제외할 URL 배열
+  const shouldSkipLoading = excludedUrls.includes(config.url); // 해당 URL이 로딩 제외 목록에 있는지 확인
+
+  if (!shouldSkipLoading) {
+    const { startLoading } = loadingStore.getState(); // 로딩 처리
+    startLoading();
+  }
+
   return config;
 });
 
