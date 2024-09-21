@@ -41,6 +41,7 @@ const CategoryLine = styled.div`
   .pocket {
     font-weight: 700;
     color: white;
+    margin-left: 5px;
   }
 `;
 const CreateBtn = styled.button`
