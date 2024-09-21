@@ -7,7 +7,7 @@ const api = axios.create({
 
 // 요청 응답에 대한 인터셉터 설정
 api.interceptors.request.use((config) => {
-  const excludedUrls = ["/api/ocr/upload"]; // 로딩 처리 제외할 URL 배열
+  const excludedUrls = ["/api/ocr/upload"]; // ocr 요청은 제외
   const shouldSkipLoading = excludedUrls.includes(config.url); // 해당 URL이 로딩 제외 목록에 있는지 확인
 
   if (!shouldSkipLoading) {
