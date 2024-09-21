@@ -17,6 +17,7 @@ import { BsFillPinFill } from "react-icons/bs";
 import { useCookies } from "react-cookie";
 import line from "../images/line.svg";
 import { MdDelete } from "react-icons/md";
+import { HiMiniCheckBadge } from "react-icons/hi2";
 
 const slideDown = keyframes`
   0% {
@@ -92,6 +93,9 @@ const Title = styled.div`
   font-size: ${(props) => props.fontSize || "30px"};
   font-weight: 700;
   margin: 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 0 10px;
 `;
 const PlaceLine = styled.div`
   display: flex;
@@ -118,6 +122,13 @@ const Comment = styled.div`
   font-weight: 500;
   margin-top: 30px;
   white-space: pre-wrap;
+  div {
+    color: #cdcdcd;
+    display: flex;
+    justify-content: flex-end;
+    font-size: ${(props) => props.fontSize};
+    margin-top: 15px;
+  }
 `;
 const HeartLine = styled.div`
   display: flex;
@@ -454,7 +465,10 @@ const Detail = ({ info }) => {
                 </div>
               )}
             </FirstLine>
-            <Title>{istranslate ? translateResult.title : detail.title}</Title>
+            <Title>
+              {istranslate ? translateResult.title : detail.title}{" "}
+              {detail.ocr && <HiMiniCheckBadge color="#3C8FDB" />}
+            </Title>
             <PlaceLine>
               <MdPlace size={25} />
               <Place>{detail.location}</Place>
@@ -522,6 +536,9 @@ const Detail = ({ info }) => {
             <Line src={line} />
             <Comment>
               {istranslate ? translateResult.content : detail.content}
+              {detail.ocr && (
+                <div fontSize="15px">👀 &nbsp; 관람 인증된 티켓</div>
+              )}
             </Comment>
           </TicketBox>
           <HeartLine height="20px">
@@ -590,6 +607,7 @@ const Detail = ({ info }) => {
             </FirstLine>
             <Title fontSize="22px">
               {istranslate ? translateResult.title : detail.title}
+              {detail.ocr && <HiMiniCheckBadge color="#3C8FDB" />}
             </Title>
             <PlaceLine height="20px">
               <MdPlace size={20} />
@@ -663,6 +681,9 @@ const Detail = ({ info }) => {
             <Line src={line} />
             <Comment fontSize="12px">
               {istranslate ? translateResult.content : detail.content}
+              {detail.ocr && (
+                <div fontSize="10px">👀 &nbsp; 관람 인증된 티켓</div>
+              )}
             </Comment>
           </MTicketBox>
           <HeartLine>
