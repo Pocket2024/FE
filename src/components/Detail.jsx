@@ -396,12 +396,13 @@ const Detail = ({ info }) => {
   const [translateResult, setTranslateResult] = useState([]);
   const [istranslate, setIstranslate] = useState(false);
 
-  const handleTranslate = (title, seat, content) => {
+  const handleTranslate = (title, location, seat, content) => {
     api
       .post(
         "/api/reviews/translate",
         {
           title: title,
+          location: location,
           seat: seat,
           content: content,
         },
@@ -471,7 +472,9 @@ const Detail = ({ info }) => {
             </Title>
             <PlaceLine>
               <MdPlace size={25} />
-              <Place>{detail.location}</Place>
+              <Place>
+                {istranslate ? translateResult.location : detail.location}
+              </Place>
               <Seat>{istranslate ? translateResult.seat : detail.seat}</Seat>
             </PlaceLine>
             <PlaceLine>
@@ -563,7 +566,12 @@ const Detail = ({ info }) => {
               onClick={() =>
                 istranslate
                   ? setIstranslate(false)
-                  : handleTranslate(detail.title, detail.seat, detail.content)
+                  : handleTranslate(
+                      detail.title,
+                      detail.location,
+                      detail.seat,
+                      detail.content
+                    )
               }
             >
               {istranslate ? "본문보기" : "번역하기(translate)"}
@@ -611,7 +619,9 @@ const Detail = ({ info }) => {
             </Title>
             <PlaceLine height="20px">
               <MdPlace size={20} />
-              <Place fontSize="15px">{detail.location}</Place>
+              <Place fontSize="15px">
+                {istranslate ? translateResult.location : detail.location}
+              </Place>
               <Seat fontSize="10px">
                 {istranslate ? translateResult.seat : detail.seat}
               </Seat>
@@ -698,7 +708,12 @@ const Detail = ({ info }) => {
               onClick={() =>
                 istranslate
                   ? setIstranslate(false)
-                  : handleTranslate(detail.title, detail.seat, detail.content)
+                  : handleTranslate(
+                      detail.title,
+                      detail.location,
+                      detail.seat,
+                      detail.content
+                    )
               }
             >
               {istranslate ? "본문보기" : "번역하기(translate)"}
