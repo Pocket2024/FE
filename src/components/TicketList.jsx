@@ -134,18 +134,19 @@ const TicketList = ({ date }) => {
           <div className="name">{date ? date : category}</div>
           {!date && <div className="pocket">포켓</div>}
         </div>
-        {!date && (
-          <CreateBtn
-            onClick={() =>
-              navigate("/upload", {
-                state: { categoryName: category, categoryId: pocket },
-              })
-            }
-          >
-            <FaPlus />
-            <span>티켓 추가하기</span>
-          </CreateBtn>
-        )}
+        {!date ||
+          (otheruserId && (
+            <CreateBtn
+              onClick={() =>
+                navigate("/upload", {
+                  state: { categoryName: category, categoryId: pocket },
+                })
+              }
+            >
+              <FaPlus />
+              <span>티켓 추가하기</span>
+            </CreateBtn>
+          ))}
       </CategoryLine>
       {ticketlist.length === 0 && <None>티켓이 없습니다.</None>}
       <List padding={isDesktop ? "" : "0 30px 10vh 30px"}>
