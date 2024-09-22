@@ -17,8 +17,8 @@ import { BsFillPinFill } from "react-icons/bs";
 import { useCookies } from "react-cookie";
 import line from "../images/line.svg";
 import { MdDelete } from "react-icons/md";
-import { HiMiniCheckBadge } from "react-icons/hi2";
 import useNotificationStore from "../store/notificationStore";
+import verified from "../images/verified.png";
 
 const slideDown = keyframes`
   0% {
@@ -468,7 +468,9 @@ const Detail = ({ info }) => {
             </FirstLine>
             <Title>
               {istranslate ? translateResult.title : detail.title}{" "}
-              {detail.ocr && <HiMiniCheckBadge color="#3C8FDB" />}
+              {detail.ocr && (
+                <img src={verified} alt="" style={{ height: "70px" }} />
+              )}
             </Title>
             <PlaceLine>
               <MdPlace size={25} />
@@ -615,7 +617,9 @@ const Detail = ({ info }) => {
             </FirstLine>
             <Title fontSize="22px">
               {istranslate ? translateResult.title : detail.title}
-              {detail.ocr && <HiMiniCheckBadge color="#3C8FDB" />}
+              {detail.ocr && (
+                <img src={verified} alt="" style={{ height: "50px" }} />
+              )}
             </Title>
             <PlaceLine height="20px">
               <MdPlace size={20} />
