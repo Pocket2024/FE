@@ -588,14 +588,22 @@ const Detail = ({ info }) => {
       ) : (
         <Wrapper>
           <div
-            style={{ height: "30px", lineHeight: "30px", marginBottom: "30px" }}
+            style={
+              info
+                ? {}
+                : { height: "30px", lineHeight: "30px", marginBottom: "30px" }
+            }
           >
-            <MdNavigateBefore
-              color="#A9A9A9"
-              size={isDesktop ? 50 : 30}
-              onClick={() => navigate(`/myticket/${detail.ticketcategory.id}`)}
-              style={{ cursor: "pointer" }}
-            />
+            {!info && (
+              <MdNavigateBefore
+                color="#A9A9A9"
+                size={isDesktop ? 50 : 30}
+                onClick={() =>
+                  navigate(`/myticket/${detail.ticketcategory.id}`)
+                }
+                style={{ cursor: "pointer" }}
+              />
+            )}
             {otheruserId || info ? (
               <></>
             ) : (
