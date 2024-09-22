@@ -18,6 +18,7 @@ import { useCookies } from "react-cookie";
 import line from "../images/line.svg";
 import { MdDelete } from "react-icons/md";
 import { HiMiniCheckBadge } from "react-icons/hi2";
+import useNotificationStore from "../store/notificationStore";
 
 const slideDown = keyframes`
   0% {
@@ -201,7 +202,7 @@ const Detail = ({ info }) => {
   const [animate, setAnimate] = useState(false);
   const { otheruserId } = useParams();
   const favticketId = localStorage.getItem("favticketId");
-  console.log(ticket, favticketId);
+  const { showNotification } = useNotificationStore();
 
   const onDownloadBtn = async () => {
     if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
@@ -286,7 +287,7 @@ const Detail = ({ info }) => {
           },
         })
         .then(() => {
-          alert("좋아요 취소");
+          showNotification("♡ 좋아요 취소");
           setIsHeart(false);
         })
         .catch((err) => {
@@ -304,7 +305,7 @@ const Detail = ({ info }) => {
           }
         )
         .then(() => {
-          alert("좋아요");
+          showNotification("♥ 좋아요");
           setIsHeart(true);
         })
         .catch((err) => {
@@ -363,8 +364,7 @@ const Detail = ({ info }) => {
         }
       )
       .then(() => {
-        console.log("대표 티켓으로 설정되었습니다.");
-        alert("성공");
+        showNotification("📌 대표 티켓으로 설정되었습니다.");
         localStorage.setItem("favticketId", ticket);
       })
       .catch((err) => {
@@ -381,7 +381,7 @@ const Detail = ({ info }) => {
         },
       })
       .then(() => {
-        alert("삭제되었습니다.");
+        showNotification("🗑️ 티켓이 삭제되었습니다.");
         if (otheruserId) {
           navigate(`/user/${otheruserId}`);
         } else {

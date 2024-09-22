@@ -17,6 +17,7 @@ import FollowPage from "./pages/FollowPage";
 import CalendarDetailPage from "./pages/CalendarDetailPage";
 import { useIsLoading } from "./store/store";
 import Loading from "./components/Loading";
+import Notification from "./components/Notification";
 
 function App() {
   const { isLoading } = useIsLoading();
@@ -25,6 +26,7 @@ function App() {
       <ResponsiveProvider>
         {isLoading && <Loading />}
         <TopBar />
+        <Notification />
         <Page>
           <Routes>
             <Route path="/" element={<LandingPage />} />

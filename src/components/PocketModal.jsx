@@ -5,6 +5,7 @@ import { ChromePicker } from "react-color";
 import styled from "styled-components";
 import api from "../api/api";
 import { useResponsive } from "../context/Responsive";
+import useNotificationStore from "../store/notificationStore";
 
 const customStyles = {
   overlay: {
@@ -93,6 +94,7 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
   let ACCESS_TOKEN = localStorage.getItem("accessToken");
   const { isDesktop } = useResponsive();
   const [categoryMessage, setCategoryMessage] = useState("");
+  const { showNotification } = useNotificationStore();
 
   const createPocket = () => {
     if (category !== "") {
@@ -107,7 +109,7 @@ const PocketModal = ({ isOpen, onRequestClose }) => {
           }
         )
         .then(() => {
-          alert("포켓이 생성되었습니다.");
+          showNotification(`✨ ${category} 포켓이 생성되었습니다.`);
           window.location.reload();
         })
         .catch((err) => {

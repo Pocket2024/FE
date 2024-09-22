@@ -8,6 +8,7 @@ import { MdFileUpload } from "react-icons/md";
 import { useResponsive } from "../context/Responsive";
 import { IoMdImage } from "react-icons/io";
 import TicketScan from "../components/TicketScan";
+import useNotificationStore from "../store/notificationStore";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -216,6 +217,7 @@ const UploadPage = () => {
   let userId = localStorage.getItem("userId");
   const [checked, setChecked] = useState(false);
   const [isocr, setIsocr] = useState(false);
+  const { showNotification } = useNotificationStore();
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value);
@@ -288,7 +290,7 @@ const UploadPage = () => {
       })
       .then((res) => {
         console.log(res);
-        alert("티켓을 업로드했습니다.");
+        showNotification("🎫 티켓이 업로드되었습니다.");
         navigate("/myticket");
       })
       .catch((err) => {
@@ -394,6 +396,7 @@ const UploadPage = () => {
       console.log("ocr 에러", err);
     } finally {
       setIsLoading(false); // 로딩 끝
+      showNotification("🪄 티켓 정보 추출 완료!");
     }
   };
 

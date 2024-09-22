@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import { useResponsive } from "../context/Responsive";
 import { useCookies } from "react-cookie"; // useCookies import
+import useNotificationStore from "../store/notificationStore";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -18,6 +19,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [cookies, setCookie] = useCookies(["access"]); // 쿠키 훅
+  const { showNotification } = useNotificationStore();
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -38,7 +40,7 @@ const LoginPage = () => {
         setCookie("access", res.data.accessToken, { path: "/" });
 
         localStorage.setItem("userId", res.data.userId);
-        alert("로그인 성공");
+        showNotification("✅ 로그인 성공!");
         navigate("/myticket");
       })
       .catch((err) => {
