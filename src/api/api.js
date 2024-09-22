@@ -2,7 +2,7 @@ import axios from "axios";
 import { loadingStore } from "../store/store"; // 기본 스토어 경로에 맞게 수정
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://3.37.150.125",
 });
 
 // 요청 응답에 대한 인터셉터 설정
