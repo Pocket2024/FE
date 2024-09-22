@@ -392,11 +392,12 @@ const UploadPage = () => {
       setSeat(res.data.seat);
       setDate(new Date(res.data.date));
       setIsocr(true);
+      showNotification("🪄 티켓 정보 추출 완료!");
     } catch (err) {
+      showNotification("⚠️ 파일용량이 너무 큽니다.");
       console.log("ocr 에러", err);
     } finally {
       setIsLoading(false); // 로딩 끝
-      showNotification("🪄 티켓 정보 추출 완료!");
     }
   };
 

@@ -28,17 +28,17 @@ api.interceptors.response.use(
     const { stopLoading } = loadingStore.getState(); // Zustand에서 stopLoading 함수 가져오기
     stopLoading(); // API 호출 실패 시 로딩 상태 감소
 
-    // 에러 응답이 발생할 경우 처리
-    if (error.response && error.response.status === 500) {
-      console.log("JWT가 만료되었습니다. 로그아웃 처리합니다.");
+    // // 에러 응답이 발생할 경우 처리
+    // if (error.response && error.response.status === 500) {
+    //   console.log("JWT가 만료되었습니다. 로그아웃 처리합니다.");
 
-      // localStorage에서 access token 삭제
-      localStorage.removeItem("accessToken");
+    //   // localStorage에서 access token 삭제
+    //   localStorage.removeItem("accessToken");
 
-      // 로그아웃 처리 (예: 페이지 리다이렉션 또는 상태 관리)
-      window.alert("로그아웃되었습니다. 다시 로그인해주세요.");
-      window.location.href = "/login"; // 로그아웃 후 로그인 페이지로 이동
-    }
+    //   // 로그아웃 처리 (예: 페이지 리다이렉션 또는 상태 관리)
+    //   window.alert("로그아웃되었습니다. 다시 로그인해주세요.");
+    //   window.location.href = "/login"; // 로그아웃 후 로그인 페이지로 이동
+    // }
 
     // 다른 에러는 그대로 throw
     return Promise.reject(error);
