@@ -48,7 +48,7 @@ const FollowPage = ({ otheruserId }) => {
         .get(
           pathname === "/following"
             ? `/api/follow/following/${userId}`
-            : `/api/follow/follower/${userId}`,
+            : `/api/follow/followers/${userId}`,
           {
             headers: {
               Authorization: `${cookies.access}`,
