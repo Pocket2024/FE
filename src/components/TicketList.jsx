@@ -164,9 +164,11 @@ const TicketList = ({ date }) => {
           />
           <div className="name">{date ? date : category}</div>
           {!date && <div className="pocket">포켓</div>}
-          <div className="delete-btn" onClick={handleDeletePocket}>
-            <FaTrash size={15} color="#aeaeae" />
-          </div>
+          {!date && !otheruserId && (
+            <div className="delete-btn" onClick={handleDeletePocket}>
+              <FaTrash size={15} color="#aeaeae" />
+            </div>
+          )}
         </div>
         {!date && !otheruserId && (
           <CreateBtn
