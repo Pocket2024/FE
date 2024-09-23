@@ -6,6 +6,8 @@ import api from "../api/api";
 import { MdNavigateBefore } from "react-icons/md";
 import { useResponsive } from "../context/Responsive";
 import { FaPlus } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa";
+import useNotificationStore from "../store/notificationStore";
 
 const List = styled.div`
   display: block;
@@ -42,6 +44,17 @@ const CategoryLine = styled.div`
     font-weight: 700;
     color: white;
     margin-left: 5px;
+    margin-right: 10px;
+  }
+  .delete-btn {
+    background-color: #323232;
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    padding: 10px;
+    &:hover {
+      background-color: #4a4a4a;
+    }
   }
 `;
 const CreateBtn = styled.button`
@@ -72,6 +85,7 @@ const TicketList = ({ date }) => {
   const navigate = useNavigate();
   const { isDesktop } = useResponsive();
   const [selectedTicketId, setSelectedTicketId] = useState(null); // 클릭된 티켓 ID를 추적
+  const { showNotification } = useNotificationStore();
 
   useEffect(() => {
     const getTicketList = () => {
@@ -116,6 +130,23 @@ const TicketList = ({ date }) => {
     }
   };
 
+  const handleDeletePocket = () => {
+    api
+      .delete(`/api/categories/${pocket}?userId=${userId}`, {
+        headers: {
+          Authorization: `${ACCESS_TOKEN}`,
+        },
+      })
+      .then((res) => {
+        showNotification("🗑️ 포켓이 삭제 되었습니다.");
+        navigate("/myticket");
+      })
+      .catch((err) => {
+        showNotification("⚠️ 포켓을 삭제하는데 실패했습니다.");
+        console.log("pocket delete error", err);
+      });
+  };
+
   return (
     <>
       <CategoryLine
@@ -133,6 +164,9 @@ const TicketList = ({ date }) => {
           />
           <div className="name">{date ? date : category}</div>
           {!date && <div className="pocket">포켓</div>}
+          <div className="delete-btn" onClick={handleDeletePocket}>
+            <FaTrash size={15} color="#aeaeae" />
+          </div>
         </div>
         {!date && !otheruserId && (
           <CreateBtn
