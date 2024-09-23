@@ -176,7 +176,7 @@ const MultiImgInput = styled.div`
   label {
     background-color: #565656;
     color: white;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 600;
     padding: 10px 15px;
     border-radius: 10px;
