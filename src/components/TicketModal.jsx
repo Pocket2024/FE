@@ -16,7 +16,7 @@ const customStyles = {
   },
   content: {
     width: "600px",
-    minHeight: "fit-content",
+    minHeight: "80vh",
     position: "absolute",
     top: "50%",
     left: "50%",
