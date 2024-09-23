@@ -18,6 +18,7 @@ import CalendarDetailPage from "./pages/CalendarDetailPage";
 import { useIsLoading } from "./store/store";
 import Loading from "./components/Loading";
 import Notification from "./components/Notification";
+import LikeTicketPage from "./pages/LikeTicketPage";
 
 function App() {
   const { isLoading } = useIsLoading();
@@ -61,6 +62,8 @@ function App() {
               path="/myticket/calendar/:date/:ticket"
               element={<CalendarDetailPage />}
             />
+            <Route path="/myticket/like" element={<LikeTicketPage />} />
+            <Route path="/myticket/like/:ticket" element={<LikeTicketPage />} />
           </Routes>
         </Page>
       </ResponsiveProvider>

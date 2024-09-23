@@ -10,7 +10,7 @@ import { saveAs } from "file-saver";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useResponsive } from "../context/Responsive";
-import { useNavigate, useParams } from "react-router-dom";
+import { useMatch, useNavigate, useParams } from "react-router-dom";
 import api from "../api/api";
 import ImgModal from "./ImgModal";
 import { BsFillPinFill } from "react-icons/bs";
@@ -200,6 +200,7 @@ const Detail = ({ info }) => {
   const navigate = useNavigate();
   const [cookies] = useCookies(["access"]);
   const [animate, setAnimate] = useState(false);
+  const likedticket = useMatch("/myticket/like/*");
   const { otheruserId } = useParams();
   const favticketId = localStorage.getItem("favticketId");
   const { showNotification } = useNotificationStore();
@@ -426,7 +427,7 @@ const Detail = ({ info }) => {
     <>
       {detail && isDesktop ? (
         <Wrapper>
-          {otheruserId || info ? (
+          {otheruserId || info || likedticket ? (
             <></>
           ) : (
             <Delete onClick={handleDelete}>
@@ -446,7 +447,7 @@ const Detail = ({ info }) => {
                 <ProfileImg src={`${detail.authorProfileImageUrl}`} />
                 <Nickname>{detail.authorNickname}</Nickname>
               </ProfileLine>
-              {otheruserId || info ? (
+              {otheruserId || info || likedticket ? (
                 <></>
               ) : (
                 <div style={{ display: "flex", gap: "0 10px" }}>

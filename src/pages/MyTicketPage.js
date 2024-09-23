@@ -85,6 +85,18 @@ const PocketTitleDiv = styled.div`
   align-items: center;
   margin: 40px 0 15px 0;
 `;
+const LikeTicketBtn = styled.button`
+  padding: 5px 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #4a4a4a;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  span {
+    margin-left: 5px;
+  }
+`;
 
 const MyTicketPage = () => {
   const { isDesktop } = useResponsive();
@@ -188,7 +200,20 @@ const MyTicketPage = () => {
             {clickticket ? (
               <FavDetail favticket={favticket} />
             ) : (
-              <None>티켓이 이곳에 표시됩니다.</None>
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <LikeTicketBtn onClick={() => navigate("/myticket/like")}>
+                    → 내가 좋아요 누른 티켓
+                  </LikeTicketBtn>
+                </div>
+                <None>티켓이 이곳에 표시됩니다.</None>
+              </>
             )}
           </TicketArea>
           <UploadBtn />
