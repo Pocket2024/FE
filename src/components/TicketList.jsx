@@ -151,7 +151,7 @@ const TicketList = ({ date }) => {
     <>
       <CategoryLine
         padding={isDesktop ? "" : "0 30px"}
-        fontsize={isDesktop ? "30px" : "25px"}
+        fontsize={isDesktop ? "30px" : "18px"}
       >
         <div gap={isDesktop ? "10px" : "5px"}>
           <MdNavigateBefore
@@ -177,7 +177,7 @@ const TicketList = ({ date }) => {
             }
           >
             <FaPlus />
-            <span>티켓 추가하기</span>
+            <span style={{ fontSize: "12px" }}>티켓 추가하기</span>
           </CreateBtn>
         )}
       </CategoryLine>

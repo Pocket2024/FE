@@ -47,6 +47,19 @@ const TicketContainer = styled.div`
     height: fit-content;
   }
 `;
+const MTicketContainer = styled.div`
+  position: relative;
+  width: 150px;
+  height: 200px;
+  margin: 20px auto;
+  border-radius: 10px;
+  top: 20%;
+  img {
+    position: absolute;
+    width: 150px;
+    height: fit-content;
+  }
+`;
 
 // 스캔 라인 스타일 및 애니메이션 적용
 const ScanLine = styled.div`
@@ -106,10 +119,10 @@ const TicketScan = () => {
         </LoadingWrapper>
       ) : (
         <MLoadingWrapper>
-          <TicketContainer>
+          <MTicketContainer>
             <img src={ticket_component} alt="티켓" />
             {scanning && <ScanLine />} {/* 스캔 중일 때만 스캔 라인 표시 */}
-          </TicketContainer>
+          </MTicketContainer>
           <div>티켓 정보 추출 중 ...</div>
         </MLoadingWrapper>
       )}
