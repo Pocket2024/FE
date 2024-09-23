@@ -111,6 +111,7 @@ const RecentTicket = () => {
           setIslike(true);
         })
         .catch((err) => {
+          showNotification("⚠️ 좋아요 취소가 반영되지 못했어요.");
           console.log("좋아요 취소 err", err);
         });
     } else {
@@ -129,6 +130,7 @@ const RecentTicket = () => {
           setIslike(true);
         })
         .catch((err) => {
+          showNotification("⚠️ 좋아요가 반영되지 못했어요.");
           console.log("좋아요 err", err);
         });
     }

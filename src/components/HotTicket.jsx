@@ -7,6 +7,7 @@ import TicketModal from "./TicketModal";
 import { useResponsive } from "../context/Responsive";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
+import useNotificationStore from "../store/notificationStore";
 
 const HotTitle = styled.div`
   font-weight: 700;
@@ -74,6 +75,7 @@ const HotTicket = () => {
   const userId = localStorage.getItem("userId");
   const [islike, setIslike] = useState(false); // 유저가 좋아요를 눌렀을 때 다시 useEffect 실행시키기 위함
   const [selected, setSelected] = useState([]);
+  const { showNotification } = useNotificationStore();
 
   useEffect(() => {
     const getHotTicket = () => {
@@ -105,10 +107,11 @@ const HotTicket = () => {
           },
         })
         .then(() => {
-          alert("좋아요 취소");
+          showNotification("♡ 좋아요 취소");
           setIslike(true);
         })
         .catch((err) => {
+          showNotification("⚠️ 좋아요 취소가 반영되지 못했어요.");
           console.log("좋아요 취소 err", err);
         });
     } else {
@@ -123,10 +126,11 @@ const HotTicket = () => {
           }
         )
         .then(() => {
-          alert("좋아요");
+          showNotification("♥ 좋아요");
           setIslike(true);
         })
         .catch((err) => {
+          showNotification("⚠️ 좋아요가 반영되지 못했어요.");
           console.log("좋아요 err", err);
         });
     }
