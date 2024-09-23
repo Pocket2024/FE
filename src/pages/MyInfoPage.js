@@ -5,6 +5,7 @@ import { useResponsive } from "../context/Responsive";
 import { MdEdit } from "react-icons/md";
 import { MdCameraEnhance } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "../store/authStore";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -60,6 +61,8 @@ const MyInfoPage = () => {
   const imgRef = useRef();
   const [img, setImg] = useState("");
   const [realimg, setRealimg] = useState([]);
+
+  const { logout } = useAuthStore();
 
   // 이미지 업로드 input의 onChange
   const saveImgFile = () => {
@@ -175,6 +178,7 @@ const MyInfoPage = () => {
         })
         .then((res) => {
           window.localStorage.removeItem("accessToken");
+          logout();
           alert("로그아웃 되었습니다.");
           navigate("/");
         })

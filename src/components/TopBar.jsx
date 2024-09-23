@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import "../style/Dropdown.css";
+import useAuthStore from "../store/authStore";
 
 const TopBarWrapper = styled.div`
   width: 100vw;
@@ -46,8 +47,7 @@ const TabTxt = styled.div`
 const TopBar = () => {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery({ minWidth: 800 });
-  const ACCESS_TOKEN = localStorage.getItem("accessToken");
-  console.log(ACCESS_TOKEN);
+  const { isLoggedIn } = useAuthStore();
 
   return (
     <>
@@ -57,7 +57,7 @@ const TopBar = () => {
             <LogoIcon fill="white" />
           </Logo>
           <TabContainer>
-            {ACCESS_TOKEN ? (
+            {isLoggedIn ? (
               <>
                 <Tab
                   onClick={() => {
@@ -103,7 +103,7 @@ const TopBar = () => {
           </Logo>
           <DropdownContainer>
             <DropdownButton id="dropdown-basic-button" title="메뉴">
-              {ACCESS_TOKEN ? (
+              {isLoggedIn ? (
                 <>
                   <Dropdown.Item
                     className="item"

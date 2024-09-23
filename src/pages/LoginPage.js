@@ -5,6 +5,7 @@ import api from "../api/api";
 import { useResponsive } from "../context/Responsive";
 import { useCookies } from "react-cookie"; // useCookies import
 import useNotificationStore from "../store/notificationStore";
+import useAuthStore from "../store/authStore";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -20,6 +21,7 @@ const LoginPage = () => {
   const [pw, setPw] = useState("");
   const [cookies, setCookie] = useCookies(["access"]); // 쿠키 훅
   const { showNotification } = useNotificationStore();
+  const { login } = useAuthStore();
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -41,6 +43,7 @@ const LoginPage = () => {
 
         localStorage.setItem("userId", res.data.userId);
         showNotification("✅ 로그인 성공!");
+        login();
         navigate("/myticket");
       })
       .catch((err) => {
