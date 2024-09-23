@@ -7,6 +7,7 @@ import { FaRegHeart } from "react-icons/fa";
 import api from "../api/api";
 import TicketModal from "./TicketModal";
 import { useNavigate } from "react-router-dom";
+import useNotificationStore from "../store/notificationStore";
 
 const RecentTitle = styled.div`
   font-weight: 700;
@@ -74,6 +75,7 @@ const RecentTicket = () => {
   const userId = localStorage.getItem("userId");
   const [islike, setIslike] = useState(false); // 유저가 좋아요를 눌렀을 때 다시 useEffect 실행시키기 위함
   const [selected, setSelected] = useState([]);
+  const { showNotification } = useNotificationStore();
 
   useEffect(() => {
     const getRecentTicket = () => {
@@ -105,7 +107,7 @@ const RecentTicket = () => {
           },
         })
         .then(() => {
-          alert("좋아요 취소");
+          showNotification("♡ 좋아요 취소");
           setIslike(true);
         })
         .catch((err) => {
@@ -123,7 +125,7 @@ const RecentTicket = () => {
           }
         )
         .then(() => {
-          alert("좋아요");
+          showNotification("♥ 좋아요");
           setIslike(true);
         })
         .catch((err) => {
