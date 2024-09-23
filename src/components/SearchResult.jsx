@@ -6,6 +6,8 @@ import { FaRegHeart } from "react-icons/fa";
 import TicketModal from "./TicketModal";
 import { useResponsive } from "../context/Responsive";
 import { useNavigate } from "react-router-dom";
+import api from "../api/api";
+import useNotificationStore from "../store/notificationStore";
 
 const SearchTitle = styled.div`
   font-weight: 700;
@@ -60,15 +62,46 @@ const NoResult = styled.div`
 
 const SearchResult = ({ results, keyword }) => {
   const { isDesktop } = useResponsive();
-  const [isHeart, setIsHeart] = useState(false);
+  const [islike, setIslike] = useState(false);
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
+  let ACCESS_TOKEN = localStorage.getItem("accessToken");
+  const userId = localStorage.getItem("userId");
+  const { showNotification } = useNotificationStore();
 
-  const handleHeart = () => {
+  const handleHeart = (ticketId, isHeart) => {
     if (isHeart) {
-      setIsHeart(!isHeart);
+      api
+        .delete(`/api/likes/unlike/${ticketId}?userId=${userId}`, {
+          headers: {
+            Authorization: `${ACCESS_TOKEN}`,
+          },
+        })
+        .then(() => {
+          showNotification("♡ 좋아요 취소");
+          setIslike(true);
+        })
+        .catch((err) => {
+          console.log("좋아요 취소 err", err);
+        });
     } else {
-      setIsHeart(!isHeart);
+      api
+        .post(
+          `/api/likes/like/${ticketId}?userId=${userId}`,
+          {},
+          {
+            headers: {
+              Authorization: `${ACCESS_TOKEN}`,
+            },
+          }
+        )
+        .then(() => {
+          showNotification("♥ 좋아요");
+          setIslike(true);
+        })
+        .catch((err) => {
+          console.log("좋아요 err", err);
+        });
     }
   };
   const handleTicket = () => {
@@ -93,17 +126,21 @@ const SearchResult = ({ results, keyword }) => {
                     <div fontSize="18px">{result.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
-                    {isHeart ? (
+                    {result.likedByCurrentUser ? (
                       <FaHeart
                         color="white"
-                        onClick={handleHeart}
+                        onClick={() =>
+                          handleHeart(result.id, result.likedByCurrentUser)
+                        }
                         size={20}
                         style={{ cursor: "pointer" }}
                       />
                     ) : (
                       <FaRegHeart
                         color="#8F8F8F"
-                        onClick={handleHeart}
+                        onClick={() =>
+                          handleHeart(result.id, result.likedByCurrentUser)
+                        }
                         size={20}
                         style={{ cursor: "pointer" }}
                       />
@@ -150,7 +187,7 @@ const SearchResult = ({ results, keyword }) => {
                     <div fontSize="15px">{result.authorNickname}</div>
                   </ProfileLine>
                   <Heart>
-                    {isHeart ? (
+                    {result.likedByCurrentUser ? (
                       <FaHeart
                         color="white"
                         onClick={handleHeart}
