@@ -133,7 +133,7 @@ const SearchPage = () => {
               padding={isDesktop ? "8px 25px" : "5px 15px"}
               borderRadius={isDesktop ? "20px" : "15px"}
             >
-              <TypeSpan fontSize={isDesktop ? "17px" : "13px"}>
+              <TypeSpan fontSize={isDesktop ? "17px" : "11px"}>
                 {type.name}
               </TypeSpan>
             </TypeLabel>
