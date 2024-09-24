@@ -8,6 +8,7 @@ import { useResponsive } from "../context/Responsive";
 import FollowingModal from "./FollowingModal";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { GiCancel } from "react-icons/gi";
+import useNotificationStore from "../store/notificationStore";
 
 const ProfileBox = styled.div`
   display: flex;
@@ -48,6 +49,8 @@ const Profile = ({ otheruserId }) => {
   const navigate = useNavigate();
   const [cookies] = useCookies(["access"]);
   const [following, setFollowing] = useState([]);
+  const { showNotification } = useNotificationStore();
+  const [followtoggle, setFollowtoggle] = useState(false);
 
   useEffect(() => {
     const getMyInfo = () => {
@@ -73,7 +76,7 @@ const Profile = ({ otheruserId }) => {
     };
 
     getMyInfo();
-  }, [otheruserId, userId, cookies.access]);
+  }, [otheruserId, userId, cookies.access, followtoggle]);
 
   const [followingModal, setFollowingModal] = useState(false);
   const [follower, setFollower] = useState(false);
@@ -149,8 +152,8 @@ const Profile = ({ otheruserId }) => {
           }
         )
         .then(() => {
-          alert("팔로우 성공!");
-          window.location.reload();
+          setFollowtoggle(!followtoggle);
+          showNotification("👤 팔로우 성공");
         })
         .catch(() => {
           alert("팔로우 실패");
@@ -171,8 +174,8 @@ const Profile = ({ otheruserId }) => {
           }
         )
         .then(() => {
-          alert("팔로우 취소");
-          window.location.reload();
+          setFollowtoggle(!followtoggle);
+          showNotification("👤 팔로우 취소");
         })
         .catch(() => {
           alert("팔로우 취소 실패");
