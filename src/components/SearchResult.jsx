@@ -104,8 +104,12 @@ const SearchResult = ({ results, keyword }) => {
         });
     }
   };
-  const handleTicket = () => {
+
+  const [selected, setSelected] = useState([]);
+
+  const handleTicket = (selected) => {
     setModal(true);
+    setSelected(selected);
   };
   return (
     <>
@@ -116,6 +120,11 @@ const SearchResult = ({ results, keyword }) => {
           <ResultList>
             {results.map((result) => (
               <div key={result.id}>
+                <TicketModal
+                  isOpen={modal}
+                  onRequestClose={() => setModal(false)}
+                  info={selected}
+                />
                 <FlexLine>
                   <ProfileLine>
                     <img
@@ -148,7 +157,7 @@ const SearchResult = ({ results, keyword }) => {
                     {result.likes}
                   </Heart>
                 </FlexLine>
-                <div onClick={handleTicket}>
+                <div onClick={() => handleTicket(result)}>
                   <Ticket
                     key={result.id}
                     title={result.title}
@@ -159,11 +168,6 @@ const SearchResult = ({ results, keyword }) => {
                     custom={result.customImageUrl}
                   />
                 </div>
-                <TicketModal
-                  isOpen={modal}
-                  onRequestClose={() => setModal(false)}
-                  info={result}
-                />
               </div>
             ))}
           </ResultList>
