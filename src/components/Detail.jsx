@@ -38,6 +38,13 @@ const TicketBox = styled.div`
   width: 100%;
   padding: 50px;
   position: relative;
+  // GPU 가속 활용
+  transform: translateZ(0);
+  will-change: transform;
+
+  // 불필요한 레이어 생성 방지
+  contain: layout style paint;
+
   -webkit-mask: radial-gradient(
       circle 20px at 0px ${(props) => props.y},
       transparent 19px,
@@ -79,6 +86,11 @@ const ProfileImg = styled.img`
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  // 이미지 렌더링 최적화
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  // GPU 가속
+  transform: translateZ(0);
 `;
 const Nickname = styled.div`
   font-size: 20px;
@@ -156,6 +168,14 @@ const ImageLine = styled.div`
     background-size: cover;
     cursor: pointer;
     object-fit: cover;
+    // 이미지 렌더링 최적화
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    // 레이아웃 시프트 방지
+    width: 100%;
+    height: auto;
+    // GPU 가속
+    transform: translateZ(0);
   }
 `;
 const FavBtn = styled.button`
@@ -205,80 +225,189 @@ const Detail = ({ info }) => {
   const favticketId = localStorage.getItem("favticketId");
   const { showNotification } = useNotificationStore();
 
-  const onDownloadBtn = async () => {
-    if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
-      const ticket = ticketRef.current; // 현재 티켓 dom에 접근
-      //   const filter = (card) => {
-      //     // button 태그 필터링
-      //     return card.tagName !== "BUTTON";
-      //   };
+  // 메모리 사용량 모니터링 커스텀 훅
+  const useMemoryMonitor = () => {
+    const [memoryInfo, setMemoryInfo] = useState(null);
 
-      try {
-        const canvas = await html2canvas(ticket, {
-          backgroundColor: null, // 배경을 투명하게 설정
-          scale: 4,
-          useCORS: true, // 이미지 로드 문제 해결
-          ignoreElements: (element) => {
-            return element.tagName === "BUTTON"; // Ignore button elements
-          },
-        }); // Await the promise and get the canvas
+    useEffect(() => {
+      const checkMemory = () => {
+        if ("memory" in performance) {
+          const memory = performance.memory;
+          setMemoryInfo({
+            used: Math.round(memory.usedJSHeapSize / 1048576), // MB
+            total: Math.round(memory.totalJSHeapSize / 1048576),
+            limit: Math.round(memory.jsHeapSizeLimit / 1048576),
+          });
+        }
+      };
 
-        const ctx = canvas.getContext("2d");
+      const interval = setInterval(checkMemory, 1000);
+      return () => clearInterval(interval);
+    }, []);
 
-        // 원래 캔버스 내용 복사
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    return memoryInfo;
+  };
 
-        // 원의 좌표 및 반지름
-        const leftCircle = { x: 0, y: 315 * 4, radius: 50 };
-        const rightCircle = {
-          x: canvas.width,
-          y: 315 * 4,
-          radius: 50,
-        };
+  // 안전한 이미지 생성 래퍼
+  const safeImageGeneration = async (element, options = {}) => {
+    // 메모리 체크
+    if ("memory" in performance) {
+      const memory = performance.memory;
+      const availableMemory = memory.jsHeapSizeLimit - memory.usedJSHeapSize;
+      const estimatedUsage =
+        element.offsetWidth *
+        element.offsetHeight *
+        4 *
+        (options.scale || 1) ** 2;
 
-        // 원 부분을 투명하게 만들기
-        const makeCircleTransparent = (circle) => {
-          for (
-            let y = circle.y - circle.radius;
-            y <= circle.y + circle.radius;
-            y++
-          ) {
-            for (
-              let x = circle.x - circle.radius;
-              x <= circle.x + circle.radius;
-              x++
-            ) {
-              const dx = circle.x - x;
-              const dy = circle.y - y;
-              if (dx * dx + dy * dy <= circle.radius * circle.radius) {
-                const index = (y * canvas.width + x) * 4;
-                imageData.data[index + 3] = 0; // 알파 채널을 0으로 설정하여 투명하게 만듦
-              }
-            }
-          }
-        };
-
-        // 왼쪽 및 오른쪽 원을 투명하게 설정
-        makeCircleTransparent(leftCircle);
-        makeCircleTransparent(rightCircle);
-
-        // 업데이트된 이미지 데이터를 다시 그리기
-        ctx.putImageData(imageData, 0, 0);
-
-        canvas.toBlob((blob) => {
-          if (blob !== null) {
-            saveAs(blob, "ticketimg.png");
-          }
-        });
-      } catch (error) {
-        console.error("Error generating image: ", error);
+      if (estimatedUsage > availableMemory * 0.5) {
+        throw new Error("메모리 부족으로 이미지 생성을 중단합니다.");
       }
+    }
 
-      //   domtoimage.toBlob(ticket, { filter: filter }).then((blob) => {
-      //     saveAs(blob, "ticketimg.png"); // png로 저장
-      //   });
+    // 타임아웃 설정
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error("이미지 생성 시간 초과")), 30000);
+    });
+
+    const canvasPromise = html2canvas(element, options);
+
+    try {
+      return await Promise.race([canvasPromise, timeoutPromise]);
+    } catch (error) {
+      // 메모리 정리
+      if (global.gc) {
+        global.gc();
+      }
+      throw error;
     }
   };
+
+  const onDownloadBtn = async () => {
+    if (!window.confirm("티켓 이미지를 저장하시겠습니까?")) {
+      return;
+    }
+
+    const ticket = ticketRef.current;
+
+    try {
+      const canvas = await safeImageGeneration(ticket, {
+        // 배경을 투명하게 설정하여 불필요한 렌더링 제거
+        backgroundColor: null,
+
+        // 고해상도 출력을 위한 스케일링 (메모리 사용량 16배 증가 주의)
+        scale: 4,
+
+        // CORS 이미지 처리 최적화
+        useCORS: true,
+        allowTaint: false,
+
+        // 로깅 비활성화로 성능 향상
+        logging: false,
+
+        // 렌더링 최적화 옵션
+        removeContainer: true,
+
+        // 불필요한 요소 제외
+        ignoreElements: (element) => {
+          return (
+            element.tagName === "BUTTON" ||
+            element.classList.contains("exclude-from-capture")
+          );
+        },
+
+        // 이미지 품질 vs 성능 균형
+        imageTimeout: 15000,
+        onclone: (clonedDoc) => {
+          // 클론된 문서에서 불필요한 스타일 제거
+          const styleElements = clonedDoc.querySelectorAll("style");
+          styleElements.forEach((style) => {
+            if (!style.textContent.includes("ticket")) {
+              style.remove();
+            }
+          });
+        },
+      });
+
+      // Canvas 처리 후 즉시 메모리 정리
+      processCanvas(canvas);
+    } catch (error) {
+      console.error("Canvas generation failed:", error);
+      showNotification("⚠️ 이미지 생성에 실패했습니다.");
+    }
+  };
+
+  const processCanvas = (canvas) => {
+    const ctx = canvas.getContext("2d");
+
+    // 원래 캔버스 내용을 ImageData로 추출
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    // 메모리 효율적인 픽셀 조작
+    const data = imageData.data;
+    const { width, height } = canvas;
+
+    // 티켓 특유의 원형 홀 처리 (scale 4 적용)
+    const leftCircle = { x: 0, y: 315 * 4, radius: 50 };
+    const rightCircle = { x: width, y: 315 * 4, radius: 50 };
+
+    // 최적화된 원형 마스크 적용
+    applyCircularMask(data, width, height, leftCircle);
+    applyCircularMask(data, width, height, rightCircle);
+
+    // 수정된 데이터를 다시 캔버스에 적용
+    ctx.putImageData(imageData, 0, 0);
+
+    // Blob 생성 및 다운로드
+    canvas.toBlob(
+      (blob) => {
+        if (blob !== null) {
+          saveAs(blob, `ticket-${Date.now()}.png`);
+          showNotification("✅ 티켓 이미지가 저장되었습니다.");
+        }
+
+        // 메모리 정리
+        cleanupCanvas(canvas);
+      },
+      "image/png",
+      0.95
+    ); // 품질 95%로 파일 크기 최적화
+  };
+
+  // 효율적인 원형 마스크 처리
+  const applyCircularMask = (data, width, height, circle) => {
+    const { x: cx, y: cy, radius } = circle;
+    const radiusSquared = radius * radius;
+
+    // 바운딩 박스로 처리 영역 제한
+    const minX = Math.max(0, cx - radius);
+    const maxX = Math.min(width, cx + radius);
+    const minY = Math.max(0, cy - radius);
+    const maxY = Math.min(height, cy + radius);
+
+    for (let y = minY; y < maxY; y++) {
+      for (let x = minX; x < maxX; x++) {
+        const dx = x - cx;
+        const dy = y - cy;
+
+        if (dx * dx + dy * dy <= radiusSquared) {
+          const index = (y * width + x) * 4;
+          data[index + 3] = 0; // 알파 채널만 수정
+        }
+      }
+    }
+  };
+
+  // 캔버스 메모리 정리
+  const cleanupCanvas = (canvas) => {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Canvas 크기를 1x1로 축소하여 메모리 해제
+    canvas.width = 1;
+    canvas.height = 1;
+  };
+
   const handleHeart = () => {
     if (isHeart) {
       api
