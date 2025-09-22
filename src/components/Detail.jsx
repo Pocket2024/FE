@@ -225,27 +225,50 @@ const Detail = ({ info }) => {
   const favticketId = localStorage.getItem("favticketId");
   const { showNotification } = useNotificationStore();
 
-  // 메모리 사용량 모니터링 커스텀 훅
-  const useMemoryMonitor = () => {
-    const [memoryInfo, setMemoryInfo] = useState(null);
+  // 성능 데이터 상태
+  const [performanceData, setPerformanceData] = useState({
+    renderingTime: 0,
+    memoryBefore: 0,
+    memoryAfter: 0,
+    memoryDiff: 0,
+    fileSize: 0,
+    attempts: 0,
+    successes: 0,
+    failures: 0,
+  });
 
-    useEffect(() => {
-      const checkMemory = () => {
-        if ("memory" in performance) {
-          const memory = performance.memory;
-          setMemoryInfo({
-            used: Math.round(memory.usedJSHeapSize / 1048576), // MB
-            total: Math.round(memory.totalJSHeapSize / 1048576),
-            limit: Math.round(memory.jsHeapSizeLimit / 1048576),
-          });
-        }
+  // 성능 모니터 표시 여부 (개발 환경에서만)
+  const [, setShowPerformanceMonitor] = useState(
+    process.env.NODE_ENV === "development"
+  );
+
+  // 성능 통계 추적
+  const trackCanvasSuccess = (isSuccess, errorType = null) => {
+    setPerformanceData((prev) => {
+      const newStats = {
+        ...prev,
+        attempts: prev.attempts + 1,
+        successes: isSuccess ? prev.successes + 1 : prev.successes,
+        failures: isSuccess ? prev.failures : prev.failures + 1,
       };
 
-      const interval = setInterval(checkMemory, 1000);
-      return () => clearInterval(interval);
-    }, []);
+      // 로컬 스토리지에 통계 저장
+      const stats = {
+        ...newStats,
+        successRate: (newStats.successes / newStats.attempts) * 100,
+        device: navigator.userAgent,
+        timestamp: Date.now(),
+        errorType: errorType,
+      };
 
-    return memoryInfo;
+      localStorage.setItem("canvas-performance-stats", JSON.stringify(stats));
+
+      if (!isSuccess && errorType) {
+        console.error(`Canvas 실패 유형: ${errorType}`);
+      }
+
+      return newStats;
+    });
   };
 
   // 안전한 이미지 생성 래퍼
@@ -283,15 +306,16 @@ const Detail = ({ info }) => {
     }
   };
 
-  const onDownloadBtn = async () => {
-    if (!window.confirm("티켓 이미지를 저장하시겠습니까?")) {
-      return;
-    }
+  // 성능 측정이 포함된 Canvas 생성 함수
+  const measureCanvasPerformance = async (element) => {
+    // 성능 마크 설정
+    performance.mark("canvas-start");
 
-    const ticket = ticketRef.current;
+    const startTime = performance.now();
+    const memoryBefore = performance.memory?.usedJSHeapSize || 0;
 
     try {
-      const canvas = await safeImageGeneration(ticket, {
+      const canvas = await safeImageGeneration(element, {
         // 배경을 투명하게 설정하여 불필요한 렌더링 제거
         backgroundColor: null,
 
@@ -329,15 +353,41 @@ const Detail = ({ info }) => {
         },
       });
 
-      // Canvas 처리 후 즉시 메모리 정리
-      processCanvas(canvas);
+      // 성능 측정 완료
+      performance.mark("canvas-end");
+      performance.measure("canvas-rendering", "canvas-start", "canvas-end");
+
+      const endTime = performance.now();
+      const renderingTime = (endTime - startTime) / 1000;
+      const memoryAfter = performance.memory?.usedJSHeapSize || 0;
+
+      // Canvas 처리
+      processCanvas(canvas, { renderingTime, memoryBefore, memoryAfter });
+
+      // // 성공 추적
+      // trackCanvasSuccess(true);
     } catch (error) {
       console.error("Canvas generation failed:", error);
       showNotification("⚠️ 이미지 생성에 실패했습니다.");
+
+      // 실패 추적
+      trackCanvasSuccess(false, error.message);
+      throw error;
     }
   };
 
-  const processCanvas = (canvas) => {
+  const onDownloadBtn = async () => {
+    if (!window.confirm("티켓 이미지를 저장하시겠습니까?")) {
+      return;
+    }
+
+    const ticketElement = ticketRef.current;
+
+    // 성능 측정 실행
+    await measureCanvasPerformance(ticketElement);
+  };
+
+  const processCanvas = (canvas, performanceInfo = {}) => {
     const ctx = canvas.getContext("2d");
 
     // 원래 캔버스 내용을 ImageData로 추출
@@ -362,8 +412,47 @@ const Detail = ({ info }) => {
     canvas.toBlob(
       (blob) => {
         if (blob !== null) {
+          const fileSizeMB = (blob.size / 1048576).toFixed(2);
+
+          // 성능 데이터 업데이트
+          setPerformanceData((prev) => ({
+            ...prev,
+            renderingTime: performanceInfo.renderingTime || 0,
+            memoryBefore: Math.round(
+              (performanceInfo.memoryBefore || 0) / 1048576
+            ),
+            memoryAfter: Math.round(
+              (performanceInfo.memoryAfter || 0) / 1048576
+            ),
+            memoryDiff: Math.round(
+              ((performanceInfo.memoryAfter || 0) -
+                (performanceInfo.memoryBefore || 0)) /
+                1048576
+            ),
+            fileSize: parseFloat(fileSizeMB),
+          }));
+
+          // 콘솔에 성능 정보 출력
+          console.table({
+            "렌더링 시간": `${(performanceInfo.renderingTime || 0).toFixed(
+              2
+            )}초`,
+            "사용 메모리 (전)": `${Math.round(
+              (performanceInfo.memoryBefore || 0) / 1048576
+            )}MB`,
+            "사용 메모리 (후)": `${Math.round(
+              (performanceInfo.memoryAfter || 0) / 1048576
+            )}MB`,
+            "메모리 변화": `${Math.round(
+              ((performanceInfo.memoryAfter || 0) -
+                (performanceInfo.memoryBefore || 0)) /
+                1048576
+            )}MB`,
+            "파일 크기": `${fileSizeMB}MB`,
+          });
+
           saveAs(blob, `ticket-${Date.now()}.png`);
-          showNotification("✅ 티켓 이미지가 저장되었습니다.");
+          showNotification(`✅ 티켓 이미지 저장 완료 (${fileSizeMB}MB)`);
         }
 
         // 메모리 정리
@@ -371,7 +460,7 @@ const Detail = ({ info }) => {
       },
       "image/png",
       0.95
-    ); // 품질 95%로 파일 크기 최적화
+    );
   };
 
   // 효율적인 원형 마스크 처리
@@ -407,6 +496,45 @@ const Detail = ({ info }) => {
     canvas.width = 1;
     canvas.height = 1;
   };
+
+  // 개발자 도구용 전역 함수 설정
+  useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      window.togglePerformanceMonitor = () => {
+        setShowPerformanceMonitor((prev) => !prev);
+      };
+
+      window.togglePerformanceDetails = () => {
+        const stats = localStorage.getItem("canvas-performance-stats");
+        if (stats) {
+          console.log("📊 Canvas 성능 통계:", JSON.parse(stats));
+        }
+        console.log("🔧 현재 성능 데이터:", performanceData);
+      };
+
+      window.clearPerformanceStats = () => {
+        localStorage.removeItem("canvas-performance-stats");
+        setPerformanceData({
+          renderingTime: 0,
+          memoryBefore: 0,
+          memoryAfter: 0,
+          memoryDiff: 0,
+          fileSize: 0,
+          attempts: 0,
+          successes: 0,
+          failures: 0,
+        });
+        console.log("📊 성능 통계가 초기화되었습니다.");
+      };
+
+      // 컴포넌트 언마운트 시 정리
+      return () => {
+        delete window.togglePerformanceMonitor;
+        delete window.togglePerformanceDetails;
+        delete window.clearPerformanceStats;
+      };
+    }
+  }, [performanceData]);
 
   const handleHeart = () => {
     if (isHeart) {
@@ -472,7 +600,7 @@ const Detail = ({ info }) => {
     }, 500); // 애니메이션 지속 시간과 동일하게 설정
 
     return () => clearTimeout(timeoutId);
-  }, [ticket, isHeart, userId, ACCESS_TOKEN, favticketId]);
+  }, [ticket, isHeart, userId, ACCESS_TOKEN, favticketId, info]);
 
   const [modal, setModal] = useState(false);
   const [clickimgurl, setClickimgurl] = useState(""); // 지금 클릭한 이미지 url
