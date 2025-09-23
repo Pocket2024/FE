@@ -193,14 +193,12 @@ class CanvasPerformanceMonitor {
     }
   }
 
-  /**
-   * 효율적인 원형 마스크 처리
-   */
+  // 원형 마스크 알고리즘 최적화
   applyCircularMask(data, width, height, circle) {
     const { x: cx, y: cy, radius } = circle;
-    const radiusSquared = radius * radius;
+    const radiusSquared = radius * radius; // 제곱 연산 캐싱: radiusSquared 사전 계산
 
-    // 바운딩 박스로 처리 영역 제한
+    // 바운딩 박스로 처리 영역 제한 : 전체 캔버스 대신 원 주변만 처리
     const minX = Math.max(0, cx - radius);
     const maxX = Math.min(width, cx + radius);
     const minY = Math.max(0, cy - radius);
@@ -213,7 +211,7 @@ class CanvasPerformanceMonitor {
 
         if (dx * dx + dy * dy <= radiusSquared) {
           const index = (y * width + x) * 4;
-          data[index + 3] = 0; // 알파 채널만 수정
+          data[index + 3] = 0; // 알파 채널만 수정 (RGB 건드리지 않고 투명도만 처리)
         }
       }
     }
