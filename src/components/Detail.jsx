@@ -89,7 +89,7 @@ const ProfileImg = styled.img`
   object-fit: cover;
   // 이미지 렌더링 최적화
   image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+  image-rendering: crisp-edges; // 선명도 향상
   // GPU 가속
   transform: translateZ(0);
 `;
@@ -235,9 +235,9 @@ const Detail = ({ info }) => {
     const data = imageData.data;
     const { width, height } = canvas;
 
-    // 티켓 특유의 원형 홀 처리 (scale 4 적용)
-    const leftCircle = { x: 0, y: 315 * 4, radius: 50 };
-    const rightCircle = { x: width, y: 315 * 4, radius: 50 };
+    // 티켓 특유의 원형 홀 처리 (scale 2 적용)
+    const leftCircle = { x: 0, y: 315 * 2, radius: 50 };
+    const rightCircle = { x: width, y: 315 * 2, radius: 50 };
 
     // 최적화된 원형 마스크 적용
     canvasPerformanceMonitor.applyCircularMask(data, width, height, leftCircle);
@@ -265,8 +265,8 @@ const Detail = ({ info }) => {
         canvasPerformanceMonitor.cleanupCanvas(canvas);
       },
       "image/png",
-      0.95
-    );
+      0.8
+    ); // 품질 80%
   };
 
   // 다운로드 버튼 핸들러
@@ -281,7 +281,7 @@ const Detail = ({ info }) => {
       // 성능 측정과 함께 Canvas 생성
       const { canvas } =
         await canvasPerformanceMonitor.measureCanvasPerformance(ticketElement, {
-          scale: 4, // 고해상도 설정
+          scale: 2, // 고해상도 설정
           // 추가 옵션이 필요한 경우 여기에 추가
         });
 
