@@ -1,8 +1,6 @@
 import html2canvas from "html2canvas";
 
-/**
- * Canvas 성능 모니터링 및 최적화 유틸리티
- */
+// Canvas 성능 모니터링 및 최적화 유틸리티
 class CanvasPerformanceMonitor {
   constructor() {
     this.performanceData = {
@@ -20,24 +18,18 @@ class CanvasPerformanceMonitor {
     this.setupDevTools();
   }
 
-  /**
-   * 성능 데이터 가져오기
-   */
+  // 성능 데이터 가져오기
   getPerformanceData() {
     return this.performanceData;
   }
 
-  /**
-   * 성능 데이터 업데이트
-   */
+  // 성능 데이터 업데이트
   updatePerformanceData(data) {
     this.performanceData = { ...this.performanceData, ...data };
     return this.performanceData;
   }
 
-  /**
-   * Canvas 성공/실패 통계 추적
-   */
+  // Canvas 성공/실패 통계 추적
   trackCanvasResult(isSuccess, errorType = null) {
     const newStats = {
       ...this.performanceData,
@@ -73,9 +65,7 @@ class CanvasPerformanceMonitor {
     return newStats;
   }
 
-  /**
-   * 안전한 이미지 생성 래퍼
-   */
+  // 안전한 이미지 생성 래퍼
   async safeImageGeneration(element, options = {}) {
     // 메모리 체크
     if ("memory" in performance) {
@@ -110,15 +100,13 @@ class CanvasPerformanceMonitor {
     }
   }
 
-  /**
-   * 성능 측정이 포함된 Canvas 생성
-   */
+  // 성능 측정이 포함된 Canvas 생성
   async measureCanvasPerformance(element, canvasOptions = {}) {
     // 성능 마크 설정
     performance.mark("canvas-start");
 
     const startTime = performance.now();
-    const memoryBefore = performance.memory?.usedJSHeapSize || 0;
+    const memoryBefore = performance.memory?.usedJSHeapSize || 0; // Performance API (브라우저 제공)
 
     try {
       const canvas = await this.safeImageGeneration(element, {
@@ -151,7 +139,7 @@ class CanvasPerformanceMonitor {
       performance.mark("canvas-end");
       performance.measure("canvas-rendering", "canvas-start", "canvas-end");
 
-      const endTime = performance.now();
+      const endTime = performance.now(); // Performance API (브라우저 제공)
       const renderingTime = (endTime - startTime) / 1000;
       const memoryAfter = performance.memory?.usedJSHeapSize || 0;
 
@@ -217,9 +205,7 @@ class CanvasPerformanceMonitor {
     }
   }
 
-  /**
-   * 캔버스 메모리 정리
-   */
+  // 캔버스 메모리 정리
   cleanupCanvas(canvas) {
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -229,12 +215,10 @@ class CanvasPerformanceMonitor {
     canvas.height = 1;
   }
 
-  /**
-   * 파일 크기 업데이트
-   */
+  // 파일 크기 업데이트
   updateFileSize(blob) {
     if (blob) {
-      const fileSizeMB = (blob.size / 1048576).toFixed(2);
+      const fileSizeMB = (blob.size / 1048576).toFixed(2); // Blob API (브라우저 제공)
       this.updatePerformanceData({
         fileSize: parseFloat(fileSizeMB),
       });
@@ -243,9 +227,7 @@ class CanvasPerformanceMonitor {
     return 0;
   }
 
-  /**
-   * 개발자 도구 설정
-   */
+  // 개발자 도구 설정
   setupDevTools() {
     if (this.isDevelopment) {
       // 성능 상세 정보 토글
@@ -275,9 +257,7 @@ class CanvasPerformanceMonitor {
     }
   }
 
-  /**
-   * 개발자 도구 정리
-   */
+  // 개발자 도구 정리
   cleanupDevTools() {
     if (this.isDevelopment) {
       delete window.togglePerformanceDetails;
