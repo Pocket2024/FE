@@ -19,6 +19,7 @@ import line from "../images/line.svg";
 import { MdDelete } from "react-icons/md";
 import useNotificationStore from "../store/notificationStore";
 import verified from "../images/verified.png";
+import canvasPerformanceMonitor from "../utils/canvasPerformanceMonitor";
 
 const slideDown = keyframes`
   0% {
@@ -38,6 +39,13 @@ const TicketBox = styled.div`
   width: 100%;
   padding: 50px;
   position: relative;
+  // GPU 가속 활용
+  transform: translateZ(0);
+  will-change: transform;
+
+  // 불필요한 레이어 생성 방지
+  contain: layout style paint;
+
   -webkit-mask: radial-gradient(
       circle 20px at 0px ${(props) => props.y},
       transparent 19px,
@@ -79,6 +87,11 @@ const ProfileImg = styled.img`
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  // 이미지 렌더링 최적화
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges; // 선명도 향상
+  // GPU 가속
+  transform: translateZ(0);
 `;
 const Nickname = styled.div`
   font-size: 20px;
@@ -156,6 +169,14 @@ const ImageLine = styled.div`
     background-size: cover;
     cursor: pointer;
     object-fit: cover;
+    // 이미지 렌더링 최적화
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    // 레이아웃 시프트 방지
+    width: 100%;
+    height: auto;
+    // GPU 가속
+    transform: translateZ(0);
   }
 `;
 const FavBtn = styled.button`
@@ -205,80 +226,78 @@ const Detail = ({ info }) => {
   const favticketId = localStorage.getItem("favticketId");
   const { showNotification } = useNotificationStore();
 
+  // Canvas 처리 함수
+  const processCanvas = (canvas) => {
+    const ctx = canvas.getContext("2d");
+
+    // 원래 캔버스 내용을 ImageData로 추출
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    const { width, height } = canvas;
+
+    // 티켓 특유의 원형 홀 처리 (DOM 기준 값을 캔버스 스케일에 맞춰 변환)
+    const domWidth = ticketRef.current?.offsetWidth || width;
+    const scale = domWidth ? canvas.width / domWidth : 1;
+    const baseRadius = isDesktop ? 20 : 10; // CSS 마스크 반지름과 동일
+    const radius = Math.round(baseRadius * scale);
+    const y = Math.round(315 * scale);
+    const leftCircle = { x: 0, y, radius };
+    const rightCircle = { x: width, y, radius };
+
+    // 최적화된 원형 마스크 적용
+    canvasPerformanceMonitor.applyCircularMask(data, width, height, leftCircle);
+    canvasPerformanceMonitor.applyCircularMask(
+      data,
+      width,
+      height,
+      rightCircle
+    );
+
+    // 수정된 데이터를 다시 캔버스에 적용
+    ctx.putImageData(imageData, 0, 0);
+
+    // Blob 생성 및 다운로드
+    canvas.toBlob(
+      (blob) => {
+        if (blob !== null) {
+          const fileSizeMB = canvasPerformanceMonitor.updateFileSize(blob);
+
+          saveAs(blob, `ticket-${Date.now()}.png`);
+          showNotification(`✅ 티켓 이미지 저장 완료 (${fileSizeMB}MB)`);
+        }
+
+        // 메모리 정리
+        canvasPerformanceMonitor.cleanupCanvas(canvas);
+      },
+      "image/png",
+      0.8
+    ); // 품질 80%
+  };
+
+  // 다운로드 버튼 핸들러
   const onDownloadBtn = async () => {
-    if (window.confirm("티켓 이미지를 저장하시겠습니까?")) {
-      const ticket = ticketRef.current; // 현재 티켓 dom에 접근
-      //   const filter = (card) => {
-      //     // button 태그 필터링
-      //     return card.tagName !== "BUTTON";
-      //   };
+    if (!window.confirm("티켓 이미지를 저장하시겠습니까?")) {
+      return;
+    }
 
-      try {
-        const canvas = await html2canvas(ticket, {
-          backgroundColor: null, // 배경을 투명하게 설정
-          scale: 4,
-          useCORS: true, // 이미지 로드 문제 해결
-          ignoreElements: (element) => {
-            return element.tagName === "BUTTON"; // Ignore button elements
-          },
-        }); // Await the promise and get the canvas
+    const ticketElement = ticketRef.current;
 
-        const ctx = canvas.getContext("2d");
-
-        // 원래 캔버스 내용 복사
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-        // 원의 좌표 및 반지름
-        const leftCircle = { x: 0, y: 315 * 4, radius: 50 };
-        const rightCircle = {
-          x: canvas.width,
-          y: 315 * 4,
-          radius: 50,
-        };
-
-        // 원 부분을 투명하게 만들기
-        const makeCircleTransparent = (circle) => {
-          for (
-            let y = circle.y - circle.radius;
-            y <= circle.y + circle.radius;
-            y++
-          ) {
-            for (
-              let x = circle.x - circle.radius;
-              x <= circle.x + circle.radius;
-              x++
-            ) {
-              const dx = circle.x - x;
-              const dy = circle.y - y;
-              if (dx * dx + dy * dy <= circle.radius * circle.radius) {
-                const index = (y * canvas.width + x) * 4;
-                imageData.data[index + 3] = 0; // 알파 채널을 0으로 설정하여 투명하게 만듦
-              }
-            }
-          }
-        };
-
-        // 왼쪽 및 오른쪽 원을 투명하게 설정
-        makeCircleTransparent(leftCircle);
-        makeCircleTransparent(rightCircle);
-
-        // 업데이트된 이미지 데이터를 다시 그리기
-        ctx.putImageData(imageData, 0, 0);
-
-        canvas.toBlob((blob) => {
-          if (blob !== null) {
-            saveAs(blob, "ticketimg.png");
-          }
+    try {
+      // 성능 측정과 함께 Canvas 생성
+      const { canvas } =
+        await canvasPerformanceMonitor.measureCanvasPerformance(ticketElement, {
+          scale: 2, // 고해상도 설정
+          // 추가 옵션이 필요한 경우 여기에 추가
         });
-      } catch (error) {
-        console.error("Error generating image: ", error);
-      }
 
-      //   domtoimage.toBlob(ticket, { filter: filter }).then((blob) => {
-      //     saveAs(blob, "ticketimg.png"); // png로 저장
-      //   });
+      // Canvas 처리
+      processCanvas(canvas);
+    } catch (error) {
+      console.error("Canvas generation failed:", error);
+      showNotification("⚠️ 이미지 생성에 실패했습니다.");
     }
   };
+
   const handleHeart = () => {
     if (isHeart) {
       api
@@ -343,7 +362,7 @@ const Detail = ({ info }) => {
     }, 500); // 애니메이션 지속 시간과 동일하게 설정
 
     return () => clearTimeout(timeoutId);
-  }, [ticket, isHeart, userId, ACCESS_TOKEN, favticketId]);
+  }, [ticket, isHeart, userId, ACCESS_TOKEN, favticketId, info]);
 
   const [modal, setModal] = useState(false);
   const [clickimgurl, setClickimgurl] = useState(""); // 지금 클릭한 이미지 url
@@ -352,6 +371,13 @@ const Detail = ({ info }) => {
     setClickimgurl(imgUrl);
     setModal(true);
   };
+
+  // 컴포넌트 언마운트 시 개발자 도구 정리
+  useEffect(() => {
+    return () => {
+      canvasPerformanceMonitor.cleanupDevTools();
+    };
+  }, []);
 
   const handleFavTicket = () => {
     api
