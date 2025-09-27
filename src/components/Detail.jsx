@@ -235,9 +235,14 @@ const Detail = ({ info }) => {
     const data = imageData.data;
     const { width, height } = canvas;
 
-    // 티켓 특유의 원형 홀 처리 (scale 2 적용)
-    const leftCircle = { x: 0, y: 315 * 2, radius: 50 };
-    const rightCircle = { x: width, y: 315 * 2, radius: 50 };
+    // 티켓 특유의 원형 홀 처리 (DOM 기준 값을 캔버스 스케일에 맞춰 변환)
+    const domWidth = ticketRef.current?.offsetWidth || width;
+    const scale = domWidth ? canvas.width / domWidth : 1;
+    const baseRadius = isDesktop ? 20 : 10; // CSS 마스크 반지름과 동일
+    const radius = Math.round(baseRadius * scale);
+    const y = Math.round(315 * scale);
+    const leftCircle = { x: 0, y, radius };
+    const rightCircle = { x: width, y, radius };
 
     // 최적화된 원형 마스크 적용
     canvasPerformanceMonitor.applyCircularMask(data, width, height, leftCircle);
