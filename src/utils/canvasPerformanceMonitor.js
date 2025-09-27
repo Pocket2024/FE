@@ -93,7 +93,8 @@ class CanvasPerformanceMonitor {
       return await Promise.race([canvasPromise, timeoutPromise]);
     } catch (error) {
       // 메모리 정리
-      if (global.gc) {
+      if (typeof global !== "undefined" && typeof global.gc === "function") {
+        // Node 환경에서만 의미 있음. 브라우저에선 무시.
         global.gc();
       }
       throw error;
